@@ -1,0 +1,20 @@
+{
+  "name": "threejs-journey-challenge-016",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "vite": "^5.3.3",
+    "vite-plugin-restart": "^0.4.1"
+  },
+  "dependencies": {
+    "lil-gui": "^0.19.2",
+    "three": "^0.166.1"
+  }
+}
