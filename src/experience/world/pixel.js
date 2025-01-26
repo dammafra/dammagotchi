@@ -7,6 +7,7 @@ export default class Pixel {
     this.experience = Experience.instance
 
     this.scene = this.experience.scene
+    this.sizes = this.experience.sizes
 
     this.setGeometry()
     this.setMaterial()
@@ -14,7 +15,7 @@ export default class Pixel {
   }
 
   setGeometry() {
-    this.geometry = new BoxGeometry(0.5, 0.5, 0.5)
+    this.geometry = new BoxGeometry(this.sizes.unit, this.sizes.unit, this.sizes.unit)
   }
 
   setMaterial() {
@@ -25,7 +26,7 @@ export default class Pixel {
 
   setMesh() {
     this.mesh = new Mesh(this.geometry, this.material)
-    this.mesh.position.setScalar(0.5 / 2)
+    this.mesh.position.setScalar(this.sizes.unit / 2)
     this.scene.add(this.mesh)
   }
 }

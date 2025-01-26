@@ -5,6 +5,7 @@ export default class Sizes extends EventDispatcher {
     super()
 
     // Setup
+    this.unit = 0.5
     this.setup()
 
     // Resize event

@@ -4,13 +4,14 @@ import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
 
 export default class Floor {
-  constructor(unit) {
+  constructor() {
     // Setup
     this.experience = Experience.instance
     this.debug = Debug.instance.addFolder('floor')
 
     this.size = 20
     this.scene = this.experience.scene
+    this.sizes = this.experience.sizes
 
     //prettier-ignore
     this.debug.add(this, 'size').min(10).max(50).step(1).onChange(() => {
@@ -22,7 +23,7 @@ export default class Floor {
   }
 
   create() {
-    this.gridHelper = new GridHelper(this.size, this.size * (1 / 0.5))
+    this.gridHelper = new GridHelper(this.size, this.size * (1 / this.sizes.unit))
 
     this.axesHelper = new AxesHelper(this.size / 2)
     this.axesHelper.visible = Debug.active
