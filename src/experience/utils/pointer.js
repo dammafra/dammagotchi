@@ -1,6 +1,6 @@
 import Experience from '../experience'
 
-export default class Mouse {
+export default class Pointer {
   constructor() {
     this.experience = Experience.instance
     this.sizes = this.experience.sizes
@@ -14,6 +14,7 @@ export default class Mouse {
 
     // Resize event
     window.addEventListener('mousemove', this.mousemove)
+    window.addEventListener('touchmove', this.touchmove)
   }
 
   mousemove = event => {
@@ -21,7 +22,14 @@ export default class Mouse {
     this.y = event.clientY / this.sizes.height - 0.5
   }
 
+  touchmove = event => {
+    const touch = event.touches[0]
+    this.x = touch.clientX / this.sizes.width - 0.5
+    this.y = touch.clientY / this.sizes.height - 0.5
+  }
+
   destroy() {
     window.removeEventListener('mousemove', this.mousemove)
+    window.removeEventListener('touchmove', this.touchmove)
   }
 }
