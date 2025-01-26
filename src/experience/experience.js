@@ -4,6 +4,7 @@ import Renderer from './renderer'
 import sources from './sources'
 import Debug from './utils/debug'
 import { dispose } from './utils/dispose'
+import Mouse from './utils/mouse'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
 import Time from './utils/time'
@@ -31,6 +32,7 @@ export default class Experience {
     // Setup
     this.sizes = new Sizes()
     this.time = new Time()
+    this.mouse = new Mouse()
     this.scene = new Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera()
@@ -64,6 +66,8 @@ export default class Experience {
 
     this.time.removeEventListener('tick', this.update)
     this.time.destroy()
+
+    this.mouse.destroy()
 
     this.scene.traverse(dispose)
 

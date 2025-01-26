@@ -1,12 +1,10 @@
 import { GridHelper } from 'three'
 import Experience from '../experience'
-import Debug from '../utils/debug'
 
 export default class Room {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('floor')
 
     this.scene = this.experience.scene
     this.sizes = this.experience.sizes
