@@ -11,9 +11,6 @@ export default class Environment {
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
-    this.intensity = 2
-    this.blurriness = 0.1
-
     this.setEnvironmentMap()
   }
 
@@ -23,22 +20,12 @@ export default class Environment {
     environmentMap.colorSpace = SRGBColorSpace
 
     this.scene.background = environmentMap
-    this.scene.environment = environmentMap
 
-    this.setIntensity()
-    this.setBlurriness()
+    this.scene.backgroundIntensity = 2
+    this.scene.backgroundBlurriness = 0.1
 
     //prettier-ignore
-    this.debug.add(this, 'intensity').min(0).max(10).step(0.1).onChange(this.setIntensity)
-    this.debug.add(this, 'blurriness').min(0).max(1).step(0.001).onChange(this.setBlurriness)
-  }
-
-  setIntensity = () => {
-    this.scene.backgroundIntensity = this.intensity
-    this.scene.environmentIntensity = this.intensity
-  }
-
-  setBlurriness = () => {
-    this.scene.backgroundBlurriness = this.blurriness
+    this.debug.add(this.scene, 'backgroundIntensity').min(0).max(10).step(0.1)
+    this.debug.add(this.scene, 'backgroundBlurriness').min(0).max(1).step(0.001)
   }
 }

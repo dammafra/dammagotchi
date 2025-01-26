@@ -1,7 +1,7 @@
 import Experience from '../experience'
+import Egg from './egg'
 import Environment from './environment'
 import Floor from './floor'
-import Pixel from './pixel'
 
 export default class World {
   constructor() {
@@ -13,7 +13,7 @@ export default class World {
 
     this.resources.addEventListener('ready', () => {
       this.floor = new Floor()
-      this.pixel = new Pixel()
+      this.egg = new Egg()
       this.environment = new Environment()
     })
   }
