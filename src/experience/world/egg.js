@@ -1,43 +1,34 @@
 import { Group } from 'three'
 import Experience from '../experience'
+import matrices from '../matrices'
 import Matrix from './matrix'
-import Pixel from './pixel'
 
 export default class Egg {
   constructor() {
     this.experience = Experience.instance
 
     this.sizes = this.experience.sizes
+    this.time = this.experience.time
+    this.lastTime = 0
     this.scene = this.experience.scene
 
     this.group = new Group()
-    this.matrix = new Matrix([
-      [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-      [0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-      [0, 1, 0, 1, 0, 0, 1, 0, 1, 0],
-      [0, 1, 0, 0, 0, 0, 0, 1, 1, 0],
-      [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1, 0, 1, 0, 0, 1],
-      [1, 1, 0, 0, 0, 1, 0, 0, 0, 1],
-      [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-      [0, 1, 0, 0, 0, 0, 1, 0, 1, 0],
-      [0, 0, 1, 0, 0, 1, 0, 1, 0, 0],
-      [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-    ])
 
-    this.build()
+    this.normal = new Matrix(matrices.egg.normal).build()
+    this.squeezed = new Matrix(matrices.egg.squeezed).build()
+    this.squeezed.visible = false
+
+    this.scene.add(this.normal, this.squeezed)
   }
 
-  build() {
-    this.group = new Group()
-    this.scene.add(this.group)
+  update() {
+    const currentTime = Math.floor(this.time.elapsed / 1000)
 
-    this.matrix.values.reverse().forEach((row, y) => {
-      row.forEach((pixel, x) => {
-        if (!pixel) return
-        const pixelMesh = new Pixel(x - this.sizes.gridSize / 2, y)
-        this.group.add(pixelMesh.mesh)
-      })
-    })
+    if (this.lastTime < currentTime) {
+      this.normal.visible = !this.normal.visible
+      this.squeezed.visible = !this.squeezed.visible
+    }
+
+    this.lastTime = currentTime
   }
 }

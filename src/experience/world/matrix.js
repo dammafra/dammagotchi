@@ -1,4 +1,6 @@
+import { Group } from 'three'
 import Experience from '../experience'
+import Pixel from './pixel'
 
 export default class Matrix {
   constructor(values) {
@@ -19,6 +21,20 @@ export default class Matrix {
     const endPadding = totalPadding - startPadding
 
     return Array(startPadding).fill(padValue).concat(row).concat(Array(endPadding).fill(padValue))
+  }
+
+  build() {
+    this.group = new Group()
+
+    this.values.reverse().forEach((row, y) => {
+      row.forEach((pixel, x) => {
+        if (!pixel) return
+        const pixelMesh = new Pixel(x - this.sizes.gridSize / 2, y)
+        this.group.add(pixelMesh.mesh)
+      })
+    })
+
+    return this.group
   }
 
   print() {
