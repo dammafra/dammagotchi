@@ -9,8 +9,8 @@ export default class Egg {
     this.sizes = this.experience.sizes
     this.scene = this.experience.scene
 
-    this.normal = new Matrix(matrices.egg.normal).build()
-    this.squeezed = new Matrix(matrices.egg.squeezed).build()
+    this.normal = new Matrix(matrices.egg.normal)
+    this.squeezed = new Matrix(matrices.egg.squeezed)
     this.squeezed.visible = false
 
     this.scene.add(this.normal, this.squeezed)

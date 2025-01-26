@@ -1,6 +1,7 @@
 import { Group } from 'three'
 import Experience from '../experience'
 import Pixel from './pixel'
+import Shadow from './shadow'
 
 export default class Matrix {
   constructor(values) {
@@ -8,6 +9,9 @@ export default class Matrix {
     this.sizes = this.experience.sizes
 
     this.values = values.map(this.pad)
+    this.setMesh()
+
+    return this.group
   }
 
   pad = row => {
@@ -23,17 +27,18 @@ export default class Matrix {
     return Array(startPadding).fill(padValue).concat(row).concat(Array(endPadding).fill(padValue))
   }
 
-  build() {
+  setMesh() {
     this.group = new Group()
 
     this.values.reverse().forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
-        const pixelMesh = new Pixel(x - this.sizes.gridSize / 2, y)
-        this.group.add(pixelMesh.mesh)
+        const centeredX = x - this.sizes.gridSize / 2
+        this.group.add(new Pixel(centeredX, y))
       })
     })
 
+    this.group.add(new Shadow())
     return this.group
   }
 

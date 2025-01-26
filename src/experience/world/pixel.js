@@ -9,13 +9,13 @@ export default class Pixel {
     // Setup
     this.experience = Experience.instance
 
-    this.scene = this.experience.scene
     this.sizes = this.experience.sizes
 
     if (!Pixel.geometry) this.setGeometry()
     if (!Pixel.material) this.setMaterial()
 
     this.setMesh(x, y)
+    return this.mesh
   }
 
   setGeometry() {
@@ -35,7 +35,5 @@ export default class Pixel {
     this.mesh.position.x = x * this.sizes.unit + zeroCoordinate
     this.mesh.position.y = y * this.sizes.unit + zeroCoordinate
     this.mesh.position.z = -this.sizes.gridSize / 4
-
-    this.scene.add(this.mesh)
   }
 }
