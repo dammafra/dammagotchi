@@ -19,7 +19,7 @@ jobs:
         run: npm install --global vercel@latest
       - name: Vercel Link
         run: |
-          VERCEL_PROJECT_NAME=$(echo "${{ github.ref }}" | sed -E 's@refs/heads/@@')
+          VERCEL_PROJECT_NAME=$(echo "${{ github.ref }}" | sed -E 's@refs/heads/@@; s@/@-@g')
           echo "VERCEL_PROJECT_NAME=$VERCEL_PROJECT_NAME" >> $GITHUB_ENV
           vercel link --token=${{ secrets.VERCEL_TOKEN }} -p $VERCEL_PROJECT_NAME --yes
       - name: Add Domain
