@@ -19,7 +19,7 @@ export default class Camera {
 
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 0.1, 100) //prettier-ignore
-    this.instance.position.set(0, 1, 4)
+    this.instance.position.set(0, 1, 1.5)
     this.scene.add(this.instance)
 
     this.debug.add(this.instance, 'fov').min(10).max(100).step(0.1)
