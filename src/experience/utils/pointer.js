@@ -3,18 +3,26 @@ import Experience from '../experience'
 export default class Pointer {
   constructor() {
     this.experience = Experience.instance
+    this.canvas = this.experience.canvas
     this.sizes = this.experience.sizes
 
     this.unit = 0.1
     this.gridSize = 20
 
     // Setup
-    this.x = 0
-    this.y = 0
+    this.init()
 
     // Resize event
-    window.addEventListener('mousemove', this.mousemove)
-    window.addEventListener('touchmove', this.touchmove)
+    this.canvas.addEventListener('mousemove', this.mousemove)
+    this.canvas.addEventListener('mouseout', this.init)
+
+    this.canvas.addEventListener('touchmove', this.touchmove)
+    this.canvas.addEventListener('touchend', this.init)
+  }
+
+  init = () => {
+    this.x = 0
+    this.y = 0
   }
 
   mousemove = event => {
@@ -29,7 +37,7 @@ export default class Pointer {
   }
 
   destroy() {
-    window.removeEventListener('mousemove', this.mousemove)
-    window.removeEventListener('touchmove', this.touchmove)
+    this.canvas.removeEventListener('mousemove', this.mousemove)
+    this.canvas.removeEventListener('touchmove', this.touchmove)
   }
 }
