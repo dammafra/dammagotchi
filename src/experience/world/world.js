@@ -18,7 +18,7 @@ export default class World {
     })
   }
 
-  update() {
-    if (this.egg) this.egg.update()
+  updateSeconds() {
+    if (this.egg) this.egg.updateSeconds()
   }
 }

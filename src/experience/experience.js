@@ -42,6 +42,7 @@ export default class Experience {
     // Events
     this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
+    this.time.addEventListener('tick-seconds', this.updaSeconds)
 
     if (Debug.active) {
       // Global access
@@ -56,8 +57,11 @@ export default class Experience {
 
   update = () => {
     this.camera.update()
-    this.world.update()
     this.renderer.update()
+  }
+
+  updaSeconds = () => {
+    this.world.updateSeconds()
   }
 
   destroy() {
@@ -65,6 +69,7 @@ export default class Experience {
     this.sizes.destroy()
 
     this.time.removeEventListener('tick', this.update)
+    this.time.removeEventListener('tick-seconds', this.update)
     this.time.destroy()
 
     this.pointer.destroy()
