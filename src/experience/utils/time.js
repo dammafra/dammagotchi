@@ -9,7 +9,7 @@ export default class Time extends EventDispatcher {
     this.current = this.start
     this.elapsed = 0
     this.delta = 16 // how many milliseconds there is between two frames at 60fps
-    this.lastSeconds = 0
+    this.elapsedSeconds = 0
 
     // don't call the tick method immediately to avoid having a delta equal to 0 on the first frame
     window.requestAnimationFrame(this.tick)
@@ -23,11 +23,11 @@ export default class Time extends EventDispatcher {
 
     this.dispatchEvent({ type: 'tick' })
 
-    const elapsedSeconds = Math.floor(this.elapsed / 1000)
-    if (this.lastSeconds < elapsedSeconds) {
+    const currentSeconds = Math.floor(this.elapsed / 1000)
+    if (this.elapsedSeconds < currentSeconds) {
       this.dispatchEvent({ type: 'tick-seconds' })
     }
-    this.lastSeconds = elapsedSeconds
+    this.elapsedSeconds = currentSeconds
 
     this.animationFrame = window.requestAnimationFrame(this.tick)
   }

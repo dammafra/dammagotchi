@@ -6,7 +6,7 @@ export default class Sizes extends EventDispatcher {
 
     // Setup
     this.unit = 0.1
-    this.gridSize = 20
+    this.gridSize = 24
 
     this.setup()
 

@@ -26,7 +26,7 @@ export default class Camera {
   }
 
   setInstance() {
-    this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 0.1, 100) //prettier-ignore
+    this.instance = new PerspectiveCamera(this.sizes.gridSize * 2, this.sizes.width / this.sizes.height, 0.1, 100) //prettier-ignore
     this.instance.position.y = 1
     this.scene.add(this.instance)
 

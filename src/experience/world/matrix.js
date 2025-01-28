@@ -7,7 +7,7 @@ export default class Matrix {
     this.experience = Experience.instance
     this.sizes = this.experience.sizes
 
-    this.values = values.map(this.pad)
+    this.values = values.map(this.pad).reverse()
     this.setMesh()
   }
 
@@ -32,7 +32,7 @@ export default class Matrix {
     this.mesh.position.y = zeroCoordinate
     this.mesh.position.z = zeroCoordinate - this.sizes.gridSize / 4
 
-    this.values.reverse().forEach((row, y) => {
+    this.values.forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
         const centeredX = x - this.sizes.gridSize / 2
@@ -40,12 +40,13 @@ export default class Matrix {
       })
     })
 
-    // this.mesh.add(new Shadow().mesh)
+    // this.mesh.add(new Shadow())
     return this.mesh
   }
 
   print() {
     const chars = this.values
+      .reverse()
       .map(row => row.map(pixel => (pixel ? '⬛️' : '⬜️')).join(''))
       .join('\n')
     console.log(chars)
