@@ -10,7 +10,7 @@ export default class Camera {
     this.debug = Debug.instance.addFolder('camera')
 
     this.sizes = this.experience.sizes
-    this.pointer = this.experience.pointer
+    this.motion = this.experience.motion
     this.time = this.experience.time
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
@@ -48,8 +48,8 @@ export default class Camera {
   }
 
   parallax() {
-    const parallaxX = -this.pointer.x * this.parallaxIntensity
-    const parallaxY = -this.pointer.y * this.parallaxIntensity
+    const parallaxX = -this.motion.x * this.parallaxIntensity
+    const parallaxY = -this.motion.y * this.parallaxIntensity
 
     this.instance.rotation.x += (parallaxY - this.instance.rotation.x) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
     this.instance.rotation.y += (parallaxX - this.instance.rotation.y) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
