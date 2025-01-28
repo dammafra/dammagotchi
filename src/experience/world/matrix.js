@@ -40,7 +40,6 @@ export default class Matrix {
       })
     })
 
-    // this.mesh.add(new Shadow())
     return this.mesh
   }
 
