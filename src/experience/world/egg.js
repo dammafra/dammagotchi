@@ -11,18 +11,18 @@ export default class Egg {
 
     this.normal = new Matrix(matrices.egg.normal)
     this.squeezed = new Matrix(matrices.egg.squeezed)
-    this.squeezed.visible = false
+    this.squeezed.mesh.visible = false
 
-    this.scene.add(this.normal, this.squeezed)
+    this.scene.add(this.normal.mesh, this.squeezed.mesh)
   }
 
   updateSeconds() {
-    this.normal.visible = !this.normal.visible
-    this.squeezed.visible = !this.squeezed.visible
+    this.normal.mesh.visible = !this.normal.mesh.visible
+    this.squeezed.mesh.visible = !this.squeezed.mesh.visible
   }
 
   rotate() {
-    this.normal.rotation.y += Math.PI
-    this.normal.position.x = -this.normal.position.x
+    this.normal.mesh.rotation.y += Math.PI
+    this.normal.mesh.position.x = -this.normal.mesh.position.x
   }
 }

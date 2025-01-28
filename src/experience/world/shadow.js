@@ -15,7 +15,6 @@ export default class Shadow {
     if (!Shadow.material) this.setMaterial()
 
     this.setMesh()
-    return this.mesh
   }
 
   setGeometry() {

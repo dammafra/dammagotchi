@@ -15,7 +15,6 @@ export default class Pixel {
     if (!Pixel.material) this.setMaterial()
 
     this.setMesh(x, y)
-    return this.mesh
   }
 
   setGeometry() {
