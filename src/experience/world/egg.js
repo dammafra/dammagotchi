@@ -11,12 +11,13 @@ export default class Egg {
     this.debug.add(this, 'idle')
     this.debug.add(this, 'hatching')
     this.debug.add(this, 'birth')
+    this.debug.add(this, 'life')
 
     this.sizes = this.experience.sizes
     this.scene = this.experience.scene
     this.time = this.experience.time
 
-    this.birth()
+    this.life()
   }
 
   // rotate() {
@@ -69,7 +70,6 @@ export default class Egg {
     const birth3 = new Matrix(matrices.egg.birth3)
     birth2.mesh.visible = false
     birth3.mesh.visible = false
-    birth3.print()
     this.scene.add(birth1.mesh, birth2.mesh, birth3.mesh)
 
     this.updateSeconds = () => {
@@ -83,6 +83,31 @@ export default class Egg {
       dispose(birth2.mesh)
       dispose(birth3.mesh)
       this.scene.remove(birth1.mesh, birth2.mesh, birth3.mesh)
+    }
+  }
+
+  life() {
+    this.dispose && this.dispose()
+
+    const life1 = new Matrix(matrices.baby.life1)
+    const life2 = new Matrix(matrices.baby.life2)
+    life2.mesh.visible = false
+    this.scene.add(life1.mesh, life2.mesh)
+
+    this.updateSeconds = () => {
+      life1.mesh.visible = Math.random() - 0.5 > 0
+      life2.mesh.visible = !life1.mesh.visible
+
+      const direction = Math.random() - 0.5 > 0 ? 'x' : 'z'
+      life1.mesh.position[direction] +=
+        Math.random() - 0.5 > 0 ? +this.sizes.unit : -this.sizes.unit
+      life2.mesh.position.copy(life1.mesh.position)
+    }
+
+    this.dispose = () => {
+      dispose(life1.mesh)
+      dispose(life2.mesh)
+      this.scene.remove(life1.mesh, life2.mesh)
     }
   }
 }
