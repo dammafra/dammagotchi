@@ -35,8 +35,8 @@ export default class Shadow {
 
   setMesh() {
     this.mesh = new Mesh(Shadow.geometry, Shadow.material)
+
     this.mesh.rotation.x = -Math.PI * 0.5
     this.mesh.position.y += 0.01
-    this.mesh.position.z = -this.sizes.gridSize / 4
   }
 }

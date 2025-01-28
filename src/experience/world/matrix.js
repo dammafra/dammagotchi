@@ -1,7 +1,6 @@
 import { Group } from 'three'
 import Experience from '../experience'
 import Pixel from './pixel'
-import Shadow from './shadow'
 
 export default class Matrix {
   constructor(values) {
@@ -30,6 +29,11 @@ export default class Matrix {
   setMesh() {
     this.group = new Group()
 
+    const zeroCoordinate = this.sizes.unit / 2
+    this.group.position.x = zeroCoordinate
+    this.group.position.y = zeroCoordinate
+    this.group.position.z = zeroCoordinate - this.sizes.gridSize / 4
+
     this.values.reverse().forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
@@ -38,7 +42,7 @@ export default class Matrix {
       })
     })
 
-    this.group.add(new Shadow())
+    // this.group.add(new Shadow())
     return this.group
   }
 

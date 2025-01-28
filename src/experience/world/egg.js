@@ -20,4 +20,9 @@ export default class Egg {
     this.normal.visible = !this.normal.visible
     this.squeezed.visible = !this.squeezed.visible
   }
+
+  rotate() {
+    this.normal.rotation.y += Math.PI
+    this.normal.position.x = -this.normal.position.x
+  }
 }

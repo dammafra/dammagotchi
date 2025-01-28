@@ -31,9 +31,9 @@ export default class Camera {
     this.scene.add(this.instance)
 
     this.debug.add(this.instance, 'fov').min(10).max(100).step(0.1)
-    this.debug.add(this.instance.position, 'x').min(0).max(100).step(0.1).name('positionX')
-    this.debug.add(this.instance.position, 'y').min(0).max(100).step(0.1).name('positionY')
-    this.debug.add(this.instance.position, 'z').min(0).max(100).step(0.1).name('positionZ')
+    this.debug.add(this.instance.position, 'x').min(-100).max(100).step(0.1).name('positionX')
+    this.debug.add(this.instance.position, 'y').min(-100).max(100).step(0.1).name('positionY')
+    this.debug.add(this.instance.position, 'z').min(-100).max(100).step(0.1).name('positionZ')
     this.debug.onChange(() => this.instance.updateProjectionMatrix())
   }
 
@@ -57,6 +57,7 @@ export default class Camera {
 
   update() {
     this.parallax()
+
     if (this.controls) {
       this.controls.update()
     }

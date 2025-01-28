@@ -31,9 +31,7 @@ export default class Pixel {
   setMesh(x, y) {
     this.mesh = new Mesh(Pixel.geometry, Pixel.material)
 
-    const zeroCoordinate = this.sizes.unit / 2
-    this.mesh.position.x = x * this.sizes.unit + zeroCoordinate
-    this.mesh.position.y = y * this.sizes.unit + zeroCoordinate
-    this.mesh.position.z = -this.sizes.gridSize / 4
+    this.mesh.position.x = x * this.sizes.unit
+    this.mesh.position.y = y * this.sizes.unit
   }
 }
