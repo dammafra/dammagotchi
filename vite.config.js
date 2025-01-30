@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import restart from 'vite-plugin-restart'
 
 export default {
@@ -14,6 +15,7 @@ export default {
     sourcemap: true, // Add sourcemap
   },
   plugins: [
+    tailwindcss(),
     restart({ restart: ['../static/**'] }), // Restart server on static file change
   ],
 }

@@ -1,8 +1,12 @@
 import { EventDispatcher } from 'three'
+import Experience from '../experience'
 
 export default class Sizes extends EventDispatcher {
   constructor() {
     super()
+
+    this.experience = Experience.instance
+    this.canvas = this.experience.canvas
 
     // Setup
     this.unit = 0.1
@@ -15,8 +19,10 @@ export default class Sizes extends EventDispatcher {
   }
 
   setup() {
-    this.width = window.innerWidth
-    this.height = window.innerHeight
+    const { width, height } = this.canvas.getBoundingClientRect()
+
+    this.width = width
+    this.height = height
     this.pixelRatio = Math.min(window.devicePixelRatio, 2)
   }
 

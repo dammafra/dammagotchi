@@ -11,9 +11,38 @@
     <link rel="shortcut icon" href="favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
     <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <meta name="theme-color" content="#312c85" />
   </head>
   <body>
     <canvas class="webgl"></canvas>
+    <div class="container">
+      <svg class="frame" viewBox="6.862 15.567 489.362 464.769">
+        <defs>
+          <filter id="inset-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feComponentTransfer in="SourceAlpha">
+              <feFuncA type="table" tableValues="1 0" />
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="4" />
+            <feOffset dx="0" dy="5" result="offsetblur" />
+            <feFlood flood-color="rgb(0, 0, 0)" result="color" />
+            <feComposite in2="offsetblur" operator="in" />
+            <feComposite in2="SourceAlpha" operator="in" />
+            <feMerge>
+              <feMergeNode in="SourceGraphic" />
+              <feMergeNode />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <path
+          d="M 46.055 42.488 L 48.361 119.506 L 5.948 247.37 L 46.934 362.971 L 33.732 447.965 L 89.878 477.566 L 161.279 458.456 L 268.482 480.336 L 364.295 462.396 L 445.328 474.867 L 463.785 326.832 L 496.224 248.018 L 462.148 167.65 L 474.845 77.071 L 413.127 22.372 L 286.524 53.928 L 175.887 15.567 L 125.55 43.969 L 46.055 42.488 Z"
+          filter="url(#inset-shadow)"
+        />
+      </svg>
+      <hr class="frame-border" />
+    </div>
+
     <script type="module" src="./script.js"></script>
   </body>
 </html>
