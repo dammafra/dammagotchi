@@ -6,7 +6,7 @@ export default class Environment {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('environment')
+    this.debug = Debug.instance.addFolder('environment').close()
 
     this.scene = this.experience.scene
     this.resources = this.experience.resources

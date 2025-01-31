@@ -7,7 +7,7 @@ export default class Camera {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('camera')
+    this.debug = Debug.instance.addFolder('camera').close()
 
     this.sizes = this.experience.sizes
     this.motion = this.experience.motion
