@@ -14,10 +14,7 @@ export default class Motion {
 
     this.setupMousemove()
 
-    if (
-      typeof DeviceOrientationEvent !== 'undefined' &&
-      typeof DeviceOrientationEvent.requestPermission === 'function'
-    ) {
+    if (typeof DeviceOrientationEvent !== 'undefined') {
       this.setupDeviceorientation()
     } else {
       this.setupTouchmove()
@@ -52,15 +49,19 @@ export default class Motion {
   }
 
   setupDeviceorientation() {
-    this.canvas.addEventListener('touchend', () =>
+    this.canvas.addEventListener('touchend', () => {
+      if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
+        DeviceOrientationEvent.requestPermission = () => Promise.resolve('granted')
+      }
+
       DeviceOrientationEvent.requestPermission().then(response => {
         if (response === 'granted') {
           window.addEventListener('deviceorientation', this.deviceorientation)
         } else {
           this.setupTouchmove()
         }
-      }),
-    )
+      })
+    })
   }
 
   deviceorientation = event => {
