@@ -23,8 +23,8 @@ body {
 }
 
 h1 {
-  @apply font-kablammo uppercase text-white text-5xl md:text-7xl;
-  @apply fixed top-10 -z-10;
+  @apply font-kablammo uppercase text-white text-5xl sm:text-7xl;
+  @apply fixed top-24 sm:top-10 -z-10;
 }
 
 .webgl {
