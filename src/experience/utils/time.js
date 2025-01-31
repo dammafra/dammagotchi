@@ -1,12 +1,13 @@
 import { EventDispatcher } from 'three'
+import { Timer } from 'three/addons/misc/Timer.js'
 
 export default class Time extends EventDispatcher {
   constructor() {
     super()
 
     // Setup
-    this.start = Date.now()
-    this.current = this.start
+    this.timer = new Timer()
+
     this.elapsed = 0
     this.delta = 16 // how many milliseconds there is between two frames at 60fps
     this.elapsedSeconds = 0
@@ -16,10 +17,10 @@ export default class Time extends EventDispatcher {
   }
 
   tick = () => {
-    const current = Date.now()
-    this.delta = current - this.current
-    this.current = current
-    this.elapsed = this.current - this.start
+    this.timer.update()
+
+    this.delta = this.timer.getDelta() * 1000
+    this.elapsed = this.timer.getElapsed() * 1000
 
     this.dispatchEvent({ type: 'tick' })
 
