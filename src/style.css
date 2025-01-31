@@ -1,17 +1,30 @@
 @import 'tailwindcss';
 
+@utility font-kablammo {
+  font-family: 'Kablammo', serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: 'MORF' 0;
+}
+
 * {
   @apply select-none;
 }
 
 html,
 body {
-  @apply overflow-hidden overscroll-none;
+  @apply overflow-hidden overscroll-none min-h-[600px] touch-none;
 }
 
 body {
   @apply flex items-center justify-center w-screen h-[100svh];
-  @apply bg-radial  via-blue-500 to-indigo-900;
+  @apply bg-radial via-blue-500 to-indigo-900;
+}
+
+h1 {
+  @apply font-kablammo uppercase text-white text-5xl md:text-7xl;
+  @apply fixed top-10 -z-10;
 }
 
 .webgl {
@@ -20,7 +33,7 @@ body {
 }
 
 .container {
-  @apply h-full w-full flex items-center justify-center px-10 py-30;
+  @apply h-full w-full flex items-center justify-center px-10 py-40;
 }
 
 .frame {
@@ -31,4 +44,9 @@ body {
   @apply absolute left-0 -z-10 w-full h-2;
   @apply border-t border-b border-slate-600;
   @apply inset-shadow-[0_2px_4px_rgb(0_0_0/0.5)];
+}
+
+footer {
+  @apply fixed bottom-0 z-10 w-full p-5;
+  @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
 }

@@ -56,6 +56,11 @@ export default class Experience {
   }
 
   update = () => {
+    // TODO: refactor ---
+    const morf = Math.sin(this.time.elapsed * 0.0005) * 60
+    document.querySelector('h1').style.fontVariationSettings = `'MORF' ${morf}`
+    // ---
+
     this.camera.update()
     this.renderer.update()
   }

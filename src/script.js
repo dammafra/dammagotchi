@@ -1,5 +1,6 @@
 import Experience from './experience/experience'
 
+// TODO: refactor ---
 const canvas = document.querySelector('canvas.webgl')
 const frame = document.querySelector('.frame path')
 
@@ -12,5 +13,6 @@ function resize() {
 
 resize()
 addEventListener('resize', resize)
+// ---
 
 Experience.init(canvas)
