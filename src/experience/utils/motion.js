@@ -35,8 +35,8 @@ export default class Motion {
   }
 
   mousemove = event => {
-    this.x = event.clientX / this.sizes.width - 0.5
-    this.y = event.clientY / this.sizes.height - 0.5
+    this.x = event.offsetX / this.sizes.width - 0.5
+    this.y = event.offsetY / this.sizes.height - 0.5
   }
 
   setupTouchmove() {
@@ -46,8 +46,9 @@ export default class Motion {
 
   touchmove = event => {
     const touch = event.touches[0]
-    this.x = -(touch.clientX / this.sizes.width - 0.5)
-    this.y = -(touch.clientY / this.sizes.height - 0.5)
+    const { left, top } = this.canvas.getBoundingClientRect()
+    this.x = -((touch.clientX - left) / this.sizes.width - 0.5)
+    this.y = -((touch.clientY - top) / this.sizes.height - 0.5)
   }
 
   setupDeviceorientation() {
