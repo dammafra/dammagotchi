@@ -19,14 +19,14 @@ export default class Camera {
     this.parallaxEase = 5
 
     this.setInstance()
-    // this.setControls()
+    this.setControls()
 
     this.debug.add(this, 'parallaxIntensity').min(0).max(2).step(0.1)
     this.debug.add(this, 'parallaxEase').min(1).max(10).step(0.5)
   }
 
   setInstance() {
-    this.instance = new PerspectiveCamera(this.sizes.gridSize * 2, this.sizes.width / this.sizes.height, 0.1, 100) //prettier-ignore
+    this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 0.1, 100) //prettier-ignore
     this.instance.position.y = 1
     this.scene.add(this.instance)
 
@@ -38,7 +38,10 @@ export default class Camera {
   }
 
   setControls() {
+    if (!Debug.active) return
+
     this.controls = new OrbitControls(this.instance, this.canvas)
+    this.controls.target.copy(this.sizes.gridCenter)
     this.controls.enableDamping = true
   }
 

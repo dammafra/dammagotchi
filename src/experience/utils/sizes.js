@@ -1,4 +1,4 @@
-import { EventDispatcher } from 'three'
+import { EventDispatcher, Vector3 } from 'three'
 import Experience from '../experience'
 
 export default class Sizes extends EventDispatcher {
@@ -9,10 +9,8 @@ export default class Sizes extends EventDispatcher {
     this.canvas = this.experience.canvas
 
     // Setup
-    this.unit = 0.1
-    this.gridSize = 24
-
     this.setup()
+    this.setGrid()
 
     // Resize event
     window.addEventListener('resize', this.resize)
@@ -29,6 +27,18 @@ export default class Sizes extends EventDispatcher {
   resize = () => {
     this.setup()
     this.dispatchEvent({ type: 'resize' })
+  }
+
+  setGrid() {
+    this.unit = 0.1
+    this.gridSize = 24
+
+    const zeroCoordinate = this.unit / 2
+    this.gridCenter = new Vector3(
+      zeroCoordinate,
+      zeroCoordinate,
+      zeroCoordinate - this.gridSize / 4,
+    )
   }
 
   destroy() {

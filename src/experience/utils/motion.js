@@ -1,4 +1,5 @@
 import Experience from '../experience'
+import { degreesToRads } from './angle'
 
 export default class Motion {
   constructor() {
@@ -65,11 +66,9 @@ export default class Motion {
   }
 
   deviceorientation = event => {
-    this.x = this.degreesToRads(event.gamma)
-    this.y = this.degreesToRads(event.beta)
+    this.x = degreesToRads(event.gamma)
+    this.y = degreesToRads(event.beta)
   }
-
-  degreesToRads = deg => (deg * Math.PI) / 180.0
 
   destroy() {
     this.canvas.removeEventListener('mousemove', this.mousemove)

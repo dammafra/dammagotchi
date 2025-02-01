@@ -12,7 +12,7 @@ export default class World {
     this.resources = this.experience.resources
 
     this.resources.addEventListener('ready', () => {
-      this.floor = new Room()
+      this.room = new Room()
       this.egg = new Egg()
       this.environment = new Environment()
     })
