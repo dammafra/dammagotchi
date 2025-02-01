@@ -2,12 +2,12 @@ import Experience from '../experience'
 import sprites from '../sprites'
 import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
-import Sprite from './sprite'
+import Sprite from '../utils/sprite'
 
-export default class Egg {
+export default class Pet {
   constructor() {
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('egg')
+    this.debug = Debug.instance.addFolder('pet')
     this.debug.add(this, 'idle')
     this.debug.add(this, 'hatching')
     this.debug.add(this, 'birth')

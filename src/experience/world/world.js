@@ -1,6 +1,6 @@
 import Experience from '../experience'
-import Egg from './egg'
 import Environment from './environment'
+import Pet from './pet'
 import Room from './room'
 
 export default class World {
@@ -13,12 +13,12 @@ export default class World {
 
     this.resources.addEventListener('ready', () => {
       this.room = new Room()
-      this.egg = new Egg()
+      this.pet = new Pet()
       this.environment = new Environment()
     })
   }
 
   updateSeconds() {
-    if (this.egg) this.egg.updateSeconds()
+    if (this.pet) this.pet.updateSeconds()
   }
 }

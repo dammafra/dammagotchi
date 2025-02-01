@@ -1,6 +1,6 @@
 import { Group } from 'three'
 import Experience from '../experience'
-import Pixel from './pixel'
+import Pixel from '../world/pixel'
 
 export default class Sprite {
   constructor(values) {
