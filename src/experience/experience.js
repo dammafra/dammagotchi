@@ -1,5 +1,6 @@
 import { Scene } from 'three'
 import Camera from './camera'
+import Frame from './frame'
 import Renderer from './renderer'
 import sources from './sources'
 import Debug from './utils/debug'
@@ -30,17 +31,21 @@ export default class Experience {
     this.canvas = canvas
 
     // Setup
+    this.frame = new Frame()
     this.sizes = new Sizes()
+
     this.time = new Time()
     this.motion = new Motion()
-    this.scene = new Scene()
     this.resources = new Resources(sources)
+
+    this.scene = new Scene()
     this.camera = new Camera()
     this.renderer = new Renderer()
+
     this.world = new World()
 
     // Events
-    this.sizes.addEventListener('resize', this.resize)
+    this.frame.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updaSeconds)
 
@@ -51,6 +56,7 @@ export default class Experience {
   }
 
   resize = () => {
+    this.sizes.resize()
     this.camera.resize()
     this.renderer.resize()
   }
@@ -70,8 +76,8 @@ export default class Experience {
   }
 
   destroy() {
-    this.sizes.removeEventListener('resize', this.resize)
-    this.sizes.destroy()
+    this.frame.removeEventListener('resize', this.resize)
+    this.frame.destroy()
 
     this.time.removeEventListener('tick', this.update)
     this.time.removeEventListener('tick-seconds', this.update)

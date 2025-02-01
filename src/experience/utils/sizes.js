@@ -1,19 +1,14 @@
-import { EventDispatcher, Vector3 } from 'three'
+import { Vector3 } from 'three'
 import Experience from '../experience'
 
-export default class Sizes extends EventDispatcher {
+export default class Sizes {
   constructor() {
-    super()
-
     this.experience = Experience.instance
     this.canvas = this.experience.canvas
 
     // Setup
     this.setup()
     this.setGrid()
-
-    // Resize event
-    window.addEventListener('resize', this.resize)
   }
 
   setup() {
@@ -24,9 +19,8 @@ export default class Sizes extends EventDispatcher {
     this.pixelRatio = Math.min(window.devicePixelRatio, 2)
   }
 
-  resize = () => {
+  resize() {
     this.setup()
-    this.dispatchEvent({ type: 'resize' })
   }
 
   setGrid() {
@@ -39,9 +33,5 @@ export default class Sizes extends EventDispatcher {
       zeroCoordinate,
       zeroCoordinate - this.gridSize / 4,
     )
-  }
-
-  destroy() {
-    window.removeEventListener('resize', this.resize)
   }
 }

@@ -28,8 +28,12 @@ h1 {
 }
 
 .webgl {
-  @apply fixed flex items-center justify-center mt-2;
-  @apply border-2 border-black rounded-2xl;
+  @apply fixed flex items-center justify-center z-10;
+}
+
+.webgl.framed {
+  @apply mt-2 rounded-2xl z-0;
+  @apply border-2 border-black;
 }
 
 .container {
@@ -47,6 +51,6 @@ h1 {
 }
 
 footer {
-  @apply fixed bottom-0 z-10 w-full p-5;
+  @apply fixed bottom-0 w-full p-5;
   @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
 }

@@ -15,14 +15,9 @@ export default class Camera {
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
 
-    this.parallaxIntensity = 0.1
-    this.parallaxEase = 5
-
     this.setInstance()
+    this.setParallax()
     this.setControls()
-
-    this.debug.add(this, 'parallaxIntensity').min(0).max(2).step(0.1)
-    this.debug.add(this, 'parallaxEase').min(1).max(10).step(0.5)
   }
 
   setInstance() {
@@ -37,12 +32,33 @@ export default class Camera {
     this.debug.onChange(() => this.instance.updateProjectionMatrix())
   }
 
+  setParallax() {
+    this.parallaxIntensity = 0.1
+    this.parallaxEase = 5
+
+    this.debug.add(this, 'parallaxIntensity').min(0).max(2).step(0.1)
+    this.debug.add(this, 'parallaxEase').min(1).max(10).step(0.5)
+  }
+
   setControls() {
     if (!Debug.active) return
 
     this.controls = new OrbitControls(this.instance, this.canvas)
-    this.controls.target.copy(this.sizes.gridCenter)
     this.controls.enableDamping = true
+    this.controls.enabled = false // trigger GUI controller onChange
+
+    this.debug
+      .add(this.controls, 'enabled')
+      .name('controls')
+      .onChange(enabled => {
+        this.controls.reset()
+        this.controls.target.set(
+          this.sizes.gridCenter.x,
+          enabled ? this.sizes.gridCenter.y : this.instance.position.y,
+          this.sizes.gridCenter.z,
+        )
+      })
+      .setValue(true)
   }
 
   resize() {
@@ -50,7 +66,7 @@ export default class Camera {
     this.instance.updateProjectionMatrix()
   }
 
-  parallax() {
+  updateParallax() {
     const parallaxX = -this.motion.x * this.parallaxIntensity
     const parallaxY = -this.motion.y * this.parallaxIntensity
 
@@ -59,7 +75,7 @@ export default class Camera {
   }
 
   update() {
-    this.parallax()
+    this.updateParallax()
 
     if (this.controls) {
       this.controls.update()
