@@ -35,7 +35,7 @@ export default class Room {
   setFrontWall() {
     this.frontWall = new Mesh(
       new PlaneGeometry(this.sizes.gridSize, this.sizes.gridSize),
-      new MeshBasicMaterial({ color: 'yellow' }),
+      new MeshBasicMaterial({ color: 'green' }),
     )
     this.frontWall.visible = false
     this.frontWall.rotation.y = Math.PI
@@ -55,7 +55,7 @@ export default class Room {
       new MeshBasicMaterial({ color: 'red' }),
     )
     this.leftWall.visible = false
-    this.leftWall.rotation.y = Math.PI * 0.6
+    this.leftWall.rotation.y = Math.PI * 0.625
     this.leftWall.position.x = -0.1
     this.leftWall.position.y = this.sizes.gridSize / 2
 
@@ -64,16 +64,16 @@ export default class Room {
     const leftWallFolder = this.debug.addFolder('left wall')
     leftWallFolder.add(this.leftWall, 'visible')
     leftWallFolder.add(this.leftWall.position, 'x').min(-this.sizes.gridSize).max(this.sizes.gridSize).step(this.sizes.unit).name('positionX') //prettier-ignore
-    leftWallFolder.add(this.leftWall.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.001).name('rotationY rad') //prettier-ignore
+    leftWallFolder.add(this.leftWall.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.001).name('rotationY') //prettier-ignore
   }
 
   setRightWall() {
     this.rightWall = new Mesh(
       new PlaneGeometry(this.sizes.gridSize, this.sizes.gridSize),
-      new MeshBasicMaterial({ color: 'green' }),
+      new MeshBasicMaterial({ color: 'red' }),
     )
     this.rightWall.visible = false
-    this.rightWall.rotation.y = -Math.PI * 0.6
+    this.rightWall.rotation.y = -Math.PI * 0.625
     this.rightWall.position.x = 0.1
     this.rightWall.position.y = this.sizes.gridSize / 2
 
@@ -82,6 +82,6 @@ export default class Room {
     const rightWallFolder = this.debug.addFolder('right wall')
     rightWallFolder.add(this.rightWall, 'visible')
     rightWallFolder.add(this.rightWall.position, 'x').min(-this.sizes.gridSize).max(this.sizes.gridSize).step(this.sizes.unit).name('positionX') //prettier-ignore
-    rightWallFolder.add(this.rightWall.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.001).name('rotationY rad') //prettier-ignore
+    rightWallFolder.add(this.rightWall.rotation, 'y').min(-Math.PI).max(Math.PI).step(0.001).name('rotationY') //prettier-ignore
   }
 }
