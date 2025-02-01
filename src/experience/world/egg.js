@@ -1,8 +1,8 @@
 import Experience from '../experience'
-import matrices from '../matrices'
+import sprites from '../sprites'
 import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
-import Matrix from './matrix'
+import Sprite from './sprite'
 
 export default class Egg {
   constructor() {
@@ -28,8 +28,8 @@ export default class Egg {
   idle() {
     this.dispose && this.dispose()
 
-    const normal = new Matrix(matrices.egg.normal)
-    const squeezed = new Matrix(matrices.egg.squeezed)
+    const normal = new Sprite(sprites.egg.normal)
+    const squeezed = new Sprite(sprites.egg.squeezed)
     squeezed.mesh.visible = false
 
     this.scene.add(normal.mesh, squeezed.mesh)
@@ -49,7 +49,7 @@ export default class Egg {
   hatching() {
     this.dispose && this.dispose()
 
-    const hatching = new Matrix(matrices.egg.hatching)
+    const hatching = new Sprite(sprites.egg.hatching)
     this.scene.add(hatching.mesh)
 
     this.updateSeconds = () => {
@@ -65,9 +65,9 @@ export default class Egg {
   birth() {
     this.dispose && this.dispose()
 
-    const birth1 = new Matrix(matrices.egg.birth1)
-    const birth2 = new Matrix(matrices.egg.birth2)
-    const birth3 = new Matrix(matrices.egg.birth3)
+    const birth1 = new Sprite(sprites.egg.birth1)
+    const birth2 = new Sprite(sprites.egg.birth2)
+    const birth3 = new Sprite(sprites.egg.birth3)
     birth2.mesh.visible = false
     birth3.mesh.visible = false
     this.scene.add(birth1.mesh, birth2.mesh, birth3.mesh)
@@ -89,8 +89,8 @@ export default class Egg {
   life() {
     this.dispose && this.dispose()
 
-    const life1 = new Matrix(matrices.baby.life1)
-    const life2 = new Matrix(matrices.baby.life2)
+    const life1 = new Sprite(sprites.baby.life1)
+    const life2 = new Sprite(sprites.baby.life2)
     life2.mesh.visible = false
     this.scene.add(life1.mesh, life2.mesh)
 

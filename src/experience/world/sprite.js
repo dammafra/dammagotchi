@@ -2,7 +2,7 @@ import { Group } from 'three'
 import Experience from '../experience'
 import Pixel from './pixel'
 
-export default class Matrix {
+export default class Sprite {
   constructor(values) {
     this.experience = Experience.instance
     this.sizes = this.experience.sizes
