@@ -6,7 +6,7 @@ export default class Room {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('room').close()
+    this.debug = Debug.instance.gui.addFolder('room').close()
 
     this.scene = this.experience.scene
     this.sizes = this.experience.sizes

@@ -7,7 +7,7 @@ export default class Frame extends EventDispatcher {
     super()
 
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('frame').close()
+    this.debug = Debug.instance.gui.addFolder('frame').close()
 
     this.canvas = this.experience.canvas
     this.element = document.querySelector('.frame path')
@@ -27,7 +27,7 @@ export default class Frame extends EventDispatcher {
         this.canvas.classList.toggle('framed')
         this.resize()
       })
-      .setValue(!Debug.active)
+      .setValue(!Debug.instance.active)
   }
 
   setup() {

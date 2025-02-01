@@ -26,6 +26,7 @@ export default class Experience {
     }
 
     Experience.instance = this
+    Debug.init()
 
     // Options
     this.canvas = canvas
@@ -49,7 +50,7 @@ export default class Experience {
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updaSeconds)
 
-    if (Debug.active) {
+    if (Debug.instance.active) {
       // Global access
       window.Experience = Experience
     }

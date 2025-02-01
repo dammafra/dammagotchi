@@ -7,7 +7,7 @@ export default class Camera {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.addFolder('camera').close()
+    this.debug = Debug.instance.gui.addFolder('camera').close()
 
     this.sizes = this.experience.sizes
     this.motion = this.experience.motion
@@ -41,7 +41,7 @@ export default class Camera {
   }
 
   setControls() {
-    if (!Debug.active) return
+    if (!Debug.instance.active) return
 
     this.controls = new OrbitControls(this.instance, this.canvas)
     this.controls.enableDamping = true
