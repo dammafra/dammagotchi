@@ -18,6 +18,9 @@ export default class Frame extends EventDispatcher {
     // Resize event
     window.addEventListener('resize', this.resize)
 
+    this.observer = new ResizeObserver(this.resize)
+    this.observer.observe(this.element)
+
     this.debug
       .add(this, 'enabled')
       .onChange(() => {
@@ -45,5 +48,6 @@ export default class Frame extends EventDispatcher {
 
   destroy() {
     window.removeEventListener('resize', this.resize)
+    this.observer.disconnect()
   }
 }
