@@ -1,8 +1,10 @@
 import { Scene } from 'three'
 import Camera from './camera'
-import Frame from './frame'
 import Renderer from './renderer'
 import sources from './sources'
+import Font from './ui/font'
+import Frame from './ui/frame'
+import Loading from './ui/loading'
 import Debug from './utils/debug'
 import { dispose } from './utils/dispose'
 import Grid from './utils/grid'
@@ -27,15 +29,19 @@ export default class Experience {
     }
 
     Experience.instance = this
+
     Debug.init()
+    Time.init()
 
     // Options
     this.canvas = canvas
 
     // Setup
-    this.time = new Time()
-
+    this.font = new Font()
+    this.loading = new Loading()
     this.frame = new Frame()
+
+    this.time = Time.instance
     this.sizes = new Sizes()
     this.grid = new Grid()
     this.motion = new Motion()
@@ -61,7 +67,7 @@ export default class Experience {
   }
 
   update = () => {
-    this.frame.update()
+    this.font.update()
     this.camera.update()
     this.renderer.update()
   }
@@ -71,6 +77,7 @@ export default class Experience {
   }
 
   ready = () => {
+    this.loading.ready()
     this.world.ready()
     Debug.instance.loadState()
   }

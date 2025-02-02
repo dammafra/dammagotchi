@@ -18,21 +18,49 @@ body {
 }
 
 body {
-  @apply flex items-center justify-center w-screen h-[100svh];
-  @apply bg-radial via-blue-500 to-indigo-900;
+  @apply w-screen h-[100svh];
+  @apply bg-indigo-900;
+}
+
+.loading {
+  @apply fixed top-0 w-full h-full z-30;
+  @apply flex justify-center items-center bg-indigo-900;
+  @apply transition-all duration-500;
+}
+
+.loading p {
+  @apply uppercase text-white text-6xl;
+  @apply opacity-100 transition-opacity;
+}
+
+.loading + main {
+  @apply hidden;
+}
+
+.loading.end {
+  @apply h-0;
+}
+
+.loading.end p {
+  @apply opacity-0;
+}
+
+.loading.end + main {
+  @apply w-full h-full flex items-center justify-center;
+  @apply bg-radial from-white via-blue-500 to-indigo-900;
 }
 
 h1 {
-  @apply font-kablammo uppercase text-white text-5xl sm:text-7xl;
-  @apply fixed top-24 sm:top-10 -z-10;
+  @apply uppercase text-white text-5xl sm:text-7xl;
+  @apply fixed top-10;
 }
 
 .webgl {
-  @apply fixed flex items-center justify-center z-10;
+  @apply fixed flex items-center justify-center z-40;
 }
 
 .webgl.framed {
-  @apply mt-2 rounded-2xl z-0;
+  @apply mt-2 rounded-2xl z-20;
   @apply border-2 border-black;
 }
 
@@ -41,16 +69,16 @@ h1 {
 }
 
 .frame {
-  @apply fill-yellow-500 min-h-90 h-full max-w-full;
+  @apply fill-yellow-500 h-full min-w-90 max-w-full z-10;
 }
 
 .frame-border {
-  @apply absolute left-0 -z-10 w-full h-2;
+  @apply absolute left-0 w-full h-2;
   @apply border-t border-b border-slate-600;
   @apply inset-shadow-[0_2px_4px_rgb(0_0_0/0.5)];
 }
 
 footer {
-  @apply fixed bottom-0 w-full p-5;
+  @apply fixed bottom-0 w-full p-5 z-30;
   @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
 }

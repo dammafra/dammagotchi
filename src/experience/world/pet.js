@@ -3,24 +3,26 @@ import sprites from '../sprites'
 import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
 import Sprite from '../utils/sprite'
+import Time from '../utils/time'
 
 export default class Pet {
   static debugName = '🥚 pet'
 
   constructor() {
     this.experience = Experience.instance
+    this.time = Time.instance
     this.debug = Debug.instance.gui.addFolder(Pet.debugName)
+
+    this.grid = this.experience.grid
+    this.scene = this.experience.scene
+    this.camera = this.experience.camera
+
+    this.life()
+
     this.debug.add(this, 'idle')
     this.debug.add(this, 'hatching')
     this.debug.add(this, 'birth')
     this.debug.add(this, 'life')
-
-    this.grid = this.experience.grid
-    this.scene = this.experience.scene
-    this.time = this.experience.time
-    this.camera = this.experience.camera
-
-    this.life()
   }
 
   // rotate() {

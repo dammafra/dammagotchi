@@ -1,7 +1,7 @@
 import GUI from 'lil-gui'
 import Camera from '../camera'
 import Experience from '../experience'
-import Frame from '../frame'
+import Frame from '../ui/frame'
 
 export default class Debug {
   /** @type {Debug} */

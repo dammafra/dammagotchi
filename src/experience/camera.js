@@ -2,6 +2,7 @@ import { Frustum, Matrix4, PerspectiveCamera } from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import Experience from './experience'
 import Debug from './utils/debug'
+import Time from './utils/time'
 
 export default class Camera {
   static debugName = '🎥 camera'
@@ -9,12 +10,12 @@ export default class Camera {
   constructor() {
     // Setup
     this.experience = Experience.instance
+    this.time = Time.instance
     this.debug = Debug.instance.gui.addFolder(Camera.debugName).close()
 
     this.sizes = this.experience.sizes
     this.grid = this.experience.grid
     this.motion = this.experience.motion
-    this.time = this.experience.time
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
 

@@ -3,10 +3,23 @@ import { Timer } from 'three/addons/misc/Timer.js'
 import Debug from './debug'
 
 export default class Time extends EventDispatcher {
+  /** @type {Time} */
+  static instance
   static debugName = '⏱️ time'
+
+  static init() {
+    return new Time()
+  }
 
   constructor() {
     super()
+
+    // Singleton
+    if (Time.instance) {
+      return Time.instance
+    }
+
+    Time.instance = this
 
     // Setup
     this.timer = new Timer()
@@ -47,5 +60,6 @@ export default class Time extends EventDispatcher {
 
   destroy() {
     window.cancelAnimationFrame(this.animationFrame)
+    Time.instance = null
   }
 }
