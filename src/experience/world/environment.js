@@ -3,7 +3,7 @@ import Experience from '../experience'
 import Debug from '../utils/debug'
 
 export default class Environment {
-  static debugName = '🌳 environment'
+  static debugName = '🏡 environment'
 
   constructor() {
     // Setup

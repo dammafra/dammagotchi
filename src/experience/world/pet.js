@@ -18,6 +18,7 @@ export default class Pet {
     this.grid = this.experience.grid
     this.scene = this.experience.scene
     this.time = this.experience.time
+    this.camera = this.experience.camera
 
     this.life()
   }
@@ -103,8 +104,13 @@ export default class Pet {
       const axis = Math.random() - 0.5 > 0 ? 'x' : 'z'
       const direction = Math.random() - 0.5 > 0 ? +this.grid.unit : -this.grid.unit
 
-      life1.mesh.position[axis] += direction
-      life2.mesh.position.copy(life1.mesh.position)
+      const position = life1.mesh.position.clone()
+      position[axis] += direction
+
+      if (this.camera.canView(position) && this.grid.contains(position)) {
+        life1.mesh.position.copy(position)
+        life2.mesh.position.copy(position)
+      }
     }
 
     this.dispose = () => {

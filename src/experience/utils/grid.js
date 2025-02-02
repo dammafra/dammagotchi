@@ -8,4 +8,13 @@ export default class Grid {
     const zeroCoordinate = this.unit / 2
     this.center = new Vector3(zeroCoordinate, zeroCoordinate, zeroCoordinate - this.size / 4)
   }
+
+  contains(position) {
+    const maxDistance = Math.abs(this.size / 2)
+    return (
+      Math.abs(position.x) <= maxDistance &&
+      Math.abs(position.y) <= maxDistance &&
+      Math.abs(position.z) <= maxDistance
+    )
+  }
 }

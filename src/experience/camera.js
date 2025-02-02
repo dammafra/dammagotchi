@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from 'three'
+import { Frustum, Matrix4, PerspectiveCamera } from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import Experience from './experience'
 import Debug from './utils/debug'
@@ -83,5 +83,15 @@ export default class Camera {
     if (this.controls) {
       this.controls.update()
     }
+  }
+
+  canView(position) {
+    const frustum = new Frustum()
+    const matrix = new Matrix4().multiplyMatrices(
+      this.instance.projectionMatrix,
+      this.instance.matrixWorldInverse,
+    )
+    frustum.setFromProjectionMatrix(matrix)
+    return frustum.containsPoint(position)
   }
 }
