@@ -5,7 +5,7 @@ import Pixel from '../world/pixel'
 export default class Sprite {
   constructor(values) {
     this.experience = Experience.instance
-    this.sizes = this.experience.sizes
+    this.grid = this.experience.grid
 
     this.values = values.map(this.pad).reverse()
     this.setMesh()
@@ -13,7 +13,7 @@ export default class Sprite {
 
   pad = row => {
     const padValue = 0
-    const targetLength = this.sizes.gridSize
+    const targetLength = this.grid.size
 
     if (row.length >= targetLength) return row
 
@@ -27,15 +27,15 @@ export default class Sprite {
   setMesh() {
     this.mesh = new Group()
 
-    const zeroCoordinate = this.sizes.unit / 2
+    const zeroCoordinate = this.grid.unit / 2
     this.mesh.position.x = zeroCoordinate
     this.mesh.position.y = zeroCoordinate
-    this.mesh.position.z = zeroCoordinate - this.sizes.gridSize / 4
+    this.mesh.position.z = zeroCoordinate - this.grid.size / 4
 
     this.values.forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
-        const centeredX = x - this.sizes.gridSize / 2
+        const centeredX = x - this.grid.size / 2
         this.mesh.add(new Pixel(centeredX, y).mesh)
       })
     })

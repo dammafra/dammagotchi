@@ -12,6 +12,7 @@ export default class Camera {
     this.debug = Debug.instance.gui.addFolder(Camera.debugName).close()
 
     this.sizes = this.experience.sizes
+    this.grid = this.experience.grid
     this.motion = this.experience.motion
     this.time = this.experience.time
     this.scene = this.experience.scene
@@ -23,7 +24,7 @@ export default class Camera {
   }
 
   setInstance() {
-    this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 0.1, 100) //prettier-ignore
+    this.instance = new PerspectiveCamera(50, this.sizes.aspectRatio, 0.1, 100)
     this.instance.position.y = 1
     this.scene.add(this.instance)
 
@@ -55,16 +56,16 @@ export default class Camera {
       .onChange(enabled => {
         this.controls.reset()
         this.controls.target.set(
-          this.sizes.gridCenter.x,
-          enabled ? this.sizes.gridCenter.y : this.instance.position.y,
-          this.sizes.gridCenter.z,
+          this.grid.center.x,
+          enabled ? this.grid.center.y : this.instance.position.y,
+          this.grid.center.z,
         )
       })
       .setValue(true)
   }
 
   resize() {
-    this.instance.aspect = this.sizes.width / this.sizes.height
+    this.instance.aspect = this.sizes.aspectRatio
     this.instance.updateProjectionMatrix()
   }
 

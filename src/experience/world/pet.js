@@ -15,7 +15,7 @@ export default class Pet {
     this.debug.add(this, 'birth')
     this.debug.add(this, 'life')
 
-    this.sizes = this.experience.sizes
+    this.grid = this.experience.grid
     this.scene = this.experience.scene
     this.time = this.experience.time
 
@@ -55,7 +55,7 @@ export default class Pet {
     this.scene.add(hatching.mesh)
 
     this.updateSeconds = () => {
-      hatching.mesh.position.x += this.time.elapsedSeconds % 2 ? this.sizes.unit : -this.sizes.unit
+      hatching.mesh.position.x += this.time.elapsedSeconds % 2 ? this.grid.unit : -this.grid.unit
     }
 
     this.dispose = () => {
@@ -100,9 +100,10 @@ export default class Pet {
       life1.mesh.visible = Math.random() - 0.5 > 0
       life2.mesh.visible = !life1.mesh.visible
 
-      const direction = Math.random() - 0.5 > 0 ? 'x' : 'z'
-      life1.mesh.position[direction] +=
-        Math.random() - 0.5 > 0 ? +this.sizes.unit : -this.sizes.unit
+      const axis = Math.random() - 0.5 > 0 ? 'x' : 'z'
+      const direction = Math.random() - 0.5 > 0 ? +this.grid.unit : -this.grid.unit
+
+      life1.mesh.position[axis] += direction
       life2.mesh.position.copy(life1.mesh.position)
     }
 

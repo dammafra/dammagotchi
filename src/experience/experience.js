@@ -5,6 +5,7 @@ import Renderer from './renderer'
 import sources from './sources'
 import Debug from './utils/debug'
 import { dispose } from './utils/dispose'
+import Grid from './utils/grid'
 import Motion from './utils/motion'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
@@ -36,6 +37,7 @@ export default class Experience {
 
     this.frame = new Frame()
     this.sizes = new Sizes()
+    this.grid = new Grid()
     this.motion = new Motion()
     this.resources = new Resources(sources)
 
