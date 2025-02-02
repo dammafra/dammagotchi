@@ -81,7 +81,7 @@ export default class Camera {
   update() {
     this.updateParallax()
 
-    if (this.controls) {
+    if (this.controls && this.controls.enabled) {
       this.controls.update()
     }
   }
