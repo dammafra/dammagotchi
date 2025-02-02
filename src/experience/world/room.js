@@ -3,10 +3,12 @@ import Experience from '../experience'
 import Debug from '../utils/debug'
 
 export default class Room {
+  static debugName = '🏠 room'
+
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui.addFolder('room').close()
+    this.debug = Debug.instance.gui.addFolder(Room.debugName).close()
 
     this.scene = this.experience.scene
     this.sizes = this.experience.sizes

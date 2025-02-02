@@ -5,9 +5,11 @@ import { dispose } from '../utils/dispose'
 import Sprite from '../utils/sprite'
 
 export default class Pet {
+  static debugName = '🥚 pet'
+
   constructor() {
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui.addFolder('pet')
+    this.debug = Debug.instance.gui.addFolder(Pet.debugName)
     this.debug.add(this, 'idle')
     this.debug.add(this, 'hatching')
     this.debug.add(this, 'birth')

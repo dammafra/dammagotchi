@@ -3,10 +3,12 @@ import Experience from '../experience'
 import Debug from '../utils/debug'
 
 export default class Environment {
+  static debugName = '🌳 environment'
+
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui.addFolder('environment').close()
+    this.debug = Debug.instance.gui.addFolder(Environment.debugName).close()
 
     this.scene = this.experience.scene
     this.resources = this.experience.resources

@@ -4,10 +4,12 @@ import Experience from './experience'
 import Debug from './utils/debug'
 
 export default class Camera {
+  static debugName = '🎥 camera'
+
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui.addFolder('camera').close()
+    this.debug = Debug.instance.gui.addFolder(Camera.debugName).close()
 
     this.sizes = this.experience.sizes
     this.motion = this.experience.motion

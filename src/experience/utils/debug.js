@@ -1,5 +1,7 @@
 import GUI from 'lil-gui'
+import Camera from '../camera'
 import Experience from '../experience'
+import Frame from '../frame'
 
 export default class Debug {
   /** @type {Debug} */
@@ -21,7 +23,7 @@ export default class Debug {
     this.gui = new GUI().show(this.active)
 
     addEventListener('beforeunload', this.saveState)
-    this.gui.add(this, 'resetState').name('Reset')
+    this.gui.add(this, 'resetState').name('↩️ reset')
 
     if (this.active) {
       // Global access
@@ -49,10 +51,12 @@ export default class Debug {
   resetState = () => {
     const defaultState = {
       folders: {
-        camera: { controllers: { controls: true } },
-        frame: { controllers: { enabled: false } },
+        [Camera.debugName]: { controllers: { controls: true } },
+        [Frame.debugName]: { controllers: { enabled: false } },
       },
     }
+
+    this.gui.reset()
     this.gui.load(defaultState)
   }
 

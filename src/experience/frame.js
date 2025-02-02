@@ -3,11 +3,13 @@ import Experience from './experience'
 import Debug from './utils/debug'
 
 export default class Frame extends EventDispatcher {
+  static debugName = '🖼️ frame'
+
   constructor() {
     super()
 
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui.addFolder('frame').close()
+    this.debug = Debug.instance.gui.addFolder(Frame.debugName).close()
 
     this.canvas = this.experience.canvas
     this.time = this.experience.time
