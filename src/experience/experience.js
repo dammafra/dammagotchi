@@ -32,10 +32,10 @@ export default class Experience {
     this.canvas = canvas
 
     // Setup
+    this.time = new Time()
+
     this.frame = new Frame()
     this.sizes = new Sizes()
-
-    this.time = new Time()
     this.motion = new Motion()
     this.resources = new Resources(sources)
 
@@ -59,11 +59,7 @@ export default class Experience {
   }
 
   update = () => {
-    // TODO: refactor ---
-    const morf = Math.sin(this.time.elapsed * 0.0005) * 60
-    document.querySelector('h1').style.fontVariationSettings = `'MORF' ${morf}`
-    // ---
-
+    this.frame.update()
     this.camera.update()
     this.renderer.update()
   }

@@ -10,7 +10,9 @@ export default class Frame extends EventDispatcher {
     this.debug = Debug.instance.gui.addFolder('frame').close()
 
     this.canvas = this.experience.canvas
+    this.time = this.experience.time
     this.element = document.querySelector('.frame path')
+    this.heading = document.querySelector('h1')
     this.enabled = true
 
     this.setup()
@@ -44,6 +46,11 @@ export default class Frame extends EventDispatcher {
   resize = () => {
     this.setup()
     this.dispatchEvent({ type: 'resize' })
+  }
+
+  update() {
+    const morf = Math.sin(this.time.elapsed * 0.0005) * 60
+    this.heading.style.fontVariationSettings = `'MORF' ${morf}`
   }
 
   destroy() {
