@@ -49,11 +49,7 @@ export default class Experience {
     this.frame.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updaSeconds)
-
-    if (Debug.instance.active) {
-      // Global access
-      window.Experience = Experience
-    }
+    this.resources.addEventListener('ready', this.ready)
   }
 
   resize = () => {
@@ -76,6 +72,11 @@ export default class Experience {
     this.world.updateSeconds()
   }
 
+  ready = () => {
+    this.world.ready()
+    Debug.instance.loadState()
+  }
+
   destroy() {
     this.frame.removeEventListener('resize', this.resize)
     this.frame.destroy()
@@ -83,6 +84,8 @@ export default class Experience {
     this.time.removeEventListener('tick', this.update)
     this.time.removeEventListener('tick-seconds', this.update)
     this.time.destroy()
+
+    this.resources.removeEventListener('ready', this.ready)
 
     this.motion.destroy()
 

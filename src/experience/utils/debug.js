@@ -1,4 +1,5 @@
 import GUI from 'lil-gui'
+import Experience from '../experience'
 
 export default class Debug {
   /** @type {Debug} */
@@ -20,8 +21,12 @@ export default class Debug {
     this.gui = new GUI().show(this.active)
 
     addEventListener('beforeunload', this.saveState)
-    addEventListener('DOMContentLoaded', this.loadState)
     this.gui.add(this, 'resetState').name('Reset')
+
+    if (this.active) {
+      // Global access
+      window.Experience = Experience
+    }
   }
 
   saveState = () => {
@@ -52,7 +57,8 @@ export default class Debug {
   }
 
   destroy() {
-    this.gui.destroy()
     Debug.instance = null
+    this.gui.destroy()
+    removeEventListener('beforeunload', this.saveState)
   }
 }
