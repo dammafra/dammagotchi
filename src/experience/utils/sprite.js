@@ -26,11 +26,7 @@ export default class Sprite {
 
   setMesh() {
     this.mesh = new Group()
-
-    const zeroCoordinate = this.grid.unit / 2
-    this.mesh.position.x = zeroCoordinate
-    this.mesh.position.y = zeroCoordinate
-    this.mesh.position.z = zeroCoordinate - this.grid.size / 4
+    this.mesh.position.copy(this.grid.center)
 
     this.values.forEach((row, y) => {
       row.forEach((pixel, x) => {
