@@ -25,7 +25,7 @@ body {
 .loading {
   @apply fixed top-0 w-full h-full z-30;
   @apply flex justify-center items-center bg-indigo-900;
-  @apply transition-all duration-500;
+  @apply transition-[height] duration-700;
 }
 
 .loading p {
