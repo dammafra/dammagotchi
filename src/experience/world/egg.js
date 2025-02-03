@@ -19,6 +19,7 @@ export default class Egg {
     this.sprites = SpritesExtractor.for('others')
     this.sprites.addEventListener('ready', this.idle)
 
+    this.debug.add(this, 'idle')
     this.debug.add(this, 'hatching')
   }
 
@@ -43,7 +44,7 @@ export default class Egg {
     }
   }
 
-  hatching() {
+  hatching = () => {
     this.dispose && this.dispose()
 
     const hatching = this.sprites.get('egg').at(0)

@@ -1,5 +1,7 @@
 import { EventDispatcher } from 'three'
+import Experience from '../experience'
 import sprites from '../sprites'
+import Debug from './debug'
 import Sprite from './sprite'
 
 export default class SpritesExtractor extends EventDispatcher {
@@ -9,7 +11,9 @@ export default class SpritesExtractor extends EventDispatcher {
 
   static for(sprite) {
     if (SpritesExtractor.instances.has(sprite)) {
-      return SpritesExtractor.instances.get(sprite)
+      const instance = SpritesExtractor.instances.get(sprite)
+      instance.dispatchEvent({ type: 'ready', instance })
+      return instance
     }
     return new SpritesExtractor(sprite)
   }
@@ -18,6 +22,9 @@ export default class SpritesExtractor extends EventDispatcher {
     super()
 
     SpritesExtractor.instances.set(sprite, this)
+
+    this.experience = Experience.instance
+    this.grid = this.experience.grid
 
     this.loaded = new Map()
     this.img = new Image()
@@ -29,10 +36,19 @@ export default class SpritesExtractor extends EventDispatcher {
       this.buildMatrix()
       this.setSprites()
 
-      this.dispatchEvent({ type: 'ready' })
+      this.dispatchEvent({ type: 'ready', instance: this })
     }
+
+    this.img.onerror = () => console.error('Cannot find sprite asset', this.img.src)
   }
 
+  getConfig(path) {
+    const config = path.split('.').reduce((acc, property) => acc && acc[property], sprites)
+    if (!config) console.error(`Cannot find sprite config '${path}'`)
+    return config
+  }
+
+  /** @returns {Sprite[]} */
   get(name) {
     if (this.loaded.has(name)) {
       return this.loaded.get(name)
@@ -144,6 +160,12 @@ export default class SpritesExtractor extends EventDispatcher {
       }
 
       subMatrix = subMatrix.filter(row => !row.every(pixel => !pixel))
+      subMatrix = this.reduce(subMatrix).map(row => this.pad(row))
+
+      if (Debug.instance.active) {
+        this.print(subMatrix)
+      }
+
       sprites.push(new Sprite(subMatrix))
       startCol += splitWidth
     }
@@ -151,7 +173,57 @@ export default class SpritesExtractor extends EventDispatcher {
     return sprites
   }
 
-  getConfig(path) {
-    return path.split('.').reduce((acc, property) => acc && acc[property], sprites)
+  reduce(matrix) {
+    const rows = matrix.length
+    const cols = matrix[0].length
+
+    let top = rows,
+      bottom = -1,
+      left = cols,
+      right = -1
+
+    // Find the bounds of the 1 values
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (matrix[i][j] === 1) {
+          top = Math.min(top, i)
+          bottom = Math.max(bottom, i)
+          left = Math.min(left, j)
+          right = Math.max(right, j)
+        }
+      }
+    }
+
+    // If no 1's are found, return an empty matrix or the original one
+    if (bottom === -1) return []
+
+    // Create the reduced matrix
+    const reducedMatrix = []
+    for (let i = top; i <= bottom; i++) {
+      reducedMatrix.push(matrix[i].slice(left, right + 1))
+    }
+
+    return reducedMatrix
+  }
+
+  pad(row) {
+    const padValue = 0
+    const targetLength = this.grid.size
+
+    if (row.length >= targetLength) return row
+
+    const totalPadding = targetLength - row.length
+    const startPadding = Math.ceil(totalPadding / 2)
+    const endPadding = totalPadding - startPadding
+
+    return Array(startPadding).fill(padValue).concat(row).concat(Array(endPadding).fill(padValue))
+  }
+
+  print(matrix) {
+    const chars = matrix.map(row => row.map(pixel => (pixel ? '⬛️' : '⬜️')).join('')).join('\n')
+    console.log(chars)
+
+    const count = matrix.reduce((count, row) => count + row.filter(Boolean).length, 0)
+    console.log(`Will be rendered using ${count} meshes`)
   }
 }

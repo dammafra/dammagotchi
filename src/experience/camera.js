@@ -49,7 +49,7 @@ export default class Camera {
 
     this.controls = new OrbitControls(this.instance, this.canvas)
     this.controls.enableDamping = true
-    this.controls.enabled = false // trigger GUI controller onChange
+    this.controls.enabled = false
 
     this.debug
       .add(this.controls, 'enabled')
@@ -62,7 +62,6 @@ export default class Camera {
           this.grid.center.z,
         )
       })
-      .setValue(true)
   }
 
   resize() {

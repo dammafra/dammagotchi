@@ -7,28 +7,14 @@ export default class Sprite {
     this.experience = Experience.instance
     this.grid = this.experience.grid
 
-    this.values = values.map(this.pad).reverse()
-    this.setMesh()
+    this.setMesh(values)
   }
 
-  pad = row => {
-    const padValue = 0
-    const targetLength = this.grid.size
-
-    if (row.length >= targetLength) return row
-
-    const totalPadding = targetLength - row.length
-    const startPadding = Math.ceil(totalPadding / 2)
-    const endPadding = totalPadding - startPadding
-
-    return Array(startPadding).fill(padValue).concat(row).concat(Array(endPadding).fill(padValue))
-  }
-
-  setMesh() {
+  setMesh(values) {
     this.mesh = new Group()
     this.mesh.position.copy(this.grid.center)
 
-    this.values.forEach((row, y) => {
+    values.toReversed().forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
         const centeredX = x - this.grid.size / 2
@@ -37,16 +23,5 @@ export default class Sprite {
     })
 
     return this.mesh
-  }
-
-  print() {
-    const chars = this.values
-      .reverse()
-      .map(row => row.map(pixel => (pixel ? '⬛️' : '⬜️')).join(''))
-      .join('\n')
-    console.log(chars)
-
-    const count = this.values.reduce((count, row) => count + row.filter(Boolean).length, 0)
-    console.log(`Will be rendered using ${count} meshes`)
   }
 }

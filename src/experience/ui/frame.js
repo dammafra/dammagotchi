@@ -25,13 +25,10 @@ export default class Frame extends EventDispatcher {
     this.observer = new ResizeObserver(this.resize)
     this.observer.observe(this.element)
 
-    this.debug
-      .add(this, 'enabled')
-      .onChange(() => {
-        this.canvas.classList.toggle('framed')
-        this.resize()
-      })
-      .setValue(!Debug.instance.active)
+    this.debug.add(this, 'enabled').onChange(() => {
+      this.canvas.classList.toggle('framed')
+      this.resize()
+    })
   }
 
   setup() {
