@@ -78,16 +78,15 @@ export default class Pet {
       idle1.mesh.visible = Math.random() - 0.5 > 0
       idle2.mesh.visible = !idle1.mesh.visible
 
-      const axis = Math.random() - 0.5 > 0 ? 'x' : 'z'
-      const direction = Math.random() - 0.5 > 0 ? +this.grid.unit : -this.grid.unit
+      this.directionX = Math.random() - 0.5 > 0 ? +this.grid.unit : -this.grid.unit
+      this.directionZ = Math.random() - 0.5 > 0 ? +this.grid.unit : -this.grid.unit
 
       const position = idle1.mesh.position.clone()
-      position[axis] += direction
+      position.x += this.directionX
+      position.z += this.directionZ
 
-      if (axis === 'x') {
-        idle1.mesh.rotation.y = direction > 0 ? Math.PI : 0
-        idle2.mesh.rotation.y = idle1.mesh.rotation.y
-      }
+      idle1.mesh.rotation.y = this.directionX > 0 ? Math.PI : 0
+      idle2.mesh.rotation.y = idle1.mesh.rotation.y
 
       if (this.camera.canView(position) && this.grid.contains(position)) {
         idle1.mesh.position.copy(position)
