@@ -1,5 +1,6 @@
 import GUI from 'lil-gui'
 import Experience from '../experience'
+import Pet from '../world/pet'
 
 export default class Debug {
   /** @type {Debug} */
@@ -17,7 +18,7 @@ export default class Debug {
 
     Debug.instance = this
 
-    this.active = true //window.location.hash === '#debug'
+    this.active = window.location.hash === '#debug'
     this.gui = new GUI().show(this.active)
 
     addEventListener('beforeunload', this.saveState)
@@ -33,6 +34,12 @@ export default class Debug {
     if (!this.active) return
 
     const state = this.gui.save()
+
+    const foldersToIgnore = [Pet.debugName]
+    for (const folder of foldersToIgnore) {
+      delete state.folders[folder]
+    }
+
     localStorage.setItem('last_gui_state', JSON.stringify(state))
   }
 

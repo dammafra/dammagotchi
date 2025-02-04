@@ -5,14 +5,6 @@ import { dispose } from '../utils/dispose'
 import SpritesExtractor from '../utils/sprites-extractor'
 import Time from '../utils/time'
 
-export const PetAge = Object.freeze({
-  BABY: 'babies',
-  CHILD: 'children',
-  TEENAGER: 'teenagers',
-  ADULT: 'adults',
-  SENIOR: 'seniors',
-})
-
 export default class Pet {
   static debugName = '👾 pet'
 
@@ -20,8 +12,6 @@ export default class Pet {
     return `pets.${this.age}.${this.model}`
   }
 
-  /** @param {PetAge} age  */
-  /** @param {string} model  */
   constructor(age, model) {
     this.experience = Experience.instance
     this.time = Time.instance
@@ -36,7 +26,7 @@ export default class Pet {
 
     SpritesExtractor.for(this.spriteName).addEventListener('ready', this.setup)
 
-    this.debug.add(this, 'age', PetAge).onChange(age => {
+    this.debug.add(this, 'age', Object.keys(sprites.pets)).onChange(age => {
       const modelOptions = Object.keys(sprites.pets[age])
       this.model = modelOptions.at(0)
       this.debug.controllers.at(1).options(modelOptions)
