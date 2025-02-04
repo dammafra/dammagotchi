@@ -29,7 +29,7 @@ body {
 }
 
 .loading p {
-  @apply uppercase text-white text-6xl;
+  @apply font-kablammo uppercase text-white text-6xl;
   @apply opacity-100 transition-opacity;
 }
 
@@ -50,9 +50,9 @@ body {
   @apply bg-radial from-white via-blue-500 to-indigo-900;
 }
 
-h1 {
-  @apply uppercase text-white text-5xl sm:text-7xl;
-  @apply fixed top-10;
+.heading {
+  @apply font-kablammo uppercase text-white text-5xl sm:text-7xl;
+  @apply fixed top-0 w-full flex justify-center;
 }
 
 .webgl {
@@ -64,7 +64,7 @@ h1 {
   @apply border-2 border-black;
 }
 
-.container {
+.device {
   @apply h-full w-full flex items-center justify-center px-10 py-40;
 }
 
@@ -72,10 +72,23 @@ h1 {
   @apply fill-yellow-500 h-full min-w-90 max-w-full z-10;
 }
 
-.frame-border {
-  @apply absolute left-0 w-full h-2;
+hr {
+  @apply fixed left-0 w-full h-2;
   @apply border-t border-b border-slate-600;
   @apply inset-shadow-[0_2px_4px_rgb(0_0_0/0.5)];
+}
+
+.buttons {
+  @apply flex justify-center gap-10 fixed bottom-0 w-full;
+}
+
+.button-slot {
+  @apply rounded-full flex items-center justify-center size-14 bg-yellow-600 inset-shadow-[0_2px_4px_rgb(0_0_0/0.5)];
+}
+
+.button-slot button {
+  @apply rounded-full size-12 bg-radial border border-yellow-700 from-yellow-500 from-50% to-yellow-900 shadow shadow-black;
+  @apply active:from-yellow-600 active:shadow-none;
 }
 
 footer {

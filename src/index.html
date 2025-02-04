@@ -24,17 +24,30 @@
 
     <meta name="theme-color" content="#312c85" />
   </head>
-  <body>
+  <!-- workaround for Safari: tells the browser to react to touch events (triggers "active" state on buttons)  -->
+  <body ontouchstart="">
     <div class="loading">
-      <p class="font-kablammo">Loading...</p>
+      <p>Loading...</p>
     </div>
 
     <main>
-      <h1 class="font-kablammo">Dammagotchi</h1>
+      <div class="heading">
+        <span>D</span>
+        <span class="leading-10">A</span>
+        <span class="leading-9">M</span>
+        <span class="leading-6">M</span>
+        <span class="leading-2">A</span>
+        <span class="leading-2">G</span>
+        <span class="leading-6">O</span>
+        <span class="leading-8">T</span>
+        <span class="leading-9">C</span>
+        <span class="leading-10">H</span>
+        <span>I</span>
+      </div>
 
       <canvas class="webgl framed"></canvas>
 
-      <div class="container">
+      <div class="device">
         <svg class="frame" viewBox="6.862 15.567 489.362 464.769">
           <defs>
             <filter id="inset-shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -58,7 +71,22 @@
             filter="url(#inset-shadow)"
           />
         </svg>
-        <hr class="frame-border" />
+
+        <hr />
+
+        <div class="buttons">
+          <div class="button-slot">
+            <button></button>
+          </div>
+
+          <div class="button-slot mt-4">
+            <button></button>
+          </div>
+
+          <div class="button-slot">
+            <button></button>
+          </div>
+        </div>
       </div>
     </main>
 

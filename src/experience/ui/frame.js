@@ -15,6 +15,8 @@ export default class Frame extends EventDispatcher {
 
     this.canvas = this.experience.canvas
     this.element = document.querySelector('.frame path')
+    this.heading = document.querySelector('.heading')
+    this.buttons = document.querySelector('.buttons')
     this.enabled = true
 
     this.setup()
@@ -29,17 +31,39 @@ export default class Frame extends EventDispatcher {
       this.canvas.classList.toggle('framed')
       this.resize()
     })
+
+    // TODO: create class
+    const buttonSound = new Audio('sounds/button.mp3')
+    this.buttons.querySelectorAll('button').forEach(button =>
+      button.addEventListener('click', () => {
+        buttonSound.load() // workaround for Safari audio delay
+        buttonSound.currentTime = 0
+        buttonSound.play()
+      }),
+    )
   }
 
   setup() {
     if (this.enabled) {
-      const { width, height } = this.element.getBoundingClientRect()
+      document.body.style.paddingBottom = '56px'
+
+      const { width, height, top, bottom } = this.element.getBoundingClientRect()
       this.canvas.style.width = `${width * 0.8}px`
       this.canvas.style.height = `${height * 0.8}px`
+
+      this.heading.style.top = `${top - 80}px`
+      this.buttons.style.top = `${bottom + 40}px`
     } else {
+      document.body.style.paddingBottom = 0
+
       this.canvas.style.width = `${window.innerWidth}px`
       this.canvas.style.height = `${window.innerHeight}px`
     }
+  }
+
+  update() {
+    const morf = Math.ceil(Math.sin(this.time.elapsed * 0.0005) * 60)
+    this.heading.style.fontVariationSettings = `'MORF' ${morf}`
   }
 
   resize = () => {

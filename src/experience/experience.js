@@ -2,7 +2,6 @@ import { Scene } from 'three'
 import Camera from './camera'
 import Renderer from './renderer'
 import sources from './sources'
-import Font from './ui/font'
 import Frame from './ui/frame'
 import Loading from './ui/loading'
 import Debug from './utils/debug'
@@ -37,7 +36,6 @@ export default class Experience {
     this.canvas = canvas
 
     // Setup
-    this.font = new Font()
     this.loading = new Loading()
     this.frame = new Frame()
 
@@ -67,7 +65,7 @@ export default class Experience {
   }
 
   update = () => {
-    this.font.update()
+    this.frame.update()
     this.camera.update()
     this.renderer.update()
   }
