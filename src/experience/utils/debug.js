@@ -19,7 +19,7 @@ export default class Debug {
     Debug.instance = this
 
     this.active = window.location.hash === '#debug'
-    this.gui = new GUI().show(this.active)
+    this.gui = new GUI({ title: 'DEBUG' }).show(this.active)
 
     addEventListener('beforeunload', this.saveState)
     this.gui.add(this, 'resetState').name('↩️ reset')
@@ -28,6 +28,10 @@ export default class Debug {
       // Global access
       window.Experience = Experience
     }
+  }
+
+  updateDisplay() {
+    this.gui.controllersRecursive().forEach(c => c.updateDisplay())
   }
 
   saveState = () => {
