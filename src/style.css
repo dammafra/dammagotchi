@@ -51,8 +51,9 @@ body {
 }
 
 .heading {
-  @apply font-kablammo uppercase text-white text-5xl sm:text-7xl;
   @apply fixed top-0 w-full flex justify-center;
+  @apply font-kablammo uppercase fill-white text-4xl transition-[width_top];
+  text-anchor: middle;
 }
 
 .webgl {

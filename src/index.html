@@ -31,19 +31,12 @@
     </div>
 
     <main>
-      <div class="heading">
-        <span>D</span>
-        <span class="leading-10">A</span>
-        <span class="leading-9">M</span>
-        <span class="leading-6">M</span>
-        <span class="leading-2">A</span>
-        <span class="leading-2">G</span>
-        <span class="leading-6">O</span>
-        <span class="leading-8">T</span>
-        <span class="leading-9">C</span>
-        <span class="leading-10">H</span>
-        <span>I</span>
-      </div>
+      <svg class="heading" viewBox="0 0 500 100">
+        <path id="curve" d="M 100,100 A 200,200 0 0,1 400,100" fill="transparent" />
+        <text>
+          <textPath href="#curve" startOffset="50%">Dammagotchi</textPath>
+        </text>
+      </svg>
 
       <canvas class="webgl framed"></canvas>
 

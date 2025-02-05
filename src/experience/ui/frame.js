@@ -45,17 +45,15 @@ export default class Frame extends EventDispatcher {
 
   setup() {
     if (this.enabled) {
-      document.body.style.paddingBottom = '56px'
-
       const { width, height, top, bottom } = this.element.getBoundingClientRect()
       this.canvas.style.width = `${width * 0.8}px`
       this.canvas.style.height = `${height * 0.8}px`
 
-      this.heading.style.top = `${top - 80}px`
-      this.buttons.style.top = `${bottom + 40}px`
-    } else {
-      document.body.style.paddingBottom = 0
+      this.heading.style.width = `${width + 400}px`
+      this.heading.style.top = `${top - 120}px`
 
+      this.buttons.style.top = `${bottom + 10}px`
+    } else {
       this.canvas.style.width = `${window.innerWidth}px`
       this.canvas.style.height = `${window.innerHeight}px`
     }
