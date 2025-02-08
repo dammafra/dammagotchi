@@ -1,6 +1,6 @@
 export default {
   stages: {
-    egg: 10,
+    egg: 12,
     babies: 100,
   },
 }

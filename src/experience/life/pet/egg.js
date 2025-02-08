@@ -5,8 +5,6 @@ import Sprites from '../../utils/sprites'
 import Time from '../../utils/time'
 
 export default class Egg {
-  static debugName = '🥚 egg'
-
   constructor() {
     this.experience = Experience.instance
     this.time = Time.instance
@@ -15,7 +13,10 @@ export default class Egg {
     this.scene = this.experience.scene
 
     this.sprites = Sprites.for('misc')
-    this.sprites.addEventListener('ready', this.idle)
+  }
+
+  ready() {
+    this.idle()
   }
 
   idle = () => {

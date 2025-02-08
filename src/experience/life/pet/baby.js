@@ -4,16 +4,20 @@ import Sprites from '../../utils/sprites'
 import Time from '../../utils/time'
 
 export default class Baby {
-  constructor(model, hatching) {
+  constructor(model, transitioning) {
     this.experience = Experience.instance
     this.time = Time.instance
 
     this.grid = this.experience.grid
     this.scene = this.experience.scene
     this.camera = this.experience.camera
+    this.transitioning = transitioning
 
     this.sprites = Sprites.for(`pets.babies.${model}`)
-    this.sprites.addEventListener('ready', hatching ? this.hatching : this.idle)
+  }
+
+  ready() {
+    this.transitioning ? this.hatching() : this.idle()
   }
 
   hatching = () => {
