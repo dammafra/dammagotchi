@@ -1,6 +1,4 @@
-import sprites from '../config/sprites'
 import Experience from '../experience'
-import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
 import SpritesExtractor from '../utils/sprites-extractor'
 import Time from '../utils/time'
@@ -15,7 +13,6 @@ export default class Pet {
   constructor(age, model) {
     this.experience = Experience.instance
     this.time = Time.instance
-    this.debug = Debug.instance.gui.addFolder(Pet.debugName)
 
     this.grid = this.experience.grid
     this.scene = this.experience.scene
@@ -25,16 +22,6 @@ export default class Pet {
     this.model = model
 
     SpritesExtractor.for(this.spriteName).addEventListener('ready', this.setup)
-
-    this.debug.add(this, 'age', Object.keys(sprites.pets)).onChange(age => {
-      const modelOptions = Object.keys(sprites.pets[age])
-      this.model = modelOptions.at(0)
-      this.debug.controllers.at(1).options(modelOptions)
-      SpritesExtractor.for(this.spriteName).addEventListener('ready', this.setup)
-    })
-    this.debug
-      .add(this, 'model', Object.keys(sprites.pets[this.age]))
-      .onChange(() => SpritesExtractor.for(this.spriteName).addEventListener('ready', this.setup))
   }
 
   setup = ({ instance }) => {

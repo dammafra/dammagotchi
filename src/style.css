@@ -57,11 +57,11 @@ body {
 }
 
 .webgl {
-  @apply fixed flex items-center justify-center z-40;
+  @apply fixed flex items-center justify-center top-0 z-40;
 }
 
 .webgl.framed {
-  @apply mt-2 rounded-2xl z-20;
+  @apply mt-2 rounded-2xl z-20 top-[unset];
   @apply border-2 border-black;
 }
 

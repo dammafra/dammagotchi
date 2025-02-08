@@ -11,7 +11,7 @@ export default class Camera {
     // Setup
     this.experience = Experience.instance
     this.time = Time.instance
-    this.debug = Debug.instance.gui.addFolder(Camera.debugName).close()
+    this.debug = Debug.instance.gui.addFolder({ title: Camera.debugName, expanded: false })
 
     this.sizes = this.experience.sizes
     this.grid = this.experience.grid
@@ -29,19 +29,18 @@ export default class Camera {
     this.instance.position.y = 1
     this.scene.add(this.instance)
 
-    this.debug.add(this.instance, 'fov').min(10).max(100).step(0.1)
-    this.debug.add(this.instance.position, 'x').min(-100).max(100).step(0.1).name('positionX')
-    this.debug.add(this.instance.position, 'y').min(-100).max(100).step(0.1).name('positionY')
-    this.debug.add(this.instance.position, 'z').min(-100).max(100).step(0.1).name('positionZ')
-    this.debug.onChange(() => this.instance.updateProjectionMatrix())
+    this.debug
+      .addBinding(this.instance, 'fov', { min: 10, max: 100, step: 0.1 })
+      .on('change', () => this.instance.updateProjectionMatrix())
+    this.debug.addBinding(this.instance, 'position')
   }
 
   setParallax() {
     this.parallaxIntensity = 0.1
     this.parallaxEase = 5
 
-    this.debug.add(this, 'parallaxIntensity').min(0).max(2).step(0.1)
-    this.debug.add(this, 'parallaxEase').min(1).max(10).step(0.5)
+    this.debug.addBinding(this, 'parallaxIntensity', { min: 0, max: 2, step: 0.1 })
+    this.debug.addBinding(this, 'parallaxEase', { min: 1, max: 10, step: 0.5 })
   }
 
   setControls() {
@@ -51,17 +50,14 @@ export default class Camera {
     this.controls.enableDamping = true
     this.controls.enabled = false
 
-    this.debug
-      .add(this.controls, 'enabled')
-      .name('controls')
-      .onChange(enabled => {
-        this.controls.reset()
-        this.controls.target.set(
-          this.grid.center.x,
-          enabled ? this.grid.center.y : this.instance.position.y,
-          this.grid.center.z,
-        )
-      })
+    this.debug.addBinding(this.controls, 'enabled', { label: 'controls' }).on('change', () => {
+      this.controls.reset()
+      this.controls.target.set(
+        this.grid.center.x,
+        this.controls.enabled ? this.grid.center.y : this.instance.position.y,
+        this.grid.center.z,
+      )
+    })
   }
 
   resize() {

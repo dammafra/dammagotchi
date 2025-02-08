@@ -11,7 +11,7 @@ export default class Frame extends EventDispatcher {
 
     this.experience = Experience.instance
     this.time = Time.instance
-    this.debug = Debug.instance.gui.addFolder(Frame.debugName).close()
+    this.debug = Debug.instance.gui.addFolder({ title: Frame.debugName, expanded: false })
 
     this.canvas = this.experience.canvas
     this.element = document.querySelector('.frame path')
@@ -27,7 +27,7 @@ export default class Frame extends EventDispatcher {
     this.observer = new ResizeObserver(this.resize)
     this.observer.observe(this.element)
 
-    this.debug.add(this, 'enabled').onChange(() => {
+    this.debug.addBinding(this, 'enabled').on('change', () => {
       this.canvas.classList.toggle('framed')
       this.resize()
     })

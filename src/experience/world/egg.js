@@ -1,5 +1,4 @@
 import Experience from '../experience'
-import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
 import SpritesExtractor from '../utils/sprites-extractor'
 import Time from '../utils/time'
@@ -10,17 +9,13 @@ export default class Egg {
   constructor() {
     this.experience = Experience.instance
     this.time = Time.instance
-    this.debug = Debug.instance.gui.addFolder(Egg.debugName)
 
     this.grid = this.experience.grid
     this.scene = this.experience.scene
     this.camera = this.experience.camera
 
-    this.sprites = SpritesExtractor.for('others')
+    this.sprites = SpritesExtractor.for('misc')
     this.sprites.addEventListener('ready', this.idle)
-
-    this.debug.add(this, 'idle')
-    this.debug.add(this, 'hatching')
   }
 
   idle = () => {

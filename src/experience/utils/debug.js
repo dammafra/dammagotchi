@@ -1,6 +1,5 @@
-import GUI from 'lil-gui'
+import { Pane } from 'tweakpane'
 import Experience from '../experience'
-import Pet from '../world/pet'
 
 export default class Debug {
   /** @type {Debug} */
@@ -19,10 +18,15 @@ export default class Debug {
     Debug.instance = this
 
     this.active = window.location.hash === '#debug'
-    this.gui = new GUI({ title: 'DEBUG' }).show(this.active)
+    this.preserveChanges = false
+
+    this.gui = new Pane({ title: 'DEBUG' })
+    this.gui.hidden = !this.active
+    this.gui.element.parentElement.style.width = '350px'
+    this.gui.element.parentElement.style.zIndex = 999
 
     addEventListener('beforeunload', this.saveState)
-    this.gui.add(this, 'resetState').name('↩️ reset')
+    this.gui.addBinding(this, 'preserveChanges')
 
     if (this.active) {
       // Global access
@@ -30,48 +34,26 @@ export default class Debug {
     }
   }
 
-  updateDisplay() {
-    this.gui.controllersRecursive().forEach(c => c.updateDisplay())
-  }
-
   saveState = () => {
-    if (!this.active) return
+    if (!this.active || !this.preserveChanges) return
 
-    const state = this.gui.save()
-
-    const foldersToIgnore = [Pet.debugName]
-    for (const folder of foldersToIgnore) {
-      delete state.folders[folder]
-    }
-
+    const state = this.gui.exportState()
     localStorage.setItem('last_gui_state', JSON.stringify(state))
   }
 
   loadState = () => {
-    if (!this.active) return
+    if (!this.active || !this.preserveChanges) return
 
     const state = localStorage.getItem('last_gui_state')
     if (state) {
-      this.gui.load(JSON.parse(state))
+      this.gui.importState(JSON.parse(state))
       localStorage.removeItem('last_gui_state')
     }
   }
 
-  resetState = () => {
-    // const defaultState = {
-    //   folders: {
-    //     [Camera.debugName]: { controllers: { controls: false } },
-    //     [Frame.debugName]: { controllers: { enabled: true } },
-    //   },
-    // }
-
-    this.gui.reset()
-    // this.gui.load(defaultState)
-  }
-
   destroy() {
     Debug.instance = null
-    this.gui.destroy()
+    this.gui.dispose()
     removeEventListener('beforeunload', this.saveState)
   }
 }
