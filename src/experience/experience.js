@@ -1,7 +1,7 @@
 import { Scene } from 'three'
 import Camera from './camera'
+import sources from './config/sources'
 import Renderer from './renderer'
-import sources from './sources'
 import Frame from './ui/frame'
 import Loading from './ui/loading'
 import Debug from './utils/debug'

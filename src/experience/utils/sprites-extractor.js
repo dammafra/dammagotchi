@@ -1,6 +1,6 @@
 import { EventDispatcher } from 'three'
+import sprites from '../config/sprites'
 import Experience from '../experience'
-import sprites from '../sprites'
 import Debug from './debug'
 import Sprite from './sprite'
 

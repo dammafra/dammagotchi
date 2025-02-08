@@ -1,5 +1,5 @@
+import sprites from '../config/sprites'
 import Experience from '../experience'
-import sprites from '../sprites'
 import Debug from '../utils/debug'
 import { dispose } from '../utils/dispose'
 import SpritesExtractor from '../utils/sprites-extractor'

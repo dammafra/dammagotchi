@@ -1,6 +1,6 @@
 import Pet from './pet'
 // import Egg from './egg'
-import sprites from '../sprites'
+import sprites from '../config/sprites'
 import Environment from './environment'
 import Room from './room'
 
