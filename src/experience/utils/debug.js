@@ -50,10 +50,4 @@ export default class Debug {
       localStorage.removeItem('last_gui_state')
     }
   }
-
-  destroy() {
-    Debug.instance = null
-    this.gui.dispose()
-    removeEventListener('beforeunload', this.saveState)
-  }
 }

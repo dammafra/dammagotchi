@@ -59,9 +59,4 @@ export default class Time extends EventDispatcher {
 
     this.animationFrame = window.requestAnimationFrame(this.tick)
   }
-
-  destroy() {
-    window.cancelAnimationFrame(this.animationFrame)
-    Time.instance = null
-  }
 }

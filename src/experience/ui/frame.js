@@ -68,9 +68,4 @@ export default class Frame extends EventDispatcher {
     this.setup()
     this.dispatchEvent({ type: 'resize' })
   }
-
-  destroy() {
-    window.removeEventListener('resize', this.resize)
-    this.observer.disconnect()
-  }
 }

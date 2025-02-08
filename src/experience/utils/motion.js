@@ -69,14 +69,4 @@ export default class Motion {
     this.x = degreesToRads(event.gamma)
     this.y = degreesToRads(event.beta)
   }
-
-  destroy() {
-    this.canvas.removeEventListener('mousemove', this.mousemove)
-    this.canvas.removeEventListener('mouseout', this.init)
-
-    this.canvas.removeEventListener('touchmove', this.touchmove)
-    this.canvas.removeEventListener('touchend', this.init)
-
-    window.removeEventListener('deviceorientation', this.deviceorientation)
-  }
 }

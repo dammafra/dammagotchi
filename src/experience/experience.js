@@ -6,7 +6,6 @@ import Renderer from './renderer'
 import Frame from './ui/frame'
 import Loading from './ui/loading'
 import Debug from './utils/debug'
-import { dispose } from './utils/dispose'
 import Grid from './utils/grid'
 import Motion from './utils/motion'
 import Resources from './utils/resources'
@@ -84,26 +83,5 @@ export default class Experience {
 
     this.loading.ready()
     Debug.instance.loadState()
-  }
-
-  destroy() {
-    this.frame.removeEventListener('resize', this.resize)
-    this.frame.destroy()
-
-    this.time.removeEventListener('tick', this.update)
-    this.time.removeEventListener('tick-seconds', this.update)
-    this.time.destroy()
-
-    this.resources.removeEventListener('ready', this.ready)
-
-    this.motion.destroy()
-
-    this.scene.traverse(dispose)
-
-    this.camera.controls.dispose()
-    this.renderer.instance.dispose()
-
-    Debug.instance.destroy()
-    Experience.instance = null
   }
 }
