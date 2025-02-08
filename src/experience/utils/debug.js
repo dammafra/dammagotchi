@@ -18,17 +18,17 @@ export default class Debug {
     Debug.instance = this
 
     this.active = window.location.hash === '#debug'
-    this.preserveChanges = false
-
-    this.gui = new Pane({ title: 'DEBUG' })
-    this.gui.hidden = !this.active
-    this.gui.element.parentElement.style.width = '350px'
-    this.gui.element.parentElement.style.zIndex = 999
-
-    addEventListener('beforeunload', this.saveState)
-    this.gui.addBinding(this, 'preserveChanges')
 
     if (this.active) {
+      this.gui = new Pane({ title: 'DEBUG' })
+      this.gui.hidden = !this.active
+      this.gui.element.parentElement.style.width = '350px'
+      this.gui.element.parentElement.style.zIndex = 999
+
+      this.preserveChanges = false
+      this.gui.addBinding(this, 'preserveChanges')
+      addEventListener('beforeunload', this.saveState)
+
       // Global access
       window.Experience = Experience
     }

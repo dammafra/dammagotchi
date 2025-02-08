@@ -32,8 +32,8 @@ export default class Time extends EventDispatcher {
     // don't call the tick method immediately to avoid having a delta equal to 0 on the first frame
     window.requestAnimationFrame(this.tick)
 
-    this.debug = Debug.instance.gui.addFolder({ title: Time.debugName })
-    this.debug.addBinding(this, 'speed', {
+    this.debug = Debug.instance.gui?.addFolder({ title: Time.debugName })
+    this.debug?.addBinding(this, 'speed', {
       options: {
         '1x': 1000,
         '2x': 500,

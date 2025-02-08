@@ -8,7 +8,7 @@ export default class Environment {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui.addFolder({ title: Environment.debugName, expanded: false })
+    this.debug = Debug.instance.gui?.addFolder({ title: Environment.debugName, expanded: false })
 
     this.scene = this.experience.scene
     this.resources = this.experience.resources
@@ -26,7 +26,7 @@ export default class Environment {
     this.scene.backgroundIntensity = 2
     this.scene.backgroundBlurriness = 0.1
 
-    this.debug.addBinding(this.scene, 'backgroundIntensity', { min: 0, max: 10, step: 0.1 })
-    this.debug.addBinding(this.scene, 'backgroundBlurriness', { min: 0, max: 1, step: 0.001 })
+    this.debug?.addBinding(this.scene, 'backgroundIntensity', { min: 0, max: 10, step: 0.1 })
+    this.debug?.addBinding(this.scene, 'backgroundBlurriness', { min: 0, max: 1, step: 0.001 })
   }
 }
