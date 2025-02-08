@@ -22,9 +22,7 @@ export default class Pixel {
   }
 
   setMaterial() {
-    Pixel.material = new MeshBasicMaterial({
-      color: 'black',
-    })
+    Pixel.material = new MeshBasicMaterial({ color: 'black' })
   }
 
   setMesh(x, y) {

@@ -1,6 +1,6 @@
 import { Group } from 'three'
 import Experience from '../experience'
-import Pixel from '../world/pixel'
+import Pixel from './pixel'
 
 export default class Sprite {
   constructor(values) {
@@ -21,7 +21,5 @@ export default class Sprite {
         this.mesh.add(new Pixel(centeredX, y).mesh)
       })
     })
-
-    return this.mesh
   }
 }

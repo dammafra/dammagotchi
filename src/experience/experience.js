@@ -1,6 +1,7 @@
 import { Scene } from 'three'
 import Camera from './camera'
-import sources from './config/sources'
+import sourcesConfig from './config/resources'
+import Life from './life/life'
 import Renderer from './renderer'
 import Frame from './ui/frame'
 import Loading from './ui/loading'
@@ -11,7 +12,6 @@ import Motion from './utils/motion'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
 import Time from './utils/time'
-import World from './world/world'
 
 export default class Experience {
   /** @type {Experience} */
@@ -43,18 +43,18 @@ export default class Experience {
     this.sizes = new Sizes()
     this.grid = new Grid()
     this.motion = new Motion()
-    this.resources = new Resources(sources)
+    this.resources = new Resources(sourcesConfig)
 
     this.scene = new Scene()
     this.camera = new Camera()
     this.renderer = new Renderer()
 
-    this.world = new World()
+    this.life = new Life()
 
     // Events
     this.frame.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
-    this.time.addEventListener('tick-seconds', this.updaSeconds)
+    this.time.addEventListener('tick-seconds', this.updateSeconds)
     this.resources.addEventListener('ready', this.ready)
   }
 
@@ -70,13 +70,13 @@ export default class Experience {
     this.renderer.update()
   }
 
-  updaSeconds = () => {
-    this.world.updateSeconds()
+  updateSeconds = () => {
+    this.life.updateSeconds()
   }
 
   ready = () => {
     this.loading.ready()
-    this.world.ready()
+    this.life.ready()
     Debug.instance.loadState()
   }
 

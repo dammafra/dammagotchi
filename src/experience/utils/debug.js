@@ -42,7 +42,7 @@ export default class Debug {
   }
 
   loadState = () => {
-    if (!this.active || !this.preserveChanges) return
+    if (!this.active) return
 
     const state = localStorage.getItem('last_gui_state')
     if (state) {

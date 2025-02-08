@@ -1,27 +1,27 @@
 import { EventDispatcher } from 'three'
-import sprites from '../config/sprites'
+import spritesConfig from '../config/sprites'
 import Experience from '../experience'
+import Sprite from '../life/sprite'
 import Debug from './debug'
-import Sprite from './sprite'
 
-export default class SpritesExtractor extends EventDispatcher {
-  /** @type {Map<string, SpritesExtractor} */
+export default class Sprites extends EventDispatcher {
+  /** @type {Map<string, Sprites} */
   static instances = new Map()
   static delimiters = ['#A616D3', '#A51CD2']
 
   static for(sprite) {
-    if (SpritesExtractor.instances.has(sprite)) {
-      const instance = SpritesExtractor.instances.get(sprite)
-      instance.dispatchEvent({ type: 'ready', instance })
+    if (Sprites.instances.has(sprite)) {
+      const instance = Sprites.instances.get(sprite)
+      instance.dispatchEvent({ type: 'ready' })
       return instance
     }
-    return new SpritesExtractor(sprite)
+    return new Sprites(sprite)
   }
 
   constructor(sprite) {
     super()
 
-    SpritesExtractor.instances.set(sprite, this)
+    Sprites.instances.set(sprite, this)
 
     this.experience = Experience.instance
     this.grid = this.experience.grid
@@ -36,14 +36,14 @@ export default class SpritesExtractor extends EventDispatcher {
       this.buildMatrix()
       this.setSprites()
 
-      this.dispatchEvent({ type: 'ready', instance: this })
+      this.dispatchEvent({ type: 'ready' })
     }
 
     this.img.onerror = () => console.error('Cannot find sprite asset', this.img.src)
   }
 
   getConfig(path) {
-    const config = path.split('.').reduce((acc, property) => acc && acc[property], sprites)
+    const config = path.split('.').reduce((acc, property) => acc && acc[property], spritesConfig)
     if (!config) console.error(`Cannot find sprite config '${path}'`)
     return config
   }
@@ -116,7 +116,7 @@ export default class SpritesExtractor extends EventDispatcher {
   }
 
   isDelimiter(pixel) {
-    return SpritesExtractor.delimiters.includes(pixel)
+    return Sprites.delimiters.includes(pixel)
   }
 
   getSpriteWidth(row, col) {

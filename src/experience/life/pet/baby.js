@@ -1,16 +1,10 @@
-import Experience from '../experience'
-import { dispose } from '../utils/dispose'
-import SpritesExtractor from '../utils/sprites-extractor'
-import Time from '../utils/time'
+import Experience from '../../experience'
+import { dispose } from '../../utils/dispose'
+import Sprites from '../../utils/sprites'
+import Time from '../../utils/time'
 
-export default class Pet {
-  static debugName = '👾 pet'
-
-  get spriteName() {
-    return `pets.${this.age}.${this.model}`
-  }
-
-  constructor(age, model) {
+export default class Baby {
+  constructor(model, hatching) {
     this.experience = Experience.instance
     this.time = Time.instance
 
@@ -18,30 +12,28 @@ export default class Pet {
     this.scene = this.experience.scene
     this.camera = this.experience.camera
 
-    this.age = age
-    this.model = model
-
-    SpritesExtractor.for(this.spriteName).addEventListener('ready', this.setup)
+    this.sprites = Sprites.for(`pets.babies.${model}`)
+    this.sprites.addEventListener('ready', hatching ? this.hatching : this.idle)
   }
 
-  setup = ({ instance }) => {
-    this.sprites = instance
-    this.idle()
+  hatching = () => {
+    this.dispose && this.dispose()
+
+    const hatching = this.sprites.get('hatching').at(0)
+    this.scene.add(hatching.mesh)
+
+    const startedAt = this.time.elapsedSeconds
+    const finishAt = startedAt + 2
+
+    this.updateSeconds = () => {
+      if (this.time.elapsedSeconds > finishAt) this.idle()
+    }
+
+    this.dispose = () => {
+      dispose(hatching.mesh)
+      this.scene.remove(hatching.mesh)
+    }
   }
-
-  // hatching = () => {
-  //   this.dispose && this.dispose()
-
-  //   const hatching = this.sprites.get('hatching').at(0)
-  //   this.scene.add(hatching.mesh)
-
-  //   this.updateSeconds = () => {}
-
-  //   this.dispose = () => {
-  //     dispose(hatching.mesh)
-  //     this.scene.remove(hatching.mesh)
-  //   }
-  // }
 
   idle = () => {
     this.dispose && this.dispose()
@@ -52,6 +44,8 @@ export default class Pet {
     this.scene.add(idle1.mesh, idle2.mesh)
 
     this.updateSeconds = () => {
+      this.age += 1
+
       idle1.mesh.visible = Math.random() - 0.5 > 0
       idle2.mesh.visible = !idle1.mesh.visible
 
