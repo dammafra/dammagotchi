@@ -12,7 +12,7 @@ export default class Sprites extends EventDispatcher {
   static for(sprite) {
     if (Sprites.instances.has(sprite)) {
       const instance = Sprites.instances.get(sprite)
-      instance.dispatchEvent({ type: 'ready' })
+      setTimeout(() => instance.dispatchEvent({ type: 'ready' }))
       return instance
     }
     return new Sprites(sprite)
@@ -159,7 +159,6 @@ export default class Sprites extends EventDispatcher {
         subMatrix.push(rowArray)
       }
 
-      subMatrix = subMatrix.filter(row => !row.every(pixel => !pixel))
       subMatrix = this.reduce(subMatrix).map(row => this.pad(row))
 
       if (Debug.instance.active) {

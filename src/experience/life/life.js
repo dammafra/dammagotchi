@@ -3,7 +3,9 @@ import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
 import Environment from './environment'
 import Baby from './pet/baby'
+import Death from './pet/death'
 import Egg from './pet/egg'
+import Pet from './pet/pet'
 import Room from './room'
 
 export default class Life extends EventDispatcher {
@@ -37,9 +39,19 @@ export default class Life extends EventDispatcher {
       case 'egg':
         this.pet = new Egg()
         break
+
       case 'babies':
-        this.model = this.model || this.getRandomModel()
+        this.model = this.getRandomModel()
         this.pet = new Baby(this.model, transitioning)
+        break
+
+      case 'death':
+        this.pet = new Death()
+        break
+
+      default:
+        this.model = this.getRandomModel()
+        this.pet = new Pet(this.stage, this.model, transitioning)
         break
     }
 
