@@ -54,8 +54,8 @@ export default class Time extends EventDispatcher {
     const currentSeconds = Math.floor(this.elapsed / this.speed)
     if (this.elapsedSeconds < currentSeconds) {
       this.dispatchEvent({ type: 'tick-seconds' })
-      this.elapsedSeconds += 1
     }
+    this.elapsedSeconds = currentSeconds
 
     this.animationFrame = window.requestAnimationFrame(this.tick)
   }
