@@ -1,4 +1,3 @@
-import { dispose } from '../../utils/dispose'
 import Pet from './pet'
 
 export default class Egg extends Pet {
@@ -12,10 +11,11 @@ export default class Egg extends Pet {
     this.dispose && this.dispose()
 
     const normal = this.sprites.get('egg').at(0)
-    const squeezed = this.sprites.get('egg').at(1)
-    squeezed.mesh.visible = false
+    normal.spawn()
 
-    this.scene.add(normal.mesh, squeezed.mesh)
+    const squeezed = this.sprites.get('egg').at(1)
+    squeezed.spawn()
+    squeezed.mesh.visible = false
 
     this.updateSeconds = () => {
       normal.mesh.visible = !normal.mesh.visible
@@ -23,9 +23,8 @@ export default class Egg extends Pet {
     }
 
     this.dispose = () => {
-      dispose(normal.mesh)
-      dispose(squeezed.mesh)
-      this.scene.remove(normal.mesh, squeezed.mesh)
+      normal.dispose()
+      squeezed.dispose()
     }
   }
 
@@ -33,16 +32,15 @@ export default class Egg extends Pet {
     this.dispose && this.dispose()
 
     const hatching = this.sprites.get('egg').at(0)
+    hatching.spawn()
     hatching.mesh.visible = true
-    this.scene.add(hatching.mesh)
 
     this.updateSeconds = () => {
       hatching.mesh.position.x += hatching.mesh.position.x < 0 ? this.grid.unit : -this.grid.unit
     }
 
     this.dispose = () => {
-      dispose(hatching.mesh)
-      this.scene.remove(hatching.mesh)
+      hatching.dispose()
     }
   }
 }

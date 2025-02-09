@@ -1,4 +1,3 @@
-import { dispose } from '../../utils/dispose'
 import Pet from './pet'
 
 export default class Death extends Pet {
@@ -13,8 +12,7 @@ export default class Death extends Pet {
     this.dispose && this.dispose()
 
     const death = this.sprites.get('death').at(0)
-
-    this.scene.add(death.mesh)
+    death.spawn()
 
     this.updateSeconds = () => {
       death.mesh.position.y +=
@@ -22,8 +20,7 @@ export default class Death extends Pet {
     }
 
     this.dispose = () => {
-      dispose(death.mesh)
-      this.scene.remove(death.mesh)
+      death.dispose()
     }
   }
 }

@@ -44,6 +44,8 @@ export default class Life extends EventDispatcher {
   }
 
   setPet(skipTransitionIn) {
+    this.previousPet = this.pet
+
     switch (this.stage) {
       case 'egg':
         this.pet = new Egg()
@@ -73,7 +75,7 @@ export default class Life extends EventDispatcher {
   }
 
   ready = skipTransitionIn => {
-    this.toDispose && this.toDispose.dispose()
+    this.previousPet && this.previousPet.dispose()
 
     if (!skipTransitionIn && this.pet.transitionIn) {
       this.pet.transitionIn()
@@ -102,8 +104,6 @@ export default class Life extends EventDispatcher {
   }
 
   next = () => {
-    this.toDispose = this.pet
-
     const stages = Object.keys(lifeConfig.stages)
     const index = stages.findIndex(s => s == this.stage)
     this.stage = stages.at(index + 1)

@@ -1,4 +1,3 @@
-import { dispose } from '../../utils/dispose'
 import Pet from './pet'
 
 export default class Baby extends Pet {
@@ -10,13 +9,12 @@ export default class Baby extends Pet {
     this.dispose && this.dispose()
 
     const hatching = this.sprites.get('hatching').at(0)
-    this.scene.add(hatching.mesh)
+    hatching.spawn()
 
-    this.updateSeconds = () => {}
+    this.updateSeconds = null
 
     this.dispose = () => {
-      dispose(hatching.mesh)
-      this.scene.remove(hatching.mesh)
+      hatching.dispose()
     }
   }
 }
