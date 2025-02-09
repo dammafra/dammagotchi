@@ -29,6 +29,8 @@ export default class Time extends EventDispatcher {
     this.elapsedSeconds = 0
     this.speed = 1000
 
+    this.callbacks = new Map()
+
     // don't call the tick method immediately to avoid having a delta equal to 0 on the first frame
     window.requestAnimationFrame(this.tick)
 
@@ -54,9 +56,24 @@ export default class Time extends EventDispatcher {
     const currentSeconds = Math.floor(this.elapsed / this.speed)
     if (this.elapsedSeconds < currentSeconds) {
       this.dispatchEvent({ type: 'tick-seconds' })
+      this.elapsedSeconds += 1
     }
-    this.elapsedSeconds = currentSeconds
+
+    this.checkCallbacks()
 
     this.animationFrame = window.requestAnimationFrame(this.tick)
+  }
+
+  runAfterSeconds(callback, duration) {
+    this.callbacks.set(this.elapsedSeconds + duration, callback)
+  }
+
+  checkCallbacks() {
+    for (const key of this.callbacks.keys()) {
+      if (this.elapsedSeconds >= key) {
+        this.callbacks.get(key)()
+        this.callbacks.delete(key)
+      }
+    }
   }
 }

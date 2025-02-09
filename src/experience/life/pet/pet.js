@@ -46,12 +46,9 @@ export default class Pet extends EventDispatcher {
     idle1.mesh.position.copy(this.grid.center)
     this.scene.add(idle1.mesh)
 
-    const startedAt = this.time.elapsedSeconds
-    const finishAt = startedAt + this.config.transitions[this.stage].in
+    this.time.runAfterSeconds(this.idle, this.config.transitions[this.stage].in)
 
-    this.updateSeconds = () => {
-      if (this.time.elapsedSeconds === finishAt) this.idle()
-    }
+    this.updateSeconds = () => {}
 
     this.dispose = () => {
       dispose(idle1.mesh)
@@ -103,14 +100,14 @@ export default class Pet extends EventDispatcher {
     idle1.mesh.position.copy(this.grid.center)
     this.scene.add(idle1.mesh)
 
-    const startedAt = this.time.elapsedSeconds
-    const finishAt = startedAt + this.config.transitions[this.stage].out
+    this.time.runAfterSeconds(
+      () => this.dispatchEvent({ type: 'transition-end' }),
+      this.config.transitions[this.stage].out,
+    )
 
     this.experience.life.environment.startFlicker()
 
-    this.updateSeconds = () => {
-      if (this.time.elapsedSeconds === finishAt) this.dispatchEvent({ type: 'transition-end' })
-    }
+    this.updateSeconds = () => {}
 
     this.dispose = () => {
       dispose(idle1.mesh)

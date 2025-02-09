@@ -12,12 +12,9 @@ export default class Baby extends Pet {
     const hatching = this.sprites.get('hatching').at(0)
     this.scene.add(hatching.mesh)
 
-    const startedAt = this.time.elapsedSeconds
-    const finishAt = startedAt + this.config.transitions.babies.in
+    this.time.runAfterSeconds(this.idle, this.config.transitions.babies.in)
 
-    this.updateSeconds = () => {
-      if (this.time.elapsedSeconds === finishAt) this.idle()
-    }
+    this.updateSeconds = () => {}
 
     this.dispose = () => {
       dispose(hatching.mesh)

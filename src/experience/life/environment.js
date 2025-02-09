@@ -1,15 +1,12 @@
 import { Color, EquirectangularReflectionMapping, SRGBColorSpace } from 'three'
 import Experience from '../experience'
 import Debug from '../utils/debug'
-import Time from '../utils/time'
 import Pixel from './pixel'
 
 export default class Environment {
   static debugName = '🏡 environment'
 
   constructor() {
-    this.time = Time.instance
-
     // Setup
     this.experience = Experience.instance
     this.debug = Debug.instance.gui?.addFolder({ title: Environment.debugName, expanded: false })

@@ -34,12 +34,13 @@ export default class Egg extends Pet {
     hatching.mesh.visible = true
     this.scene.add(hatching.mesh)
 
-    const startedAt = this.time.elapsedSeconds
-    const finishAt = startedAt + this.config.transitions.egg.out
+    this.time.runAfterSeconds(
+      () => this.dispatchEvent({ type: 'transition-end' }),
+      this.config.transitions.egg.out,
+    )
 
     this.updateSeconds = () => {
       hatching.mesh.position.x += hatching.mesh.position.x < 0 ? this.grid.unit : -this.grid.unit
-      if (this.time.elapsedSeconds === finishAt) this.dispatchEvent({ type: 'transition-end' })
     }
 
     this.dispose = () => {

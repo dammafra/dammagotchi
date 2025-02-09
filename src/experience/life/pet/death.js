@@ -6,10 +6,6 @@ export default class Death extends Pet {
     super('misc')
   }
 
-  ready() {
-    this.idle()
-  }
-
   idle = () => {
     this.dispose && this.dispose()
 
