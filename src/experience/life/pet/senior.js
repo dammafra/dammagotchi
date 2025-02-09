@@ -2,8 +2,8 @@ import { dispose } from '../../utils/dispose'
 import Pet from './pet'
 
 export default class Senior extends Pet {
-  constructor(model, transitioning) {
-    super('seniors', model, transitioning)
+  constructor(model) {
+    super('seniors', model)
   }
 
   transitionOut = () => {
@@ -13,11 +13,6 @@ export default class Senior extends Pet {
     eyesClosed.mesh.visible = true
     eyesClosed.mesh.position.copy(this.grid.center)
     this.scene.add(eyesClosed.mesh)
-
-    this.time.runAfterSeconds(
-      () => this.dispatchEvent({ type: 'transition-end' }),
-      this.config.transitions.seniors.out,
-    )
 
     this.updateSeconds = () => {
       eyesClosed.mesh.position.y += this.grid.unit * 4

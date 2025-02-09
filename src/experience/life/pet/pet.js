@@ -1,5 +1,4 @@
 import { EventDispatcher } from 'three'
-import lifeConfig from '../../config/life'
 import Experience from '../../experience'
 import { dispose } from '../../utils/dispose'
 import Sprites from '../../utils/sprites'
@@ -16,26 +15,17 @@ export default class Pet extends EventDispatcher {
     this.scene = this.experience.scene
     this.camera = this.experience.camera
 
-    this.config = lifeConfig
+    if (args.length === 2) {
+      const stage = args.at(0)
+      const model = args.at(1)
 
-    if (args.length === 3) {
-      this.stage = args.at(0)
-      this.model = args.at(1)
-      this.transitioning = args.at(2)
-
-      this.sprites = Sprites.for(`pets.${this.stage}.${this.model}`)
+      this.sprites = Sprites.for(`pets.${stage}.${model}`)
     } else {
       const sprite = args.at(0)
-      this.transitioning = args.at(1)
-
       this.sprites = Sprites.for(sprite)
     }
 
     this.sprites.addEventListener('ready', () => this.dispatchEvent({ type: 'ready' }))
-  }
-
-  ready() {
-    this.transitioning ? this.transitionIn() : this.idle()
   }
 
   transitionIn() {
@@ -46,7 +36,7 @@ export default class Pet extends EventDispatcher {
     idle1.mesh.position.copy(this.grid.center)
     this.scene.add(idle1.mesh)
 
-    this.time.runAfterSeconds(this.idle, this.config.transitions[this.stage].in)
+    this.experience.life.environment.startFlicker()
 
     this.updateSeconds = () => {}
 
@@ -100,11 +90,6 @@ export default class Pet extends EventDispatcher {
     idle1.mesh.position.copy(this.grid.center)
     this.scene.add(idle1.mesh)
 
-    this.time.runAfterSeconds(
-      () => this.dispatchEvent({ type: 'transition-end' }),
-      this.config.transitions[this.stage].out,
-    )
-
     this.experience.life.environment.startFlicker()
 
     this.updateSeconds = () => {}
@@ -112,6 +97,7 @@ export default class Pet extends EventDispatcher {
     this.dispose = () => {
       dispose(idle1.mesh)
       this.scene.remove(idle1.mesh)
+      this.experience.life.environment.stopFlicker()
     }
   }
 }

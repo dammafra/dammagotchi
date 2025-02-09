@@ -19,24 +19,15 @@ export default class Life extends EventDispatcher {
     // TODO: load saved state
     this.age = 0
     this.stageStart = 0
+    this.scheduled = new Map()
 
     this.stage = 'egg'
     this.model = undefined
 
-    this.setPet()
+    this.setPet(true)
   }
 
-  ready = () => {
-    this.toDispose && this.toDispose.dispose()
-    this.pet.ready()
-    this.transitioning = false
-
-    this.dispatchEvent({ type: 'ready' })
-  }
-
-  setPet() {
-    this.setStageEnd()
-
+  setPet(skipTransitionIn) {
     switch (this.stage) {
       case 'egg':
         this.pet = new Egg()
@@ -44,12 +35,12 @@ export default class Life extends EventDispatcher {
 
       case 'babies':
         this.model = this.getRandomModel()
-        this.pet = new Baby(this.model, this.transitioning)
+        this.pet = new Baby(this.model)
         break
 
       case 'seniors':
         this.model = this.getRandomModel()
-        this.pet = new Senior(this.model, this.transitioning)
+        this.pet = new Senior(this.model)
         break
 
       case 'death':
@@ -58,14 +49,43 @@ export default class Life extends EventDispatcher {
 
       default:
         this.model = this.getRandomModel()
-        this.pet = new Pet(this.stage, this.model, this.transitioning)
+        this.pet = new Pet(this.stage, this.model)
         break
     }
 
-    this.pet.addEventListener('ready', this.ready)
+    this.pet.addEventListener('ready', () => this.ready(skipTransitionIn))
   }
 
-  nextStage = () => {
+  ready = skipTransitionIn => {
+    this.toDispose && this.toDispose.dispose()
+
+    if (!skipTransitionIn && this.pet.transitionIn) {
+      this.pet.transitionIn()
+      this.schedule(this.start, lifeConfig.transitions[this.stage].in)
+    } else {
+      this.start()
+    }
+
+    this.dispatchEvent({ type: 'ready' })
+  }
+
+  start = () => {
+    this.pet.idle()
+
+    this.stageStart = this.age
+    this.schedule(this.transition, lifeConfig.stages[this.stage])
+  }
+
+  transition = () => {
+    if (this.pet.transitionOut) {
+      this.pet.transitionOut()
+      this.schedule(this.next, lifeConfig.transitions[this.stage].out)
+    } else {
+      this.next()
+    }
+  }
+
+  next = () => {
     this.toDispose = this.pet
 
     const stages = Object.keys(lifeConfig.stages)
@@ -78,26 +98,22 @@ export default class Life extends EventDispatcher {
   updateSeconds() {
     this.environment.updateSeconds()
 
-    if (!this.pet || !this.pet.updateSeconds) return
-
-    // TODO: avoid age progress durint transition in
-    this.age += 1
-    this.pet.updateSeconds(this.age)
-
-    if (this.transitioning) return
-    if (this.age === this.stageEnd) this.transition()
+    this.age++
+    this.checkScheduled()
+    if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
   }
 
-  transition() {
-    this.transitioning = true
-
-    this.pet.transitionOut()
-    this.pet.addEventListener('transition-end', this.nextStage)
+  schedule(callback, duration) {
+    this.scheduled.set(this.age + duration, callback)
   }
 
-  setStageEnd() {
-    this.stageStart = this.age
-    this.stageEnd = this.stageStart + lifeConfig.stages[this.stage]
+  checkScheduled() {
+    for (const key of this.scheduled.keys()) {
+      if (this.age >= key) {
+        this.scheduled.get(key)()
+        this.scheduled.delete(key)
+      }
+    }
   }
 
   getRandomModel() {

@@ -4,6 +4,8 @@ import Pet from './pet'
 export default class Egg extends Pet {
   constructor() {
     super('misc')
+
+    this.transitionIn = null
   }
 
   idle = () => {
@@ -33,11 +35,6 @@ export default class Egg extends Pet {
     const hatching = this.sprites.get('egg').at(0)
     hatching.mesh.visible = true
     this.scene.add(hatching.mesh)
-
-    this.time.runAfterSeconds(
-      () => this.dispatchEvent({ type: 'transition-end' }),
-      this.config.transitions.egg.out,
-    )
 
     this.updateSeconds = () => {
       hatching.mesh.position.x += hatching.mesh.position.x < 0 ? this.grid.unit : -this.grid.unit

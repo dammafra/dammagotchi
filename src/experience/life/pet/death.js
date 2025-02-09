@@ -4,6 +4,9 @@ import Pet from './pet'
 export default class Death extends Pet {
   constructor() {
     super('misc')
+
+    this.transitionIn = null
+    this.transitionOut = null
   }
 
   idle = () => {
