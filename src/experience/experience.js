@@ -1,8 +1,10 @@
 import { Scene } from 'three'
 import Camera from './camera'
 import sourcesConfig from './config/resources'
+import Environment from './environment'
 import Life from './life/life'
 import Renderer from './renderer'
+import Room from './room'
 import Frame from './ui/frame'
 import Loading from './ui/loading'
 import Debug from './utils/debug'
@@ -68,13 +70,17 @@ export default class Experience {
   }
 
   updateSeconds = () => {
+    if (this.environment) this.environment.updateSeconds()
     if (this.life) this.life.updateSeconds()
   }
 
   readyResources = () => {
     this.resources.removeEventListener('ready', this.readyResources)
 
+    this.environment = new Environment()
+    this.room = new Room()
     this.life = new Life()
+
     this.life.addEventListener('ready', this.readyLife)
   }
 

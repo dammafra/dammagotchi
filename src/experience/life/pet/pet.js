@@ -10,6 +10,7 @@ export default class Pet extends EventDispatcher {
 
     this.experience = Experience.instance
     this.time = Time.instance
+    this.environment = this.experience.environment
 
     this.grid = this.experience.grid
     this.scene = this.experience.scene
@@ -36,14 +37,14 @@ export default class Pet extends EventDispatcher {
     idle1.mesh.position.copy(this.grid.center)
     this.scene.add(idle1.mesh)
 
-    this.experience.life.environment.startFlicker()
+    this.environment.startFlicker()
 
     this.updateSeconds = () => {}
 
     this.dispose = () => {
       dispose(idle1.mesh)
       this.scene.remove(idle1.mesh)
-      this.experience.life.environment.stopFlicker()
+      this.environment.stopFlicker()
     }
   }
 
@@ -90,14 +91,14 @@ export default class Pet extends EventDispatcher {
     idle1.mesh.position.copy(this.grid.center)
     this.scene.add(idle1.mesh)
 
-    this.experience.life.environment.startFlicker()
+    this.environment.startFlicker()
 
     this.updateSeconds = () => {}
 
     this.dispose = () => {
       dispose(idle1.mesh)
       this.scene.remove(idle1.mesh)
-      this.experience.life.environment.stopFlicker()
+      this.environment.stopFlicker()
     }
   }
 }

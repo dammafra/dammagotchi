@@ -1,20 +1,24 @@
 import { EventDispatcher } from 'three'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
-import Environment from './environment'
+import Debug from '../utils/debug'
 import Baby from './pet/baby'
 import Death from './pet/death'
 import Egg from './pet/egg'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
-import Room from './room'
 
 export default class Life extends EventDispatcher {
+  static debugName = '📊 life'
+
+  get scheduledFormatted() {
+    return Array.from(this.scheduled)
+      .map(([key, value]) => `${key}: ${value.name}`)
+      .join('\n')
+  }
+
   constructor() {
     super()
-
-    this.environment = new Environment()
-    this.room = new Room()
 
     // TODO: load saved state
     this.age = 0
@@ -22,9 +26,21 @@ export default class Life extends EventDispatcher {
     this.scheduled = new Map()
 
     this.stage = 'egg'
-    this.model = undefined
+    this.model = ''
 
     this.setPet(true)
+
+    this.debug = Debug.instance.gui?.addFolder({ title: Life.debugName })
+    this.debug?.addBinding(this, 'stage', { readonly: true })
+    this.debug?.addBinding(this, 'stageStart', { readonly: true })
+    this.debug?.addBinding(this, 'model', { readonly: true })
+    this.debug?.addBinding(this, 'age', { readonly: true })
+    this.debug?.addBinding(this, 'scheduledFormatted', {
+      label: 'schedule',
+      readonly: true,
+      multiline: true,
+      rows: 5,
+    })
   }
 
   setPet(skipTransitionIn) {
@@ -61,7 +77,7 @@ export default class Life extends EventDispatcher {
 
     if (!skipTransitionIn && this.pet.transitionIn) {
       this.pet.transitionIn()
-      this.schedule(this.start, lifeConfig.transitions[this.stage].in)
+      this.schedule(this.start, lifeConfig.transitions[this.stage].in, `starting ${this.stage}`)
     } else {
       this.start()
     }
@@ -73,13 +89,13 @@ export default class Life extends EventDispatcher {
     this.pet.idle()
 
     this.stageStart = this.age
-    this.schedule(this.transition, lifeConfig.stages[this.stage])
+    this.schedule(this.transition, lifeConfig.stages[this.stage], `transition`)
   }
 
   transition = () => {
     if (this.pet.transitionOut) {
       this.pet.transitionOut()
-      this.schedule(this.next, lifeConfig.transitions[this.stage].out)
+      this.schedule(this.next, lifeConfig.transitions[this.stage].out, `next`)
     } else {
       this.next()
     }
@@ -96,15 +112,13 @@ export default class Life extends EventDispatcher {
   }
 
   updateSeconds() {
-    this.environment.updateSeconds()
-
     this.age++
     this.checkScheduled()
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
   }
 
-  schedule(callback, duration) {
-    this.scheduled.set(this.age + duration, callback)
+  schedule(action, duration) {
+    this.scheduled.set(this.age + duration, action)
   }
 
   checkScheduled() {

@@ -1,5 +1,5 @@
 import { GridHelper } from 'three'
-import Experience from '../experience'
+import Experience from './experience'
 
 export default class Room {
   constructor() {
