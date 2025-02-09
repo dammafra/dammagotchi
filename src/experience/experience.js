@@ -67,10 +67,10 @@ export default class Experience {
     this.frame.update()
     this.camera.update()
     this.renderer.update()
+    if (this.environment) this.environment.update()
   }
 
   updateSeconds = () => {
-    if (this.environment) this.environment.updateSeconds()
     if (this.life) this.life.updateSeconds()
   }
 
