@@ -6,6 +6,7 @@ import Baby from './pet/baby'
 import Death from './pet/death'
 import Egg from './pet/egg'
 import Pet from './pet/pet'
+import Senior from './pet/senior'
 import Room from './room'
 
 export default class Life extends EventDispatcher {
@@ -28,11 +29,12 @@ export default class Life extends EventDispatcher {
   ready = () => {
     this.toDispose && this.toDispose.dispose()
     this.pet.ready()
+    this.transitioning = false
 
     this.dispatchEvent({ type: 'ready' })
   }
 
-  setPet(transitioning) {
+  setPet() {
     this.setStageEnd()
 
     switch (this.stage) {
@@ -42,7 +44,12 @@ export default class Life extends EventDispatcher {
 
       case 'babies':
         this.model = this.getRandomModel()
-        this.pet = new Baby(this.model, transitioning)
+        this.pet = new Baby(this.model, this.transitioning)
+        break
+
+      case 'seniors':
+        this.model = this.getRandomModel()
+        this.pet = new Senior(this.model, this.transitioning)
         break
 
       case 'death':
@@ -51,30 +58,41 @@ export default class Life extends EventDispatcher {
 
       default:
         this.model = this.getRandomModel()
-        this.pet = new Pet(this.stage, this.model, transitioning)
+        this.pet = new Pet(this.stage, this.model, this.transitioning)
         break
     }
 
-    this.pet.sprites.addEventListener('ready', this.ready)
+    this.pet.addEventListener('ready', this.ready)
   }
 
-  nextStage() {
+  nextStage = () => {
     this.toDispose = this.pet
 
     const stages = Object.keys(lifeConfig.stages)
     const index = stages.findIndex(s => s == this.stage)
     this.stage = stages.at(index + 1)
 
-    this.setPet(true)
+    this.setPet()
   }
 
   updateSeconds() {
+    this.environment.updateSeconds()
+
     if (!this.pet || !this.pet.updateSeconds) return
 
+    // TODO: avoid age progress durint transition in
     this.age += 1
     this.pet.updateSeconds(this.age)
 
-    if (this.age > this.stageEnd) this.nextStage()
+    if (this.transitioning) return
+    if (this.age === this.stageEnd) this.transition()
+  }
+
+  transition() {
+    this.transitioning = true
+
+    this.pet.transitionOut()
+    this.pet.addEventListener('transition-end', this.nextStage)
   }
 
   setStageEnd() {

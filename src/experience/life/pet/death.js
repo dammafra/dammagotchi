@@ -1,15 +1,9 @@
-import Experience from '../../experience'
 import { dispose } from '../../utils/dispose'
-import Sprites from '../../utils/sprites'
+import Pet from './pet'
 
-export default class Death {
+export default class Death extends Pet {
   constructor() {
-    this.experience = Experience.instance
-
-    this.grid = this.experience.grid
-    this.scene = this.experience.scene
-
-    this.sprites = Sprites.for('misc')
+    super('misc')
   }
 
   ready() {
@@ -24,7 +18,8 @@ export default class Death {
     this.scene.add(death.mesh)
 
     this.updateSeconds = () => {
-      death.mesh.position.y += death.mesh.position.y < 0 ? this.grid.unit : -this.grid.unit
+      death.mesh.position.y +=
+        death.mesh.position.y > this.grid.unit ? -this.grid.unit : +this.grid.unit
     }
 
     this.dispose = () => {

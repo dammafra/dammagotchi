@@ -1,22 +1,9 @@
-import lifeConfig from '../../config/life'
-import Experience from '../../experience'
 import { dispose } from '../../utils/dispose'
-import Sprites from '../../utils/sprites'
-import Time from '../../utils/time'
+import Pet from './pet'
 
-export default class Egg {
+export default class Egg extends Pet {
   constructor() {
-    this.experience = Experience.instance
-    this.time = Time.instance
-
-    this.grid = this.experience.grid
-    this.scene = this.experience.scene
-
-    this.sprites = Sprites.for('misc')
-  }
-
-  ready() {
-    this.idle()
+    super('misc')
   }
 
   idle = () => {
@@ -28,14 +15,9 @@ export default class Egg {
 
     this.scene.add(normal.mesh, squeezed.mesh)
 
-    const startedAt = this.time.elapsedSeconds
-    const finishAt = startedAt + lifeConfig.stages.egg / 3
-
     this.updateSeconds = () => {
       normal.mesh.visible = !normal.mesh.visible
       squeezed.mesh.visible = !squeezed.mesh.visible
-
-      if (this.time.elapsedSeconds > finishAt) this.hatching()
     }
 
     this.dispose = () => {
@@ -45,15 +27,19 @@ export default class Egg {
     }
   }
 
-  hatching = () => {
+  transitionOut = () => {
     this.dispose && this.dispose()
 
     const hatching = this.sprites.get('egg').at(0)
     hatching.mesh.visible = true
     this.scene.add(hatching.mesh)
 
+    const startedAt = this.time.elapsedSeconds
+    const finishAt = startedAt + this.config.transitions.egg.out
+
     this.updateSeconds = () => {
       hatching.mesh.position.x += hatching.mesh.position.x < 0 ? this.grid.unit : -this.grid.unit
+      if (this.time.elapsedSeconds === finishAt) this.dispatchEvent({ type: 'transition-end' })
     }
 
     this.dispose = () => {

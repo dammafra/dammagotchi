@@ -12,7 +12,7 @@ const adultConfig2 = petConfig
 const adultConfig3 = petConfig
 const adultConfig4 = petConfig
 
-const seniorConfig = petConfig
+const seniorConfig = petConfig.concat([{ name: 'eyes-closed', index: 18 }])
 
 export default {
   pets: {
