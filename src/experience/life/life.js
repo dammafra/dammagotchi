@@ -13,7 +13,7 @@ export default class Life extends EventDispatcher {
 
   get scheduledFormatted() {
     return Array.from(this.scheduled)
-      .map(([key, value]) => `${key}: ${value.name}`)
+      .map(([key, value]) => `${key}: ${value.label}`)
       .join('\n')
   }
 
@@ -48,6 +48,7 @@ export default class Life extends EventDispatcher {
 
     switch (this.stage) {
       case 'egg':
+        this.model = ''
         this.pet = new Egg()
         break
 
@@ -62,6 +63,7 @@ export default class Life extends EventDispatcher {
         break
 
       case 'death':
+        this.model = ''
         this.pet = new Death()
         break
 
@@ -79,7 +81,8 @@ export default class Life extends EventDispatcher {
 
     if (!skipTransitionIn && this.pet.transitionIn) {
       this.pet.transitionIn()
-      this.schedule(this.start, lifeConfig.transitions[this.stage].in, `starting ${this.stage}`)
+      const transitionDuration = lifeConfig.transitions[this.stage].in
+      this.schedule(this.start, transitionDuration, `start ${this.stage}`)
     } else {
       this.start()
     }
@@ -91,13 +94,15 @@ export default class Life extends EventDispatcher {
     this.pet.idle()
 
     this.stageStart = this.age
-    this.schedule(this.transition, lifeConfig.stages[this.stage], `transition`)
+    const stageDuration = lifeConfig.stages[this.stage]
+    if (stageDuration > 0) this.schedule(this.transition, stageDuration, `transition`)
   }
 
   transition = () => {
     if (this.pet.transitionOut) {
       this.pet.transitionOut()
-      this.schedule(this.next, lifeConfig.transitions[this.stage].out, `next`)
+      const transitionDuration = lifeConfig.transitions[this.stage].out
+      this.schedule(this.next, transitionDuration, `next`)
     } else {
       this.next()
     }
@@ -117,14 +122,14 @@ export default class Life extends EventDispatcher {
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
   }
 
-  schedule(action, duration) {
-    this.scheduled.set(this.age + duration, action)
+  schedule(action, duration, label) {
+    this.scheduled.set(this.age + duration, { label, action })
   }
 
   checkScheduled() {
     for (const key of this.scheduled.keys()) {
       if (this.age >= key) {
-        this.scheduled.get(key)()
+        this.scheduled.get(key).action()
         this.scheduled.delete(key)
       }
     }

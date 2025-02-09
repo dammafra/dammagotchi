@@ -14,6 +14,6 @@ export default {
     teenagers: 10,
     adults: 10,
     seniors: 10,
-    death: Number.POSITIVE_INFINITY,
+    death: -1,
   },
 }
