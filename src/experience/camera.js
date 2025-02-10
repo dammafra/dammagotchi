@@ -14,6 +14,7 @@ export default class Camera {
     this.debug = Debug.instance.gui?.addFolder({ title: Camera.debugName, expanded: false })
 
     this.sizes = this.experience.sizes
+    this.frame = this.experience.frame
     this.grid = this.experience.grid
     this.motion = this.experience.motion
     this.scene = this.experience.scene
@@ -61,8 +62,12 @@ export default class Camera {
   }
 
   resize() {
+    this.instance.position.z = this.frame.enabled ? 0 : 2
+
     this.instance.aspect = this.sizes.aspectRatio
     this.instance.updateProjectionMatrix()
+
+    this.debug?.refresh()
   }
 
   updateParallax() {
