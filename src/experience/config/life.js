@@ -5,7 +5,7 @@ export default {
     children: { in: 4, out: 4 },
     teenagers: { in: 4, out: 4 },
     adults: { in: 4, out: 4 },
-    seniors: { in: 4, out: 12 },
+    seniors: { in: 4, out: 14 },
   },
   stages: {
     egg: 10,
