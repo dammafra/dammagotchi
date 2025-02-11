@@ -68,7 +68,8 @@ export default class Sprites extends EventDispatcher {
     const ctx = canvas.getContext('2d')
     ctx.drawImage(this.img, 0, 0)
 
-    this.pixels = ctx.getImageData(0, 0, this.img.width, this.img.height).data
+    // prettier-ignore
+    this.pixels = ctx.getImageData(0, 0, this.img.width, this.img.height, { colorSpace: 'srgb' }).data
   }
 
   buildMatrix() {
