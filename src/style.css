@@ -14,7 +14,7 @@
 
 html,
 body {
-  @apply overflow-hidden overscroll-none min-h-[600px] touch-none;
+  @apply overflow-hidden overscroll-none touch-none;
 }
 
 body {
@@ -23,7 +23,7 @@ body {
 }
 
 .loading {
-  @apply fixed top-0 w-full h-full z-30;
+  @apply fixed top-0 w-full h-full z-10;
   @apply flex justify-center items-center bg-indigo-900;
   @apply transition-[height] duration-700;
 }
@@ -31,10 +31,6 @@ body {
 .loading p {
   @apply font-kablammo uppercase text-white text-6xl;
   @apply opacity-100 transition-opacity;
-}
-
-.loading + main {
-  @apply hidden;
 }
 
 .loading.end {
@@ -45,54 +41,11 @@ body {
   @apply opacity-0;
 }
 
-.loading.end + main {
-  @apply w-full h-full flex items-center justify-center;
-  @apply bg-radial from-white via-blue-500 to-indigo-900;
-}
-
-.heading {
-  @apply fixed top-0 w-full flex justify-center;
-  @apply font-kablammo uppercase fill-white text-4xl transition-[width_top];
-  text-anchor: middle;
-}
-
 .webgl {
-  @apply fixed flex items-center justify-center top-0 z-40;
-}
-
-.webgl.framed {
-  @apply mt-2 rounded-2xl z-20 top-[unset];
-  @apply border-2 border-black;
-}
-
-.device {
-  @apply h-full w-full flex items-center justify-center px-10 py-40;
-}
-
-.frame {
-  @apply fill-yellow-500 h-full min-w-90 max-w-full z-10;
-}
-
-hr {
-  @apply fixed left-0 w-full h-2;
-  @apply border-t border-b border-slate-600;
-  @apply inset-shadow-[0_2px_4px_rgb(0_0_0/0.5)];
-}
-
-.buttons {
-  @apply flex justify-center gap-10 fixed bottom-0 w-full;
-}
-
-.button-slot {
-  @apply rounded-full flex items-center justify-center size-14 bg-yellow-600 inset-shadow-[0_2px_4px_rgb(0_0_0/0.5)];
-}
-
-.button-slot button {
-  @apply rounded-full size-12 bg-radial border border-yellow-700 from-yellow-500 from-50% to-yellow-900 shadow shadow-black;
-  @apply active:from-yellow-600 active:shadow-none;
+  @apply fixed top-0 left-0 outline-none;
 }
 
 footer {
-  @apply fixed bottom-0 w-full p-5 z-30;
+  @apply fixed bottom-0 w-full p-5 z-10;
   @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
 }

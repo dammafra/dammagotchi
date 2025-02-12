@@ -1,24 +1,25 @@
-import Experience from '../experience'
+import { EventDispatcher } from 'three'
 
-export default class Sizes {
+export default class Sizes extends EventDispatcher {
   constructor() {
-    this.experience = Experience.instance
-    this.canvas = this.experience.canvas
+    super()
 
     // Setup
     this.setup()
+
+    // Resize event
+    window.addEventListener('resize', this.resize)
   }
 
   setup() {
-    const { width, height } = this.canvas.getBoundingClientRect()
-
-    this.width = width
-    this.height = height
-    this.aspectRatio = width / height
+    this.width = window.innerWidth
+    this.height = window.innerHeight
+    this.aspectRatio = this.width / this.height
     this.pixelRatio = Math.min(window.devicePixelRatio, 2)
   }
 
-  resize() {
+  resize = () => {
     this.setup()
+    this.dispatchEvent({ type: 'resize' })
   }
 }

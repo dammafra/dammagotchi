@@ -5,7 +5,6 @@ import Environment from './environment'
 import Life from './life/life'
 import Renderer from './renderer'
 import Room from './room'
-import Frame from './ui/frame'
 import Loading from './ui/loading'
 import Debug from './utils/debug'
 import Grid from './utils/grid'
@@ -38,7 +37,6 @@ export default class Experience {
 
     // Setup
     this.loading = new Loading()
-    this.frame = new Frame()
 
     this.time = Time.instance
     this.sizes = new Sizes()
@@ -51,20 +49,18 @@ export default class Experience {
     this.renderer = new Renderer()
 
     // Events
-    this.frame.addEventListener('resize', this.resize)
+    this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updateSeconds)
     this.resources.addEventListener('ready', this.readyResources)
   }
 
   resize = () => {
-    this.sizes.resize()
     this.camera.resize()
     this.renderer.resize()
   }
 
   update = () => {
-    this.frame.update()
     this.camera.update()
     this.renderer.update()
     if (this.environment) this.environment.update()
