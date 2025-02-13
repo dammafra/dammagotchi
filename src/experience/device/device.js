@@ -3,6 +3,7 @@ import { radToDeg } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
 import Screen from '../screen/screen'
 import Debug from '../utils/debug'
+import ButtonSlot from './button-slot'
 import Environment from './environment'
 import Frame from './frame'
 import Notch from './notch'
@@ -42,7 +43,12 @@ export default class Device {
       rotation: { x: Math.PI * 0.5, y: 0, z: 0 },
       cut: 1.1,
     },
-    buttonSlots: [{ radius: 0.1 }],
+    buttonSlots: [
+      { radius: 0.1, position: { x: -0.3, y: -0.6, z: -0.3 } },
+      { radius: 0.1, position: { x: 0, y: -0.7, z: -0.3 } },
+      { radius: 0.1, position: { x: 0.3, y: -0.6, z: -0.3 } },
+      { radius: 0.05, position: { x: -0.3, y: -0.6, z: 0.3 } },
+    ],
   }
 
   constructor() {
@@ -59,10 +65,17 @@ export default class Device {
     this.shell = new Shell(this.config.shell)
     this.frames = this.config.frames.map(config => new Frame(config))
     this.notch = new Notch(this.config.notch)
+    this.buttonSlots = this.config.buttonSlots.map(config => new ButtonSlot(config))
 
-    this.mesh = Device.evaluator.evaluate(this.shell.mesh, this.frames.at(0).mesh, SUBTRACTION)
-    this.mesh = Device.evaluator.evaluate(this.mesh, this.frames.at(1).mesh, SUBTRACTION)
+    this.mesh = this.frames.reduce(
+      (result, frame) => Device.evaluator.evaluate(result, frame.mesh, SUBTRACTION),
+      this.shell.mesh,
+    )
     this.mesh = Device.evaluator.evaluate(this.mesh, this.notch.mesh, SUBTRACTION)
+    this.mesh = this.buttonSlots.reduce(
+      (result, buttonSlot) => Device.evaluator.evaluate(result, buttonSlot.mesh, SUBTRACTION),
+      this.mesh,
+    )
 
     this.scene.add(this.mesh)
   }
@@ -85,7 +98,7 @@ export default class Device {
   }
 
   setDebug() {
-    this.debug = Debug.instance.gui?.addFolder({ title: Device.debugName })
+    this.debug = Debug.instance.gui?.addFolder({ title: Device.debugName, expanded: false })
     if (!this.debug) return
 
     const shellFolder = this.debug.addFolder({ title: 'shell', expanded: false })
@@ -112,6 +125,15 @@ export default class Device {
     notchFolder.addBinding(this.config.notch, 'position')
     notchFolder.addBinding(this.config.notch, 'rotation', { step: 0.1, format: radToDeg })
     notchFolder.addBinding(this.config.notch, 'cut', { min: 0, max: 5, step: 0.001 })
+
+    const buttonSlotsFolder = this.debug.addFolder({ title: 'button slots', expanded: false })
+    const buttonSlotsTabs = buttonSlotsFolder.addTab({
+      pages: this.config.buttonSlots.map((_, i) => ({ title: `button ${i + 1}` })),
+    })
+    buttonSlotsTabs.pages.forEach((p, i) => {
+      p.addBinding(this.config.buttonSlots[i], 'radius', { min: 0, max: 10, step: 0.01 })
+      p.addBinding(this.config.buttonSlots[i], 'position')
+    })
 
     this.debug.on('change', () => {
       this.dispose()

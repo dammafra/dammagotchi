@@ -34,7 +34,7 @@ export default class Screen {
   setMesh() {
     this.mesh = new Mesh(this.geometry, this.material)
 
-    this.mesh.scale.setScalar(0.7)
+    this.mesh.scale.setScalar(0.71)
     this.mesh.position.z = -0.251
     this.mesh.rotation.y = Math.PI
 
