@@ -70,7 +70,7 @@ export default class Camera {
   setControls() {
     this.controls = new CameraControls(this.instance, this.canvas)
     this.controls.smoothTime = 2
-    this.controls.minDistance = 2
+    this.controls.minDistance = 1
     this.controls.maxDistance = 10
   }
 
@@ -95,6 +95,7 @@ export default class Camera {
   }
 
   async animation() {
-    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, true)
+    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !Debug.instance.active)
+    Debug.instance.active && this.controls.dolly(10)
   }
 }

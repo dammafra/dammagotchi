@@ -1,4 +1,5 @@
 import {
+  AxesHelper,
   Mesh,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
@@ -29,6 +30,14 @@ export default class Screen {
     this.setMaterial()
     this.setMesh()
     this.setGlass()
+
+    if (this.debug) {
+      const helper = new AxesHelper(3)
+      helper.position.z = this.grid.center.z
+      this.scene.add(helper)
+
+      this.debug.addBinding(helper, 'visible', { label: 'helper' })
+    }
   }
 
   setGeometry() {
@@ -58,12 +67,12 @@ export default class Screen {
     this.glassMaterial = new MeshPhysicalMaterial({
       roughness: 0.15,
       transmission: 0.9,
-      ior: 1.5,
       thickness: 0.01,
-      reflectivity: 1,
+      ior: 1.5,
     })
 
     this.glass = new Mesh(this.geometry, this.glassMaterial)
+    this.glass.visible = !Debug.instance.active
     this.glass.scale.copy(this.mesh.scale)
     this.glass.position.copy(this.mesh.position)
     this.glass.rotation.copy(this.mesh.rotation)
@@ -73,14 +82,15 @@ export default class Screen {
     this.debug?.addBinding(this.glass, 'visible', { label: 'glass' })
     this.debug?.addBinding(this.glassMaterial, 'roughness', { min: 0, max: 1, step: 0.001 })
     this.debug?.addBinding(this.glassMaterial, 'transmission', { min: 0, max: 1, step: 0.001 })
-    this.debug?.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
     this.debug?.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
-    this.debug?.addBinding(this.glassMaterial, 'reflectivity', { min: 0, max: 2, step: 0.01 })
+    this.debug?.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
   }
 
   ready() {
     this.environment = new ScreenEnvironment()
     // this.room = new Room()
+
+    this.debug?.addBinding(this.environment, 'flicker')
   }
 
   update() {

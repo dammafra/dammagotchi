@@ -28,7 +28,7 @@ export default class Debug {
       this.gui.element.parentElement.style.zIndex = 999
 
       this.preserveChanges = false
-      this.gui.addBinding(this, 'preserveChanges')
+      this.gui.addBinding(this, 'preserveChanges', { label: 'preserve changes' })
       addEventListener('beforeunload', this.saveState)
 
       // Global access

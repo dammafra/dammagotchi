@@ -14,7 +14,7 @@ export default class Death extends Pet {
     const death = this.sprites.get('death').at(0)
     death.spawn()
 
-    const startPositionY = 0.35
+    const startPositionY = 0.8
     death.mesh.position.y = startPositionY
 
     this.updateSeconds = () => {

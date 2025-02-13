@@ -17,10 +17,12 @@ export default class Sprite {
     this.mesh = new Group()
     this.mesh.position.copy(this.grid.center)
 
+    const width = matrix.at(0).length
+
     matrix.toReversed().forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
-        const centeredX = x - this.grid.size / 2
+        const centeredX = x - width / 2
         this.mesh.add(new Pixel(centeredX, y).mesh)
       })
     })

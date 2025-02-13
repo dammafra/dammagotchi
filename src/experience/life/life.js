@@ -23,6 +23,7 @@ export default class Life extends EventDispatcher {
     // TODO: load saved state
     this.age = 0
     this.stageStart = 0
+    this.pause = false
     this.scheduled = new Map()
 
     this.stage = 'egg'
@@ -31,6 +32,7 @@ export default class Life extends EventDispatcher {
     this.setPet(true)
 
     this.debug = Debug.instance.gui?.addFolder({ title: Life.debugName })
+    this.debug?.addBinding(this, 'pause')
     this.debug?.addBinding(this, 'stage', { readonly: true })
     this.debug?.addBinding(this, 'stageStart', { readonly: true })
     this.debug?.addBinding(this, 'model', { readonly: true })
@@ -117,7 +119,7 @@ export default class Life extends EventDispatcher {
   }
 
   updateSeconds() {
-    this.age++
+    if (!this.pause) this.age++
     this.checkScheduled()
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
   }

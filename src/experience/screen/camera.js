@@ -8,8 +8,8 @@ export default class ScreenCamera {
 
   setInstance() {
     this.instance = new PerspectiveCamera(50, 1, 0.1, 100)
-    this.instance.position.y = 0.95
-    this.instance.position.z = -2.5
+    this.instance.position.y = 1.4
+    this.instance.position.z = -1
   }
 
   canView(position) {
