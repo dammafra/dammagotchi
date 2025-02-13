@@ -9,6 +9,7 @@ import Environment from './environment'
 import Frame from './frame'
 import Notch from './notch'
 import Shell from './shell'
+import Tab from './tab'
 
 export default class Device {
   static debugName = '🥚 device'
@@ -77,6 +78,14 @@ export default class Device {
         color: 'gray',
       },
     ],
+    tab: {
+      width: 1,
+      height: 0.3,
+      position: { x: -0.5, y: -0.4, z: 0 },
+      rotation: { x: Math.PI, y: 0, z: Math.PI * 0.9 },
+      color: 'red',
+      visible: false,
+    },
   }
 
   constructor() {
@@ -105,8 +114,9 @@ export default class Device {
     )
 
     this.buttons = this.config.buttons.map(config => new Button(config))
+    this.tab = new Tab(this.config.tab)
 
-    this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh))
+    this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
   }
 
   setEnvironment() {
@@ -128,8 +138,9 @@ export default class Device {
     this.frames.forEach(f => f.dispose())
     this.notch.dispose()
     this.buttonSlots.forEach(bs => bs.dispose())
+    this.tab.dispose()
 
-    this.scene.remove(this.mesh, ...this.buttons.map(b => b.mesh))
+    this.scene.remove(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
   }
 
   setDebug() {
@@ -180,6 +191,13 @@ export default class Device {
       p.addBinding(this.config.buttons[i], 'position', { min: -2, max: 2, step: 0.01 })
       p.addBinding(this.config.buttons[i], 'rotation', { step: 0.1, format: radToDeg })
     })
+
+    const tabFolder = this.debug.addFolder({ title: 'tab', expanded: false })
+    tabFolder.addBinding(this.config.tab, 'width', { min: 0, max: 2, step: 0.01 })
+    tabFolder.addBinding(this.config.tab, 'height', { min: 0, max: 2, step: 0.01 })
+    tabFolder.addBinding(this.config.tab, 'position', { min: -2, max: 2, step: 0.01 })
+    tabFolder.addBinding(this.config.tab, 'rotation', { step: 0.1, format: radToDeg })
+    tabFolder.addBinding(this.config.tab, 'visible')
 
     this.debug.on('change', () => {
       this.dispose()

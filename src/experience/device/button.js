@@ -33,5 +33,6 @@ export default class Button {
 
   dispose() {
     this.geometry.dispose()
+    this.material?.dispose()
   }
 }
