@@ -13,7 +13,7 @@ export default class Screen {
     this.debug = Debug.instance.gui?.addFolder({ title: Screen.debugName, expanded: false })
     this.renderer = this.experience.renderer
 
-    this.renderTarget = new WebGLRenderTarget(512, 512)
+    this.renderTarget = new WebGLRenderTarget(256, 256)
     this.scene = new Scene()
     this.camera = new ScreenCamera()
     this.grid = new ScreenGrid()

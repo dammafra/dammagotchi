@@ -2,6 +2,8 @@ import { CylinderGeometry, MeshMatcapMaterial } from 'three'
 import { Brush } from 'three-bvh-csg'
 
 export default class Frame {
+  static material = null
+
   constructor({
     radiusTop,
     radiusBottom,
@@ -21,21 +23,21 @@ export default class Frame {
     this.rotationY = rotationY
     this.scale = scale
 
-    this.setMaterial()
     this.setGeometry()
+    if (!Frame.material) this.setMaterial()
     this.setMesh()
-  }
-
-  setMaterial() {
-    this.material = new MeshMatcapMaterial({ color: 'yellow' })
   }
 
   setGeometry() {
     this.geometry = new CylinderGeometry(this.radiusTop, this.radiusBottom, this.height, 4)
   }
 
+  setMaterial() {
+    Frame.material = new MeshMatcapMaterial({ color: 'yellow' })
+  }
+
   setMesh() {
-    this.mesh = new Brush(this.geometry, this.material)
+    this.mesh = new Brush(this.geometry, Frame.material)
     this.mesh.scale.setScalar(this.scale)
     this.mesh.rotation.y = this.rotationY
     this.mesh.rotation.x = -Math.PI * 0.5
@@ -45,6 +47,6 @@ export default class Frame {
 
   dispose() {
     this.geometry.dispose()
-    this.material.dispose()
+    Frame.material?.dispose()
   }
 }

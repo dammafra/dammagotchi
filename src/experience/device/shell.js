@@ -3,18 +3,16 @@ import { Brush } from 'three-bvh-csg'
 import { degToRad } from 'three/src/math/MathUtils.js'
 
 export default class Shell {
+  static material = null
+
   constructor({ girth, apex, scaleZ }) {
     this.girth = girth
     this.apex = apex
     this.scaleZ = scaleZ
 
-    this.setMaterial()
     this.setGeometry()
+    if (!Shell.material) this.setMaterial()
     this.setMesh()
-  }
-
-  setMaterial() {
-    this.material = new MeshMatcapMaterial({ color: 'lightblue' })
   }
 
   setGeometry() {
@@ -30,14 +28,18 @@ export default class Shell {
     this.geometry = new LatheGeometry(points, 100)
   }
 
+  setMaterial() {
+    Shell.material = new MeshMatcapMaterial({ color: 'lightblue' })
+  }
+
   setMesh() {
-    this.mesh = new Brush(this.geometry, this.material)
+    this.mesh = new Brush(this.geometry, Shell.material)
     this.mesh.scale.z = this.scaleZ
     this.mesh.updateMatrixWorld()
   }
 
   dispose() {
     this.geometry.dispose()
-    this.material.dispose()
+    Shell.material?.dispose()
   }
 }
