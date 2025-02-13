@@ -4,7 +4,6 @@ import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
 import ScreenGrid from './grid'
-import Room from './room'
 
 export default class Screen {
   static debugName = '📺 screen'
@@ -49,7 +48,7 @@ export default class Screen {
 
   ready() {
     this.environment = new ScreenEnvironment()
-    this.room = new Room()
+    // this.room = new Room()
   }
 
   update() {

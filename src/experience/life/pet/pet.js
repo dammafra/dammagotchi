@@ -58,13 +58,14 @@ export default class Pet extends EventDispatcher {
       idle1.mesh.visible = Random.boolean()
 
       const directionX = Random.oneOf(+this.grid.unit, -this.grid.unit)
-      const directionZ = Random.oneOf(+this.grid.unit, -this.grid.unit)
+      // const directionZ = Random.oneOf(+this.grid.unit, -this.grid.unit)
 
       const position = idle1.mesh.position.clone()
       position.x += directionX
-      position.z += directionZ
+      // position.z += directionZ
 
-      if (this.camera.canView(position) && this.grid.contains(position)) {
+      // if (this.camera.canView(position) && this.grid.contains(position)) {
+      if (this.camera.canView(position)) {
         idle1.mesh.position.copy(position)
         idle1.mesh.rotation.y = directionX > 0 ? Math.PI : 0
       }
