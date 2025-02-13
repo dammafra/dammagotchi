@@ -7,7 +7,7 @@ export default [
   {
     name: 'screenBackground',
     type: 'texture',
-    path: 'environment-maps/screen-background.png',
+    path: 'environment-maps/screen-background-desaturated-tiny.png',
   },
   {
     name: 'shellTexture',

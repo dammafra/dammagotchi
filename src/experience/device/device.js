@@ -16,7 +16,7 @@ export default class Device {
   config = {
     shell: {
       girth: 0.8,
-      apex: 0.15,
+      apex: 0.1,
       scaleZ: 0.5,
     },
     frames: [
