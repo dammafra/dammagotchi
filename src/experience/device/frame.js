@@ -1,10 +1,14 @@
 import { CylinderGeometry, MeshMatcapMaterial } from 'three'
 import { Brush } from 'three-bvh-csg'
+import Experience from '../experience'
 
 export default class Frame {
   static material = null
 
   constructor({ radiusTop, radiusBottom, height, position, rotation }) {
+    this.experience = Experience.instance
+    this.resources = this.experience.resources
+
     this.radiusTop = radiusTop
     this.radiusBottom = radiusBottom
     this.height = height
@@ -21,7 +25,7 @@ export default class Frame {
   }
 
   setMaterial() {
-    Frame.material = new MeshMatcapMaterial({ color: 'yellow' })
+    Frame.material = new MeshMatcapMaterial({ matcap: this.resources.items.frameTexture })
   }
 
   setMesh() {

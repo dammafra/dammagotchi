@@ -1,11 +1,15 @@
 import { LatheGeometry, MeshMatcapMaterial, Vector2 } from 'three'
 import { Brush } from 'three-bvh-csg'
 import { degToRad } from 'three/src/math/MathUtils.js'
+import Experience from '../experience'
 
 export default class Shell {
   static material = null
 
   constructor({ girth, apex, scaleZ }) {
+    this.experience = Experience.instance
+    this.resources = this.experience.resources
+
     this.girth = girth
     this.apex = apex
     this.scaleZ = scaleZ
@@ -29,7 +33,7 @@ export default class Shell {
   }
 
   setMaterial() {
-    Shell.material = new MeshMatcapMaterial({ color: 'lightblue' })
+    Shell.material = new MeshMatcapMaterial({ matcap: this.resources.items.shellTexture })
   }
 
   setMesh() {

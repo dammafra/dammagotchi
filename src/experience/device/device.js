@@ -57,7 +57,6 @@ export default class Device {
 
     this.screen = new Screen()
 
-    this.setMesh()
     this.setDebug()
   }
 
@@ -80,8 +79,13 @@ export default class Device {
     this.scene.add(this.mesh)
   }
 
-  ready() {
+  setEnvironment() {
     this.environment = new Environment()
+  }
+
+  ready() {
+    this.setMesh()
+    this.setEnvironment()
     this.screen.ready()
   }
 
