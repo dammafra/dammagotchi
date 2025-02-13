@@ -1,10 +1,9 @@
 import { Scene } from 'three'
 import Camera from './camera'
 import sourcesConfig from './config/resources'
-import Environment from './environment'
+import Device from './device/device'
 import Life from './life/life'
 import Renderer from './renderer'
-import Screen from './screen/screen'
 import Loading from './ui/loading'
 import Debug from './utils/debug'
 import Motion from './utils/motion'
@@ -45,13 +44,13 @@ export default class Experience {
     this.scene = new Scene()
     this.camera = new Camera()
     this.renderer = new Renderer()
-    this.screen = new Screen()
+    this.device = new Device()
 
     // Events
     this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updateSeconds)
-    this.resources.addEventListener('ready', this.readyResources)
+    this.resources.addEventListener('ready', this.ready)
   }
 
   resize = () => {
@@ -59,22 +58,10 @@ export default class Experience {
     this.renderer.resize()
   }
 
-  update = () => {
-    this.camera.update()
-    this.renderer.update()
+  ready = () => {
+    this.resources.removeEventListener('ready', this.ready)
 
-    if (this.screen) this.screen.update()
-  }
-
-  updateSeconds = () => {
-    if (this.life) this.life.updateSeconds()
-  }
-
-  readyResources = () => {
-    this.resources.removeEventListener('ready', this.readyResources)
-
-    this.environment = new Environment()
-    this.screen.readyResources()
+    this.device.ready()
 
     this.life = new Life()
     this.life.addEventListener('ready', this.readyLife)
@@ -85,5 +72,15 @@ export default class Experience {
 
     this.loading.ready()
     Debug.instance.loadState()
+  }
+
+  update = () => {
+    this.camera.update()
+    this.renderer.update()
+    this.device.update()
+  }
+
+  updateSeconds = () => {
+    if (this.life) this.life.updateSeconds()
   }
 }

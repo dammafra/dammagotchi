@@ -7,9 +7,9 @@ export default class Pixel {
 
   constructor(x, y) {
     // Setup
-    this.screen = Experience.instance.screen
+    this.experience = Experience.instance
 
-    this.grid = this.screen.grid
+    this.grid = this.experience.device.screen.grid
 
     if (!Pixel.geometry) this.setGeometry()
     if (!Pixel.material) this.setMaterial()

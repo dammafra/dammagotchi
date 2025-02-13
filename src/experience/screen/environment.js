@@ -7,10 +7,9 @@ export default class ScreenEnvironment {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.screen = this.experience.screen
     this.time = Time.instance
 
-    this.scene = this.screen.scene
+    this.scene = this.experience.device.screen.scene
     this.resources = this.experience.resources
 
     this.setEnvironmentMap()

@@ -4,10 +4,10 @@ import Experience from '../experience'
 export default class Room {
   constructor() {
     // Setup
-    this.screen = Experience.instance.screen
+    this.experience = Experience.instance
 
-    this.scene = this.screen.scene
-    this.grid = this.screen.grid
+    this.scene = this.experience.device.screen.scene
+    this.grid = this.experience.device.screen.grid
 
     this.setFloor()
     this.setWall()

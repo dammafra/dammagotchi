@@ -1,6 +1,6 @@
 import { EquirectangularReflectionMapping, SRGBColorSpace } from 'three'
-import Experience from './experience'
-import Debug from './utils/debug'
+import Experience from '../experience'
+import Debug from '../utils/debug'
 
 export default class Environment {
   static debugName = '🏡 environment'

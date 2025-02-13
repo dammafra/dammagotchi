@@ -5,10 +5,10 @@ import Pixel from './pixel'
 
 export default class Sprite {
   constructor(matrix) {
-    this.screen = Experience.instance.screen
+    this.experience = Experience.instance
 
-    this.scene = this.screen.scene
-    this.grid = this.screen.grid
+    this.scene = this.experience.device.screen.scene
+    this.grid = this.experience.device.screen.grid
 
     this.setMesh(matrix)
   }

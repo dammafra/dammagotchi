@@ -18,23 +18,23 @@ export default class Screen {
     this.setMesh()
   }
 
+  setMesh() {
+    const planeGeometry = new PlaneGeometry()
+    const planeMaterial = new MeshBasicMaterial({ map: this.renderTarget.texture })
+    const plane = new Mesh(planeGeometry, planeMaterial)
+    this.experience.scene.add(plane)
+  }
+
+  ready() {
+    this.environment = new ScreenEnvironment()
+    this.room = new Room()
+  }
+
   update() {
     this.renderer.instance.setRenderTarget(this.renderTarget)
     this.renderer.instance.render(this.scene, this.camera.instance)
     this.renderer.instance.setRenderTarget(null)
 
     if (this.environment) this.environment.update()
-  }
-
-  readyResources() {
-    this.environment = new ScreenEnvironment()
-    this.room = new Room()
-  }
-
-  setMesh() {
-    const planeGeometry = new PlaneGeometry()
-    const planeMaterial = new MeshBasicMaterial({ map: this.renderTarget.texture })
-    const plane = new Mesh(planeGeometry, planeMaterial)
-    this.experience.scene.add(plane)
   }
 }

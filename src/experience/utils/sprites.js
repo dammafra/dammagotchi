@@ -36,8 +36,8 @@ export default class Sprites extends EventDispatcher {
 
     Sprites.instances.set(sprite, this)
 
-    this.screen = Experience.instance.screen
-    this.grid = this.screen.grid
+    this.experience = Experience.instance
+    this.grid = this.experience.device.screen.grid
 
     this.loaded = new Map()
     this.config = this.getConfig(sprite)
