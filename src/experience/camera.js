@@ -1,8 +1,33 @@
-import { PerspectiveCamera } from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import CameraControls from 'camera-controls'
+import {
+  Box3,
+  Matrix4,
+  PerspectiveCamera,
+  Quaternion,
+  Raycaster,
+  Sphere,
+  Spherical,
+  Vector2,
+  Vector3,
+  Vector4,
+} from 'three'
 import Experience from './experience'
 import Debug from './utils/debug'
 import Time from './utils/time'
+
+const subsetOfTHREE = {
+  Vector2: Vector2,
+  Vector3: Vector3,
+  Vector4: Vector4,
+  Quaternion: Quaternion,
+  Matrix4: Matrix4,
+  Spherical: Spherical,
+  Box3: Box3,
+  Sphere: Sphere,
+  Raycaster: Raycaster,
+}
+
+CameraControls.install({ THREE: subsetOfTHREE })
 
 export default class Camera {
   static debugName = '🎥 camera'
@@ -25,7 +50,7 @@ export default class Camera {
 
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.aspectRatio, 0.1, 100)
-    this.instance.position.z = -3
+    this.instance.position.set(0, 10, 0)
     this.scene.add(this.instance)
 
     this.debug
@@ -43,8 +68,10 @@ export default class Camera {
   }
 
   setControls() {
-    this.controls = new OrbitControls(this.instance, this.canvas)
-    this.controls.enableDamping = true
+    this.controls = new CameraControls(this.instance, this.canvas)
+    this.controls.smoothTime = 2
+    this.controls.minDistance = 2
+    this.controls.maxDistance = 10
   }
 
   resize() {
@@ -64,7 +91,10 @@ export default class Camera {
 
   update() {
     // this.updateParallax()
+    this.controls.update(this.time.delta)
+  }
 
-    this.controls.update()
+  async animation() {
+    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, true)
   }
 }

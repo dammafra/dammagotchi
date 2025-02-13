@@ -18,6 +18,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.1",
     "@tweakpane/plugin-essentials": "^0.2.1",
+    "camera-controls": "^2.10.0",
     "gsap": "^3.12.7",
     "tailwindcss": "^4.0.1",
     "three": "^0.166.1",

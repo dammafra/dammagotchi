@@ -71,6 +71,8 @@ export default class Experience {
     this.life.removeEventListener('ready', this.readyLife)
 
     this.loading.ready()
+
+    this.camera.animation()
     Debug.instance.loadState()
   }
 
