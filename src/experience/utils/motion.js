@@ -1,5 +1,5 @@
+import { degToRad } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
-import { degreesToRads } from './angle'
 
 export default class Motion {
   constructor() {
@@ -66,7 +66,7 @@ export default class Motion {
   }
 
   deviceorientation = event => {
-    this.x = degreesToRads(event.gamma)
-    this.y = degreesToRads(event.beta)
+    this.x = degToRad(event.gamma)
+    this.y = degToRad(event.beta)
   }
 }
