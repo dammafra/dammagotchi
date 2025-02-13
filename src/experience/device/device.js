@@ -23,29 +23,26 @@ export default class Device {
         radiusTop: 1,
         radiusBottom: 0.5,
         height: 0.5,
-        positionX: 0,
-        positionY: 0,
-        positionZ: -0.5,
-        rotationY: Math.PI * 0.25,
+        position: { x: 0, y: 0, z: -0.5 },
+        rotation: { x: -Math.PI * 0.5, y: Math.PI * 0.25, z: 0 },
       },
       {
         radiusTop: 0.8,
         radiusBottom: 0.32,
         height: 0.24,
-        positionX: 0.02,
-        positionY: 0.04,
-        positionZ: -0.37,
-        rotationY: Math.PI * 0.05,
+        position: { x: 0.02, y: 0.04, z: -0.37 },
+        rotation: { x: -Math.PI * 0.5, y: Math.PI * 0.05, z: 0 },
       },
     ],
     notch: {
       radius: 0.8,
       tube: 0.02,
-      scaleY: 0.5,
-      positionY: -0.02,
-      rotationX: Math.PI * 0.5,
+      scale: { x: 1, y: 0.5, z: 1 },
+      position: { x: 0, y: -0.02, z: 0 },
+      rotation: { x: Math.PI * 0.5, y: 0, z: 0 },
       cut: 1.1,
     },
+    buttonSlots: [{ radius: 0.1 }],
   }
 
   constructor() {
@@ -104,18 +101,16 @@ export default class Device {
       p.addBinding(this.config.frames[i], 'radiusTop', { min: 0, max: 10, step: 0.01 })
       p.addBinding(this.config.frames[i], 'radiusBottom', { min: 0, max: 10, step: 0.01 })
       p.addBinding(this.config.frames[i], 'height', { min: 0, max: 10, step: 0.01 })
-      p.addBinding(this.config.frames[i], 'positionX', { min: -5, max: 5, step: 0.01 })
-      p.addBinding(this.config.frames[i], 'positionY', { min: -5, max: 5, step: 0.01 })
-      p.addBinding(this.config.frames[i], 'positionZ', { min: -5, max: 5, step: 0.01 })
-      p.addBinding(this.config.frames[i], 'rotationY', { min: 0, max: Math.PI * 2, step: 0.1, format: radToDeg }) //prettier-ignore
+      p.addBinding(this.config.frames[i], 'position')
+      p.addBinding(this.config.frames[i], 'rotation', { step: 0.1, format: radToDeg })
     })
 
     const notchFolder = this.debug.addFolder({ title: 'notch', expanded: false })
     notchFolder.addBinding(this.config.notch, 'radius', { min: 0, max: 2, step: 0.001 })
     notchFolder.addBinding(this.config.notch, 'tube', { min: 0, max: 2, step: 0.001 })
-    notchFolder.addBinding(this.config.notch, 'scaleY', { min: 0, max: 2, step: 0.001 })
-    notchFolder.addBinding(this.config.notch, 'positionY', { min: -5, max: 5, step: 0.01 })
-    notchFolder.addBinding(this.config.notch, 'rotationX', { min: 0, max: Math.PI * 2, step: 0.1, format: radToDeg }) //prettier-ignore
+    notchFolder.addBinding(this.config.notch, 'scale')
+    notchFolder.addBinding(this.config.notch, 'position')
+    notchFolder.addBinding(this.config.notch, 'rotation', { step: 0.1, format: radToDeg })
     notchFolder.addBinding(this.config.notch, 'cut', { min: 0, max: 5, step: 0.001 })
 
     this.debug.on('change', () => {

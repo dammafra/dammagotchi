@@ -4,12 +4,12 @@ import Device from './device'
 import Shell from './shell'
 
 export default class Notch {
-  constructor({ radius, tube, scaleY, positionY, rotationX, cut }) {
+  constructor({ radius, tube, scale, position, rotation, cut }) {
     this.radius = radius
     this.tube = tube
-    this.scaleY = scaleY
-    this.positionY = positionY
-    this.rotationX = rotationX
+    this.scale = scale
+    this.position = position
+    this.rotation = rotation
     this.cut = cut
 
     this.setGeometry()
@@ -23,9 +23,9 @@ export default class Notch {
 
   setMesh() {
     this.torus = new Brush(this.torusGeometry, Shell.material)
-    this.torus.scale.y = this.scaleY
-    this.torus.position.y = this.positionY
-    this.torus.rotation.x = this.rotationX
+    this.torus.scale.copy(this.scale)
+    this.torus.position.copy(this.position)
+    this.torus.rotation.setFromVector3(this.rotation)
     this.torus.updateMatrixWorld()
 
     this.box = new Brush(this.boxGeometry, Shell.material)
