@@ -1,3 +1,4 @@
+import * as EssentialsPlugin from '@tweakpane/plugin-essentials'
 import { Pane } from 'tweakpane'
 import Experience from '../experience'
 
@@ -21,9 +22,17 @@ export default class Debug {
 
     if (this.active) {
       this.gui = new Pane({ title: 'DEBUG' })
+      this.gui.registerPlugin(EssentialsPlugin)
+
       this.gui.hidden = !this.active
       this.gui.element.parentElement.style.width = '350px'
       this.gui.element.parentElement.style.zIndex = 999
+
+      this.stats = this.gui.addBlade({
+        view: 'fpsgraph',
+        label: 'FPS',
+        rows: 2,
+      })
 
       this.preserveChanges = false
       this.gui.addBinding(this, 'preserveChanges')

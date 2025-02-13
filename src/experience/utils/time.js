@@ -44,6 +44,8 @@ export default class Time extends EventDispatcher {
   }
 
   tick = () => {
+    Debug.instance.stats?.begin()
+
     this.timer.update()
 
     this.delta = this.timer.getDelta() * 1000
@@ -57,6 +59,7 @@ export default class Time extends EventDispatcher {
     }
     this.elapsedSeconds = currentSeconds
 
+    Debug.instance.stats?.end()
     this.animationFrame = window.requestAnimationFrame(this.tick)
   }
 }
