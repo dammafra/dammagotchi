@@ -1,4 +1,11 @@
-import { Mesh, MeshBasicMaterial, PlaneGeometry, Scene, WebGLRenderTarget } from 'three'
+import {
+  Mesh,
+  MeshBasicMaterial,
+  MeshPhysicalMaterial,
+  PlaneGeometry,
+  Scene,
+  WebGLRenderTarget,
+} from 'three'
 import Experience from '../experience'
 import Debug from '../utils/debug'
 import ScreenCamera from './camera'
@@ -21,6 +28,7 @@ export default class Screen {
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
+    this.setGlass()
   }
 
   setGeometry() {
@@ -44,6 +52,30 @@ export default class Screen {
     this.debug?.addBinding(this.mesh.position, 'z', {min: -1, max: 1, step: 0.001, label: 'positionZ'}) //prettier-ignore
 
     this.experience.scene.add(this.mesh)
+  }
+
+  setGlass() {
+    this.glassMaterial = new MeshPhysicalMaterial({
+      roughness: 0.15,
+      transmission: 0.9,
+      ior: 1.5,
+      thickness: 0.01,
+      reflectivity: 1,
+    })
+
+    this.glass = new Mesh(this.geometry, this.glassMaterial)
+    this.glass.scale.copy(this.mesh.scale)
+    this.glass.position.copy(this.mesh.position)
+    this.glass.rotation.copy(this.mesh.rotation)
+
+    this.experience.scene.add(this.glass)
+
+    this.debug?.addBinding(this.glass, 'visible', { label: 'glass' })
+    this.debug?.addBinding(this.glassMaterial, 'roughness', { min: 0, max: 1, step: 0.001 })
+    this.debug?.addBinding(this.glassMaterial, 'transmission', { min: 0, max: 1, step: 0.001 })
+    this.debug?.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
+    this.debug?.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
+    this.debug?.addBinding(this.glassMaterial, 'reflectivity', { min: 0, max: 2, step: 0.01 })
   }
 
   ready() {

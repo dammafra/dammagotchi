@@ -24,7 +24,6 @@ export default class ScreenEnvironment {
 
     this.backgroundIntensity = 0.5
     this.scene.backgroundIntensity = this.backgroundIntensity
-    // this.offscreenScene.backgroundBlurriness = TODO
   }
 
   setFlicker() {
