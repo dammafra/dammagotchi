@@ -3,6 +3,7 @@ import { radToDeg } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
 import Screen from '../screen/screen'
 import Debug from '../utils/debug'
+import Button from './button'
 import ButtonSlot from './button-slot'
 import Environment from './environment'
 import Frame from './frame'
@@ -17,7 +18,7 @@ export default class Device {
     shell: {
       girth: 0.8,
       apex: 0.1,
-      scaleZ: 0.5,
+      scale: { x: 1, y: 1, z: 0.5 },
     },
     frames: [
       {
@@ -44,10 +45,37 @@ export default class Device {
       cut: 1.1,
     },
     buttonSlots: [
-      { radius: 0.1, position: { x: -0.3, y: -0.6, z: -0.3 } },
-      { radius: 0.1, position: { x: 0, y: -0.7, z: -0.3 } },
       { radius: 0.1, position: { x: 0.3, y: -0.6, z: -0.3 } },
+      { radius: 0.1, position: { x: 0, y: -0.7, z: -0.3 } },
+      { radius: 0.1, position: { x: -0.3, y: -0.6, z: -0.3 } },
       { radius: 0.05, position: { x: -0.3, y: -0.6, z: 0.3 } },
+    ],
+    buttons: [
+      {
+        radius: 0.09,
+        scale: { x: 1, y: 1, z: 0.5 },
+        rotation: { x: -Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
+        position: { x: 0.3, y: -0.6, z: -0.3 },
+      },
+      {
+        radius: 0.09,
+        scale: { x: 1, y: 1, z: 0.5 },
+        rotation: { x: -Math.PI * 0.15, y: 0, z: 0 },
+        position: { x: 0, y: -0.7, z: -0.3 },
+      },
+      {
+        radius: 0.09,
+        scale: { x: 1, y: 1, z: 0.5 },
+        rotation: { x: -Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
+        position: { x: -0.3, y: -0.6, z: -0.3 },
+      },
+      {
+        radius: 0.0405,
+        scale: { x: 1, y: 1, z: 0.5 },
+        rotation: { x: Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
+        position: { x: -0.3, y: -0.6, z: 0.28 },
+        color: 'gray',
+      },
     ],
   }
 
@@ -76,7 +104,9 @@ export default class Device {
       this.mesh,
     )
 
-    this.scene.add(this.mesh)
+    this.buttons = this.config.buttons.map(config => new Button(config))
+
+    this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh))
   }
 
   setEnvironment() {
@@ -97,8 +127,9 @@ export default class Device {
     this.shell.dispose()
     this.frames.forEach(f => f.dispose())
     this.notch.dispose()
+    this.buttonSlots.forEach(bs => bs.dispose())
 
-    this.scene.remove(this.mesh)
+    this.scene.remove(this.mesh, ...this.buttons.map(b => b.mesh))
   }
 
   setDebug() {
@@ -106,9 +137,9 @@ export default class Device {
     if (!this.debug) return
 
     const shellFolder = this.debug.addFolder({ title: 'shell', expanded: false })
-    shellFolder.addBinding(this.config.shell, 'girth', { min: 0, max: 2, step: 0.001 })
-    shellFolder.addBinding(this.config.shell, 'apex', { min: 0, max: 2, step: 0.001 })
-    shellFolder.addBinding(this.config.shell, 'scaleZ', { min: 0, max: 2, step: 0.001 })
+    shellFolder.addBinding(this.config.shell, 'girth', { min: 0, max: 2, step: 0.01 })
+    shellFolder.addBinding(this.config.shell, 'apex', { min: 0, max: 2, step: 0.01 })
+    shellFolder.addBinding(this.config.shell, 'scale', { min: 0, max: 2, step: 0.01 })
 
     const framesFolder = this.debug.addFolder({ title: 'frames', expanded: false })
     const framesTabs = framesFolder.addTab({
@@ -118,25 +149,36 @@ export default class Device {
       p.addBinding(this.config.frames[i], 'radiusTop', { min: 0, max: 10, step: 0.01 })
       p.addBinding(this.config.frames[i], 'radiusBottom', { min: 0, max: 10, step: 0.01 })
       p.addBinding(this.config.frames[i], 'height', { min: 0, max: 10, step: 0.01 })
-      p.addBinding(this.config.frames[i], 'position')
+      p.addBinding(this.config.frames[i], 'position', { min: -2, max: 2, step: 0.01 })
       p.addBinding(this.config.frames[i], 'rotation', { step: 0.1, format: radToDeg })
     })
 
     const notchFolder = this.debug.addFolder({ title: 'notch', expanded: false })
-    notchFolder.addBinding(this.config.notch, 'radius', { min: 0, max: 2, step: 0.001 })
-    notchFolder.addBinding(this.config.notch, 'tube', { min: 0, max: 2, step: 0.001 })
-    notchFolder.addBinding(this.config.notch, 'scale')
-    notchFolder.addBinding(this.config.notch, 'position')
+    notchFolder.addBinding(this.config.notch, 'radius', { min: 0, max: 2, step: 0.01 })
+    notchFolder.addBinding(this.config.notch, 'tube', { min: 0, max: 2, step: 0.01 })
+    notchFolder.addBinding(this.config.notch, 'scale', { min: 0, max: 2, step: 0.01 })
+    notchFolder.addBinding(this.config.notch, 'position', { min: -2, max: 2, step: 0.01 })
     notchFolder.addBinding(this.config.notch, 'rotation', { step: 0.1, format: radToDeg })
-    notchFolder.addBinding(this.config.notch, 'cut', { min: 0, max: 5, step: 0.001 })
+    notchFolder.addBinding(this.config.notch, 'cut', { min: 0, max: 5, step: 0.01 })
 
     const buttonSlotsFolder = this.debug.addFolder({ title: 'button slots', expanded: false })
     const buttonSlotsTabs = buttonSlotsFolder.addTab({
-      pages: this.config.buttonSlots.map((_, i) => ({ title: `button ${i + 1}` })),
+      pages: this.config.buttonSlots.map((_, i) => ({ title: `slot ${i + 1}` })),
     })
     buttonSlotsTabs.pages.forEach((p, i) => {
-      p.addBinding(this.config.buttonSlots[i], 'radius', { min: 0, max: 10, step: 0.01 })
-      p.addBinding(this.config.buttonSlots[i], 'position')
+      p.addBinding(this.config.buttonSlots[i], 'radius', { min: 0, max: 2, step: 0.01 })
+      p.addBinding(this.config.buttonSlots[i], 'position', { min: -2, max: 2, step: 0.01 })
+    })
+
+    const buttonsFolder = this.debug.addFolder({ title: 'buttons', expanded: false })
+    const buttonsTabs = buttonsFolder.addTab({
+      pages: this.config.buttons.map((_, i) => ({ title: `button ${i + 1}` })),
+    })
+    buttonsTabs.pages.forEach((p, i) => {
+      p.addBinding(this.config.buttons[i], 'radius', { min: 0, max: 2, step: 0.01 })
+      p.addBinding(this.config.buttons[i], 'scale', { min: 0, max: 2, step: 0.01 })
+      p.addBinding(this.config.buttons[i], 'position', { min: -2, max: 2, step: 0.01 })
+      p.addBinding(this.config.buttons[i], 'rotation', { step: 0.1, format: radToDeg })
     })
 
     this.debug.on('change', () => {

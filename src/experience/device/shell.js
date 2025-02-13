@@ -6,13 +6,13 @@ import Experience from '../experience'
 export default class Shell {
   static material = null
 
-  constructor({ girth, apex, scaleZ }) {
+  constructor({ girth, apex, scale }) {
     this.experience = Experience.instance
     this.resources = this.experience.resources
 
     this.girth = girth
     this.apex = apex
-    this.scaleZ = scaleZ
+    this.scale = scale
 
     this.setGeometry()
     if (!Shell.material) this.setMaterial()
@@ -38,7 +38,7 @@ export default class Shell {
 
   setMesh() {
     this.mesh = new Brush(this.geometry, Shell.material)
-    this.mesh.scale.z = this.scaleZ
+    this.mesh.scale.copy(this.scale)
     this.mesh.updateMatrixWorld()
   }
 
