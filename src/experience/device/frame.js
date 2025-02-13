@@ -2,13 +2,24 @@ import { CylinderGeometry, MeshMatcapMaterial } from 'three'
 import { Brush } from 'three-bvh-csg'
 
 export default class Frame {
-  constructor({ radiusTop, radiusBottom, height, positionX, positionY, positionZ }) {
+  constructor({
+    radiusTop,
+    radiusBottom,
+    height,
+    positionX,
+    positionY,
+    positionZ,
+    rotationY,
+    scale,
+  }) {
     this.radiusTop = radiusTop
     this.radiusBottom = radiusBottom
     this.height = height
     this.positionX = positionX
     this.positionY = positionY
     this.positionZ = positionZ
+    this.rotationY = rotationY
+    this.scale = scale
 
     this.setMaterial()
     this.setGeometry()
@@ -25,7 +36,8 @@ export default class Frame {
 
   setMesh() {
     this.mesh = new Brush(this.geometry, this.material)
-    this.mesh.rotation.y = Math.PI * 0.25
+    this.mesh.scale.setScalar(this.scale)
+    this.mesh.rotation.y = this.rotationY
     this.mesh.rotation.x = -Math.PI * 0.5
     this.mesh.position.set(this.positionX, this.positionY, this.positionZ)
     this.mesh.updateMatrixWorld()
