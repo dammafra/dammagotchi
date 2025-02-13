@@ -41,7 +41,7 @@ export default class Screen {
     this.debug
       ?.addBinding(this.mesh.scale, 'x', { min: -1, max: 1, step: 0.001, label: 'scale' })
       .on('change', e => this.mesh.scale.setScalar(e.value))
-    this.debug?.addBinding(this.mesh.position, 'z', {min: -1, max: 1, step: 0.001, label: 'positionX'}) //prettier-ignore
+    this.debug?.addBinding(this.mesh.position, 'z', {min: -1, max: 1, step: 0.001, label: 'positionZ'}) //prettier-ignore
 
     this.experience.scene.add(this.mesh)
   }
