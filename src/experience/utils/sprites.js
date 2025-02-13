@@ -1,17 +1,4 @@
-import {
-  EventDispatcher,
-  Mesh,
-  MeshBasicMaterial,
-  OrthographicCamera,
-  PlaneGeometry,
-  RGBAFormat,
-  Scene,
-  SRGBColorSpace,
-  TextureLoader,
-  UnsignedByteType,
-  WebGLRenderer,
-  WebGLRenderTarget,
-} from 'three'
+import { EventDispatcher } from 'three'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
 import Sprite from '../screen/sprite'
@@ -40,27 +27,19 @@ export default class Sprites extends EventDispatcher {
     this.grid = this.experience.device.screen.grid
 
     this.loaded = new Map()
+    this.img = new Image()
+    this.img.src = `sprites/${sprite.split('.').join('/')}.png`
     this.config = this.getConfig(sprite)
 
-    const src = `sprites/${sprite.split('.').join('/')}.png`
-    const loader = new TextureLoader()
-    loader.load(
-      src,
-      texture => {
-        texture.colorSpace = SRGBColorSpace
-        this.texture = texture
-        this.width = texture.image.width
-        this.height = texture.image.height
+    this.img.onload = () => {
+      this.extractPixels()
+      this.buildMatrix()
+      this.setSprites()
 
-        this.extractPixels()
-        this.buildMatrix()
-        this.setSprites()
+      this.dispatchEvent({ type: 'ready' })
+    }
 
-        this.dispatchEvent({ type: 'ready' })
-      },
-      undefined,
-      () => console.error('Cannot find sprite asset', src),
-    )
+    this.img.onerror = () => console.error('Cannot find sprite asset', this.img.src)
   }
 
   getConfig(path) {
@@ -81,56 +60,36 @@ export default class Sprites extends EventDispatcher {
     return sprites
   }
 
-  async extractPixels() {
-    const scene = new Scene()
-    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
+  extractPixels() {
+    const canvas = document.createElement('canvas')
+    canvas.width = this.img.width
+    canvas.height = this.img.height
 
-    const renderer = new WebGLRenderer()
-    renderer.setSize(this.width, this.height)
+    const ctx = canvas.getContext('2d', { colorSpace: 'srgb' })
+    ctx.drawImage(this.img, 0, 0)
 
-    const renderTarget = new WebGLRenderTarget(this.width, this.height, {
-      format: RGBAFormat,
-      type: UnsignedByteType,
-      colorSpace: SRGBColorSpace,
-    })
-
-    const material = new MeshBasicMaterial({ map: this.texture })
-    const quad = new Mesh(new PlaneGeometry(2, 2), material)
-    scene.add(quad)
-
-    renderer.setRenderTarget(renderTarget)
-    renderer.render(scene, camera)
-    renderer.setRenderTarget(null)
-
-    const pixelBuffer = new Uint8Array(this.width * this.height * 4)
-    renderer.readRenderTargetPixels(renderTarget, 0, 0, this.width, this.height, pixelBuffer)
-    this.pixels = pixelBuffer
-
-    renderer.dispose()
-    renderTarget.dispose()
+    // prettier-ignore
+    this.pixels = ctx.getImageData(0, 0, this.img.width, this.img.height, { colorSpace: 'srgb' }).data
   }
 
   buildMatrix() {
     this.matrix = []
 
-    for (let y = 0; y < this.height; y++) {
+    for (let y = 0; y < this.img.height; y++) {
       const row = []
-      for (let x = 0; x < this.width; x++) {
+      for (let x = 0; x < this.img.width; x++) {
         const color = this.getPixelColor(x, y)
         row.push(color)
       }
       this.matrix.push(row)
     }
-
-    this.matrix.reverse()
   }
 
   getPixelColor(x, y) {
-    const i = (y * this.width + x) * 4
+    const i = (y * this.img.width + x) * 4
     const r = this.pixels[i]
     const g = this.pixels[i + 1]
     const b = this.pixels[i + 2]
-
     const hex = `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase()}`
     return hex
   }
