@@ -2,12 +2,13 @@ import { EventDispatcher } from 'three'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
 import Sprite from '../screen/sprite'
+import { areColorsNear, rgbToHex } from './colors'
 import Debug from './debug'
 
 export default class Sprites extends EventDispatcher {
   /** @type {Map<string, Sprites} */
   static instances = new Map()
-  static delimiters = ['#A616D3', '#A51CD2']
+  static delimiter = '#A616D3'
 
   static for(sprite) {
     if (Sprites.instances.has(sprite)) {
@@ -79,7 +80,7 @@ export default class Sprites extends EventDispatcher {
       const row = []
       for (let x = 0; x < this.img.width; x++) {
         const color = this.getPixelColor(x, y)
-        row.push(color)
+        row.push(rgbToHex(color))
       }
       this.matrix.push(row)
     }
@@ -90,8 +91,7 @@ export default class Sprites extends EventDispatcher {
     const r = this.pixels[i]
     const g = this.pixels[i + 1]
     const b = this.pixels[i + 2]
-    const hex = `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase()}`
-    return hex
+    return { r, g, b }
   }
 
   setSprites() {
@@ -116,7 +116,7 @@ export default class Sprites extends EventDispatcher {
   }
 
   isDelimiter(pixel) {
-    return Sprites.delimiters.includes(pixel)
+    return areColorsNear(Sprites.delimiter, pixel)
   }
 
   getSpriteWidth(row, col) {
