@@ -1,13 +1,17 @@
 import { Mesh, MeshBasicMaterial, PlaneGeometry, Scene, WebGLRenderTarget } from 'three'
 import Experience from '../experience'
+import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
 import ScreenGrid from './grid'
 import Room from './room'
 
 export default class Screen {
+  static debugName = '📺 screen'
+
   constructor() {
     this.experience = Experience.instance
+    this.debug = Debug.instance.gui?.addFolder({ title: Screen.debugName, expanded: false })
     this.renderer = this.experience.renderer
 
     this.renderTarget = new WebGLRenderTarget(512, 512)
@@ -15,14 +19,32 @@ export default class Screen {
     this.camera = new ScreenCamera()
     this.grid = new ScreenGrid()
 
+    this.setGeometry()
+    this.setMaterial()
     this.setMesh()
   }
 
+  setGeometry() {
+    this.geometry = new PlaneGeometry()
+  }
+
+  setMaterial() {
+    this.material = new MeshBasicMaterial({ map: this.renderTarget.texture })
+  }
+
   setMesh() {
-    const planeGeometry = new PlaneGeometry()
-    const planeMaterial = new MeshBasicMaterial({ map: this.renderTarget.texture })
-    const plane = new Mesh(planeGeometry, planeMaterial)
-    this.experience.scene.add(plane)
+    this.mesh = new Mesh(this.geometry, this.material)
+
+    this.mesh.scale.setScalar(0.7)
+    this.mesh.position.z = -0.251
+    this.mesh.rotation.y = Math.PI
+
+    this.debug
+      ?.addBinding(this.mesh.scale, 'x', { min: -1, max: 1, step: 0.001, label: 'scale' })
+      .on('change', e => this.mesh.scale.setScalar(e.value))
+    this.debug?.addBinding(this.mesh.position, 'z', {min: -1, max: 1, step: 0.001, label: 'positionX'}) //prettier-ignore
+
+    this.experience.scene.add(this.mesh)
   }
 
   ready() {
