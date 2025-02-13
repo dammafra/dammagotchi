@@ -21,18 +21,11 @@ export default class Debug {
     this.active = window.location.hash === '#debug'
 
     if (this.active) {
-      this.gui = new Pane({ title: 'DEBUG', expanded: false })
-      this.gui.registerPlugin(EssentialsPlugin)
+      this.gui = new Pane({ title: 'DEBUG' })
 
       this.gui.hidden = !this.active
       this.gui.element.parentElement.style.width = '350px'
       this.gui.element.parentElement.style.zIndex = 999
-
-      this.stats = this.gui.addBlade({
-        view: 'fpsgraph',
-        label: 'FPS',
-        rows: 2,
-      })
 
       this.preserveChanges = false
       this.gui.addBinding(this, 'preserveChanges')
@@ -40,6 +33,18 @@ export default class Debug {
 
       // Global access
       window.Experience = Experience
+
+      // Stats
+      this.stats = new Pane({ title: 'FPS' })
+      this.stats.registerPlugin(EssentialsPlugin)
+
+      this.stats.element.parentElement.style.left = '8px'
+
+      this.stats = this.stats.addBlade({
+        view: 'fpsgraph',
+        label: 'FPS',
+        rows: 2,
+      })
     }
   }
 
