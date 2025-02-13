@@ -21,7 +21,7 @@ export default class Debug {
     this.active = window.location.hash === '#debug'
 
     if (this.active) {
-      this.gui = new Pane({ title: 'DEBUG' })
+      this.gui = new Pane({ title: 'DEBUG', expanded: false })
       this.gui.registerPlugin(EssentialsPlugin)
 
       this.gui.hidden = !this.active
