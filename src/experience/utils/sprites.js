@@ -14,7 +14,7 @@ import {
 } from 'three'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
-import Sprite from '../life/sprite'
+import Sprite from '../screen/sprite'
 import Debug from './debug'
 
 export default class Sprites extends EventDispatcher {
@@ -36,8 +36,8 @@ export default class Sprites extends EventDispatcher {
 
     Sprites.instances.set(sprite, this)
 
-    this.experience = Experience.instance
-    this.grid = this.experience.grid
+    this.screen = Experience.instance.screen
+    this.grid = this.screen.grid
 
     this.loaded = new Map()
     this.config = this.getConfig(sprite)

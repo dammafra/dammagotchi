@@ -1,7 +1,12 @@
 export default [
   {
-    name: 'environmentMapTexture',
+    name: 'sceneBackground',
     type: 'texture',
-    path: 'environment-maps/abstract-pixelated-background-tiny.jpg',
+    path: 'environment-maps/scene-background-tiny.jpg',
+  },
+  {
+    name: 'screenBackground',
+    type: 'texture',
+    path: 'environment-maps/screen-background.png',
   },
 ]

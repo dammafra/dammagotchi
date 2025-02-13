@@ -4,10 +4,9 @@ import sourcesConfig from './config/resources'
 import Environment from './environment'
 import Life from './life/life'
 import Renderer from './renderer'
-import Room from './room'
+import Screen from './screen/screen'
 import Loading from './ui/loading'
 import Debug from './utils/debug'
-import Grid from './utils/grid'
 import Motion from './utils/motion'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
@@ -40,13 +39,13 @@ export default class Experience {
 
     this.time = Time.instance
     this.sizes = new Sizes()
-    this.grid = new Grid()
     this.motion = new Motion()
     this.resources = new Resources(sourcesConfig)
 
     this.scene = new Scene()
     this.camera = new Camera()
     this.renderer = new Renderer()
+    this.screen = new Screen()
 
     // Events
     this.sizes.addEventListener('resize', this.resize)
@@ -63,7 +62,8 @@ export default class Experience {
   update = () => {
     this.camera.update()
     this.renderer.update()
-    if (this.environment) this.environment.update()
+
+    if (this.screen) this.screen.update()
   }
 
   updateSeconds = () => {
@@ -74,9 +74,9 @@ export default class Experience {
     this.resources.removeEventListener('ready', this.readyResources)
 
     this.environment = new Environment()
-    this.room = new Room()
-    this.life = new Life()
+    this.screen.readyResources()
 
+    this.life = new Life()
     this.life.addEventListener('ready', this.readyLife)
   }
 

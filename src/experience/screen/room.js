@@ -1,25 +1,25 @@
 import { GridHelper } from 'three'
-import Experience from './experience'
+import Experience from '../experience'
 
 export default class Room {
   constructor() {
     // Setup
-    this.experience = Experience.instance
+    this.screen = Experience.instance.screen
 
-    this.scene = this.experience.scene
-    this.grid = this.experience.grid
+    this.scene = this.screen.scene
+    this.grid = this.screen.grid
 
     this.setFloor()
     this.setWall()
   }
 
   setFloor() {
-    this.floor = new GridHelper(this.grid.size, this.grid.size, '#888888')
+    this.floor = new GridHelper(this.grid.size, this.grid.size, '#bbbbbb', '#bbbbbb')
     this.scene.add(this.floor)
   }
 
   setWall() {
-    this.wall = new GridHelper(this.grid.size, this.grid.size, '#888888')
+    this.wall = new GridHelper(this.grid.size, this.grid.size, '#bbbbbb', '#bbbbbb')
     this.wall.rotation.x = -Math.PI * 0.5
     this.wall.position.y = this.grid.size / 2
     this.wall.position.z = -this.grid.size / 2

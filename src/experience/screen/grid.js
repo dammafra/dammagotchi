@@ -1,6 +1,6 @@
 import { Vector3 } from 'three'
 
-export default class Grid {
+export default class ScreenGrid {
   constructor() {
     this.unit = 0.1
     this.size = 24

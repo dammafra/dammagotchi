@@ -1,4 +1,4 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial } from 'three'
+import { DoubleSide, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
 import Experience from '../experience'
 
 export default class Pixel {
@@ -7,9 +7,9 @@ export default class Pixel {
 
   constructor(x, y) {
     // Setup
-    this.experience = Experience.instance
+    this.screen = Experience.instance.screen
 
-    this.grid = this.experience.grid
+    this.grid = this.screen.grid
 
     if (!Pixel.geometry) this.setGeometry()
     if (!Pixel.material) this.setMaterial()
@@ -18,11 +18,11 @@ export default class Pixel {
   }
 
   setGeometry() {
-    Pixel.geometry = new BoxGeometry(this.grid.unit, this.grid.unit, this.grid.unit)
+    Pixel.geometry = new PlaneGeometry(this.grid.unit, this.grid.unit)
   }
 
   setMaterial() {
-    Pixel.material = new MeshBasicMaterial({ color: 'black' })
+    Pixel.material = new MeshBasicMaterial({ color: 'black', side: DoubleSide })
   }
 
   setMesh(x, y) {

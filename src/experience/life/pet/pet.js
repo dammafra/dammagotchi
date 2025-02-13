@@ -8,12 +8,12 @@ export default class Pet extends EventDispatcher {
   constructor(...args) {
     super()
 
-    this.experience = Experience.instance
+    this.screen = Experience.instance.screen
     this.time = Time.instance
-    this.environment = this.experience.environment
 
-    this.grid = this.experience.grid
-    this.camera = this.experience.camera
+    this.environment = this.screen.environment
+    this.grid = this.screen.grid
+    this.camera = this.screen.camera
 
     if (args.length === 2) {
       const stage = args.at(0)

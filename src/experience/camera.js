@@ -1,4 +1,4 @@
-import { Frustum, Matrix4, PerspectiveCamera } from 'three'
+import { PerspectiveCamera } from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import Experience from './experience'
 import Debug from './utils/debug'
@@ -14,7 +14,6 @@ export default class Camera {
     this.debug = Debug.instance.gui?.addFolder({ title: Camera.debugName, expanded: false })
 
     this.sizes = this.experience.sizes
-    this.grid = this.experience.grid
     this.motion = this.experience.motion
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
@@ -27,6 +26,7 @@ export default class Camera {
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.aspectRatio, 0.1, 100)
     this.instance.position.y = 1
+    this.instance.position.z = 4
     this.scene.add(this.instance)
 
     this.debug
@@ -44,20 +44,8 @@ export default class Camera {
   }
 
   setControls() {
-    if (!Debug.instance.active) return
-
     this.controls = new OrbitControls(this.instance, this.canvas)
     this.controls.enableDamping = true
-    this.controls.enabled = false
-
-    this.debug?.addBinding(this.controls, 'enabled', { label: 'controls' }).on('change', () => {
-      this.controls.reset()
-      this.controls.target.set(
-        this.grid.center.x,
-        this.controls.enabled ? this.grid.center.y : this.instance.position.y,
-        this.grid.center.z,
-      )
-    })
   }
 
   resize() {
@@ -67,29 +55,17 @@ export default class Camera {
     this.debug?.refresh()
   }
 
-  updateParallax() {
-    const parallaxX = -this.motion.x * this.parallaxIntensity
-    const parallaxY = -this.motion.y * this.parallaxIntensity
+  // updateParallax() {
+  //   const parallaxX = -this.motion.x * this.parallaxIntensity
+  //   const parallaxY = -this.motion.y * this.parallaxIntensity
 
-    this.instance.rotation.x += (parallaxY - this.instance.rotation.x) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
-    this.instance.rotation.y += (parallaxX - this.instance.rotation.y) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
-  }
+  //   this.instance.rotation.x += (parallaxY - this.instance.rotation.x) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
+  //   this.instance.rotation.y += (parallaxX - this.instance.rotation.y) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
+  // }
 
   update() {
-    this.updateParallax()
+    // this.updateParallax()
 
-    if (this.controls && this.controls.enabled) {
-      this.controls.update()
-    }
-  }
-
-  canView(position) {
-    const frustum = new Frustum()
-    const matrix = new Matrix4().multiplyMatrices(
-      this.instance.projectionMatrix,
-      this.instance.matrixWorldInverse,
-    )
-    frustum.setFromProjectionMatrix(matrix)
-    return frustum.containsPoint(position)
+    this.controls.update()
   }
 }
