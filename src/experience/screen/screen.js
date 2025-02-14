@@ -20,10 +20,11 @@ export default class Screen {
     this.experience = Experience.instance
     this.debug = Debug.instance.gui?.addFolder({ title: Screen.debugName, expanded: false })
     this.renderer = this.experience.renderer
+    this.mainCamera = this.experience.camera
 
     this.renderTarget = new WebGLRenderTarget(256, 256)
     this.scene = new Scene()
-    this.camera = new ScreenCamera()
+    this.screenCamera = new ScreenCamera()
     this.grid = new ScreenGrid()
 
     this.setGeometry()
@@ -97,8 +98,12 @@ export default class Screen {
 
   update() {
     this.renderer.instance.setRenderTarget(this.renderTarget)
-    this.renderer.instance.render(this.scene, this.camera.instance)
+    this.renderer.instance.render(this.scene, this.screenCamera.instance)
     this.renderer.instance.setRenderTarget(null)
+
+    if (!Debug.instance.active) {
+      this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 1.5
+    }
 
     if (this.environment) this.environment.update()
   }

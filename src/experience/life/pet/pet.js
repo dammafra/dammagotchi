@@ -13,7 +13,7 @@ export default class Pet extends EventDispatcher {
 
     this.environment = this.experience.device.screen.environment
     this.grid = this.experience.device.screen.grid
-    this.camera = this.experience.device.screen.camera
+    this.screenCamera = this.experience.device.screen.screenCamera
 
     if (args.length === 2) {
       const stage = args.at(0)
@@ -64,8 +64,8 @@ export default class Pet extends EventDispatcher {
       position.x += directionX
       // position.z += directionZ
 
-      // if (this.camera.canView(position) && this.grid.contains(position)) {
-      if (this.camera.canView(position)) {
+      // if (this.screenCamera.canView(position) && this.grid.contains(position)) {
+      if (this.screenCamera.canView(position)) {
         idle1.mesh.position.copy(position)
         idle1.mesh.rotation.y = directionX > 0 ? Math.PI : 0
       }

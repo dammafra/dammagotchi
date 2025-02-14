@@ -1,4 +1,4 @@
-import { WebGLRenderer } from 'three'
+import { PCFSoftShadowMap, WebGLRenderer } from 'three'
 import Experience from './experience'
 
 export default class Renderer {
@@ -19,6 +19,9 @@ export default class Renderer {
       canvas: this.canvas,
       antialias: this.sizes.pixelRatio < 2,
     })
+
+    this.instance.shadowMap.enabled = true
+    this.instance.shadowMap.type = PCFSoftShadowMap
 
     this.resize()
   }

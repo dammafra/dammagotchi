@@ -94,6 +94,10 @@ export default class Camera {
     this.controls.update(this.time.delta)
   }
 
+  distanceTo(position) {
+    return this.instance.position.distanceTo(position)
+  }
+
   async animation() {
     await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !Debug.instance.active)
     Debug.instance.active && this.controls.dolly(10)

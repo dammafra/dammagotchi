@@ -1,4 +1,4 @@
-import { LatheGeometry, MeshMatcapMaterial, SRGBColorSpace, Vector2 } from 'three'
+import { LatheGeometry, MeshStandardMaterial, Vector2 } from 'three'
 import { Brush } from 'three-bvh-csg'
 import { degToRad } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
@@ -33,9 +33,7 @@ export default class Shell {
   }
 
   setMaterial() {
-    const matcap = this.resources.items.shellTexture
-    matcap.colorSpace = SRGBColorSpace
-    Shell.material = new MeshMatcapMaterial({ matcap })
+    Shell.material = new MeshStandardMaterial({ color: '#224488', metalness: 0, roughness: 0.2 })
   }
 
   setMesh() {

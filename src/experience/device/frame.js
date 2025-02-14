@@ -1,4 +1,4 @@
-import { CylinderGeometry, MeshMatcapMaterial, SRGBColorSpace } from 'three'
+import { CylinderGeometry, MeshStandardMaterial } from 'three'
 import { Brush } from 'three-bvh-csg'
 import Experience from '../experience'
 
@@ -25,9 +25,7 @@ export default class Frame {
   }
 
   setMaterial() {
-    const matcap = this.resources.items.frameTexture
-    matcap.colorSpace = SRGBColorSpace
-    Frame.material = new MeshMatcapMaterial({ matcap })
+    Frame.material = new MeshStandardMaterial({ color: '#996600', metalness: 0, roughness: 0.4 })
   }
 
   setMesh() {

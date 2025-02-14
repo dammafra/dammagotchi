@@ -1,4 +1,4 @@
-import { Mesh, MeshMatcapMaterial, SphereGeometry } from 'three'
+import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import Frame from './frame'
 
 export default class Button {
@@ -12,7 +12,7 @@ export default class Button {
     this.color = color
 
     this.setGeometry()
-    if (this.color) this.setMaterial()
+    this.setMaterial()
     this.setMesh()
   }
 
@@ -21,7 +21,7 @@ export default class Button {
   }
 
   setMaterial() {
-    this.material = new MeshMatcapMaterial({ color: this.color })
+    this.material = new MeshStandardMaterial({ color: this.color, metalness: 0, roughness: 0.7 })
   }
 
   setMesh() {
@@ -33,6 +33,6 @@ export default class Button {
 
   dispose() {
     this.geometry.dispose()
-    this.material?.dispose()
+    this.material.dispose()
   }
 }

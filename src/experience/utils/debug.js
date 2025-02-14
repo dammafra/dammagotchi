@@ -33,7 +33,9 @@ export default class Debug {
 
       // Global access
       window.Experience = Experience
+    }
 
+    if (this.active || window.location.hash === '#stats') {
       // Stats
       this.stats = new Pane({ title: 'FPS' })
       this.stats.registerPlugin(EssentialsPlugin)

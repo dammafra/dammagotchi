@@ -57,18 +57,21 @@ export default class Device {
         scale: { x: 1, y: 1, z: 0.5 },
         rotation: { x: -Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: 0.3, y: -0.6, z: -0.3 },
+        color: '#996600',
       },
       {
         radius: 0.09,
         scale: { x: 1, y: 1, z: 0.5 },
         rotation: { x: -Math.PI * 0.15, y: 0, z: 0 },
         position: { x: 0, y: -0.7, z: -0.3 },
+        color: '#996600',
       },
       {
         radius: 0.09,
         scale: { x: 1, y: 1, z: 0.5 },
         rotation: { x: -Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: -0.3 },
+        color: '#996600',
       },
       {
         radius: 0.0405,
@@ -79,11 +82,9 @@ export default class Device {
       },
     ],
     tab: {
-      width: 1,
+      width: 0.8,
       height: 0.3,
-      position: { x: -0.5, y: -0.4, z: 0 },
-      rotation: { x: Math.PI, y: 0, z: Math.PI * 0.9 },
-      color: 'red',
+      position: { x: -0.6, y: -0.3, z: 0 },
       visible: false,
     },
   }
@@ -91,7 +92,6 @@ export default class Device {
   constructor() {
     this.experience = Experience.instance
     this.scene = this.experience.scene
-
     this.screen = new Screen()
 
     this.setDebug()
@@ -112,6 +112,8 @@ export default class Device {
       (result, buttonSlot) => Device.evaluator.evaluate(result, buttonSlot.mesh, SUBTRACTION),
       this.mesh,
     )
+    this.mesh.castShadow = true
+    this.mesh.receiveShadow = true
 
     this.buttons = this.config.buttons.map(config => new Button(config))
     this.tab = new Tab(this.config.tab)
@@ -196,7 +198,6 @@ export default class Device {
     tabFolder.addBinding(this.config.tab, 'width', { min: 0, max: 2, step: 0.01 })
     tabFolder.addBinding(this.config.tab, 'height', { min: 0, max: 2, step: 0.01 })
     tabFolder.addBinding(this.config.tab, 'position', { min: -2, max: 2, step: 0.01 })
-    tabFolder.addBinding(this.config.tab, 'rotation', { step: 0.1, format: radToDeg })
     tabFolder.addBinding(this.config.tab, 'visible')
 
     this.debug.on('change', () => {

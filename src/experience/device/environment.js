@@ -1,4 +1,4 @@
-import { EquirectangularReflectionMapping, SRGBColorSpace } from 'three'
+import { DirectionalLight, EquirectangularReflectionMapping, SRGBColorSpace } from 'three'
 import Experience from '../experience'
 import Debug from '../utils/debug'
 
@@ -13,7 +13,24 @@ export default class Environment {
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
+    this.setLight()
     this.setEnvironmentMap()
+  }
+
+  setLight() {
+    this.directionalLight = new DirectionalLight('white', 4)
+    this.directionalLight.position.set(-3, 3, -2)
+
+    this.directionalLight.castShadow = true
+    this.directionalLight.shadow.mapSize.set(512, 512)
+    this.directionalLight.shadow.camera.far = 10
+    this.directionalLight.shadow.normalBias = 0.05
+
+    this.scene.add(this.directionalLight)
+
+    this.debug?.addBinding(this.directionalLight, 'intensity', { label: 'light intensity' })
+    this.debug?.addBinding(this.directionalLight, 'position', { label: 'light position' })
+    this.debug?.addBinding(this.directionalLight, 'castShadow', { label: 'shadows' })
   }
 
   setEnvironmentMap() {
