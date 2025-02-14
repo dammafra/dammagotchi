@@ -65,6 +65,7 @@ export default class Screen {
 
   setGlass() {
     this.glassMaterial = new MeshPhysicalMaterial({
+      metalness: 0.1,
       roughness: 0.15,
       transmission: 0.9,
       thickness: 0.01,
@@ -80,6 +81,7 @@ export default class Screen {
     this.experience.scene.add(this.glass)
 
     this.debug?.addBinding(this.glass, 'visible', { label: 'glass' })
+    this.debug?.addBinding(this.glassMaterial, 'metalness', { min: 0, max: 1, step: 0.001 })
     this.debug?.addBinding(this.glassMaterial, 'roughness', { min: 0, max: 1, step: 0.001 })
     this.debug?.addBinding(this.glassMaterial, 'transmission', { min: 0, max: 1, step: 0.001 })
     this.debug?.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
