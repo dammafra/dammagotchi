@@ -2,9 +2,7 @@ import Pet from './pet'
 
 export default class Death extends Pet {
   constructor() {
-    super('misc')
-
-    this.stage = 'death'
+    super('death')
 
     this.evolveIn = null
     this.evolveOut = null

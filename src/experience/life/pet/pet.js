@@ -9,7 +9,7 @@ export default class Pet extends EventDispatcher {
     return this.experience.life.age
   }
 
-  constructor(...args) {
+  constructor(stage, model) {
     super()
 
     this.experience = Experience.instance
@@ -18,15 +18,11 @@ export default class Pet extends EventDispatcher {
     this.environment = this.screen.environment
     this.screenCamera = this.screen.screenCamera
 
-    if (args.length === 2) {
-      this.stage = args.at(0)
-      const model = args.at(1)
+    this.stage = stage
+    this.model = model
 
-      this.sprites = Sprites.for(`pets.${this.stage}.${model}`)
-    } else {
-      const sprite = args.at(0)
-      this.sprites = Sprites.for(sprite)
-    }
+    const sprite = this.model ? `pets.${this.stage}.${this.model}` : `pets.${this.stage}`
+    this.sprites = Sprites.for(sprite)
 
     this.sprites.addEventListener('ready', () => this.dispatchEvent({ type: 'ready' }))
   }

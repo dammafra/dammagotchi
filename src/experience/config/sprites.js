@@ -24,6 +24,7 @@ const seniorConfig = petConfig.concat([
 
 export default {
   pets: {
+    egg: { index: 0, split: 2 },
     babies: {
       petitchi: babyConfig,
       shiropetitchi: babyConfig,
@@ -87,16 +88,15 @@ export default {
       otokitchi: seniorConfig,
       oyajitchi: seniorConfig,
     },
+    death: { index: 0 },
   },
   food: [],
   items: [],
   misc: [
     { name: 'toilets', index: 0, split: 3 },
-    { name: 'egg', index: 1, split: 2 },
-    { name: 'death', index: 2 },
-    { name: 'meter', index: 3, split: 2 },
-    { name: 'poop', index: 4, split: 2 },
-    { name: 'illnesses', index: 5, split: 3 },
+    { name: 'meter', index: 1, split: 2 },
+    { name: 'poop', index: 2, split: 2 },
+    { name: 'illnesses', index: 3, split: 3 },
   ],
   food: [
     { name: 'meal.babies', index: 66 },

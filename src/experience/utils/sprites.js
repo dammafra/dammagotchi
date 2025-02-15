@@ -51,7 +51,7 @@ export default class Sprites extends EventDispatcher {
       return this.loaded.get(name)
     }
 
-    const config = this.config.find(c => c.name === name)
+    const config = Array.isArray(this.config) ? this.config.find(c => c.name === name) : this.config
     const sprites = this.splitSprite(config.index, config.split)
     this.loaded.set(name, sprites)
     return sprites

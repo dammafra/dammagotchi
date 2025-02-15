@@ -2,9 +2,7 @@ import Pet from './pet'
 
 export default class Egg extends Pet {
   constructor() {
-    super('misc')
-
-    this.stage = 'egg'
+    super('egg')
 
     this.evolveIn = null
     this.eat = null
