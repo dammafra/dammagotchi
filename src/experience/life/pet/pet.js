@@ -2,24 +2,27 @@ import { EventDispatcher } from 'three'
 import Experience from '../../experience'
 import Random from '../../utils/random'
 import Sprites from '../../utils/sprites'
-import Time from '../../utils/time'
+import Food from '../food'
 
 export default class Pet extends EventDispatcher {
+  get age() {
+    return this.experience.life.age
+  }
+
   constructor(...args) {
     super()
 
     this.experience = Experience.instance
-    this.time = Time.instance
 
-    this.environment = this.experience.device.screen.environment
-    this.grid = this.experience.device.screen.grid
-    this.screenCamera = this.experience.device.screen.screenCamera
+    this.screen = this.experience.device.screen
+    this.environment = this.screen.environment
+    this.screenCamera = this.screen.screenCamera
 
     if (args.length === 2) {
-      const stage = args.at(0)
+      this.stage = args.at(0)
       const model = args.at(1)
 
-      this.sprites = Sprites.for(`pets.${stage}.${model}`)
+      this.sprites = Sprites.for(`pets.${this.stage}.${model}`)
     } else {
       const sprite = args.at(0)
       this.sprites = Sprites.for(sprite)
@@ -28,7 +31,7 @@ export default class Pet extends EventDispatcher {
     this.sprites.addEventListener('ready', () => this.dispatchEvent({ type: 'ready' }))
   }
 
-  transitionIn() {
+  evolveIn() {
     this.dispose && this.dispose()
 
     const idle1 = this.sprites.get('idle').at(0)
@@ -57,15 +60,12 @@ export default class Pet extends EventDispatcher {
     this.updateSeconds = () => {
       idle1.mesh.visible = Random.boolean()
 
-      const directionX = Random.oneOf(+this.grid.unit, -this.grid.unit)
-      // const directionZ = Random.oneOf(+this.grid.unit, -this.grid.unit)
+      const directionX = Random.oneOf(+this.screen.unit, -this.screen.unit)
 
       const position = idle1.mesh.position.clone()
       position.x += directionX
-      // position.z += directionZ
 
-      // if (this.screenCamera.canView(position) && this.grid.contains(position)) {
-      if (this.screenCamera.canView(position)) {
+      if (this.screen.contains(idle1, position)) {
         idle1.mesh.position.copy(position)
         idle1.mesh.rotation.y = directionX > 0 ? Math.PI : 0
       }
@@ -80,7 +80,97 @@ export default class Pet extends EventDispatcher {
     }
   }
 
-  transitionOut() {
+  eat = type => {
+    this.dispose && this.dispose()
+
+    const [idle1] = this.sprites.get('idle')
+    idle1.spawn()
+    idle1.mesh.position.x = 1
+
+    const [eat1, eat2] = this.sprites.get('eat')
+    eat1.spawn()
+    eat2.spawn()
+    eat1.mesh.visible = false
+    eat2.mesh.visible = false
+    eat1.mesh.position.x = idle1.mesh.position.x
+    eat2.mesh.position.x = idle1.mesh.position.x
+
+    const [food1, food2, food3] = Food.get(type, this.stage)
+    food1.spawn()
+    food2.spawn()
+    food3.spawn()
+
+    food1.mesh.position.y = 1.5
+    food1.mesh.position.x = -1
+    food2.mesh.position.x =
+      food1.mesh.position.x - (this.screen.unit * (food1.width - food2.width)) / 2
+    food3.mesh.position.x =
+      food1.mesh.position.x - (this.screen.unit * (food1.width - food3.width)) / 2
+
+    food2.mesh.visible = false
+    food3.mesh.visible = false
+
+    const startedAt = this.age
+
+    this.updateSeconds = () => {
+      if (this.age === startedAt + 1) {
+        food1.mesh.position.y = this.screen.center.y
+        idle1.mesh.visible = false
+        eat2.mesh.visible = true
+        return
+      }
+
+      if (this.age === startedAt + 2) {
+        food1.mesh.visible = false
+        food2.mesh.visible = true
+
+        eat2.mesh.visible = false
+        eat1.mesh.visible = true
+      }
+
+      if (this.age === startedAt + 3) {
+        eat1.mesh.visible = false
+        eat2.mesh.visible = true
+      }
+
+      if (this.age === startedAt + 4) {
+        food2.mesh.visible = false
+        food3.mesh.visible = true
+
+        eat2.mesh.visible = false
+        eat1.mesh.visible = true
+      }
+
+      if (this.age === startedAt + 5) {
+        eat1.mesh.visible = false
+        eat2.mesh.visible = true
+      }
+
+      if (this.age === startedAt + 6) {
+        food3.mesh.visible = false
+
+        eat2.mesh.visible = false
+        eat1.mesh.visible = true
+      }
+
+      if (this.age === startedAt + 7) {
+        this.idle()
+      }
+    }
+
+    this.dispose = () => {
+      idle1.dispose()
+
+      eat1.dispose()
+      eat2.dispose()
+
+      food1.dispose()
+      food2.dispose()
+      food3.dispose()
+    }
+  }
+
+  evolveOut() {
     this.dispose && this.dispose()
 
     const idle1 = this.sprites.get('idle').at(0)

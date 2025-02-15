@@ -1,6 +1,5 @@
 import { EventDispatcher } from 'three'
 import spritesConfig from '../config/sprites'
-import Experience from '../experience'
 import Sprite from '../screen/sprite'
 import { areColorsNear, rgbToHex } from './colors'
 import Debug from './debug'
@@ -23,9 +22,6 @@ export default class Sprites extends EventDispatcher {
     super()
 
     Sprites.instances.set(sprite, this)
-
-    this.experience = Experience.instance
-    this.grid = this.experience.device.screen.grid
 
     this.loaded = new Map()
     this.img = new Image()
@@ -159,7 +155,7 @@ export default class Sprites extends EventDispatcher {
         subMatrix.push(rowArray)
       }
 
-      subMatrix = this.reduce(subMatrix).map(row => this.pad(row))
+      subMatrix = this.reduce(subMatrix)
 
       if (Debug.instance.active) {
         this.print(subMatrix)
@@ -203,19 +199,6 @@ export default class Sprites extends EventDispatcher {
     }
 
     return reducedMatrix
-  }
-
-  pad(row) {
-    const padValue = 0
-    const targetLength = this.grid.size
-
-    if (row.length >= targetLength) return row
-
-    const totalPadding = targetLength - row.length
-    const startPadding = Math.ceil(totalPadding / 2)
-    const endPadding = totalPadding - startPadding
-
-    return Array(startPadding).fill(padValue).concat(row).concat(Array(endPadding).fill(padValue))
   }
 
   print(matrix) {

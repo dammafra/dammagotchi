@@ -69,8 +69,8 @@ export default class Camera {
 
   setControls() {
     this.controls = new CameraControls(this.instance, this.canvas)
-    this.controls.smoothTime = 2
-    this.controls.minDistance = 1
+    this.controls.smoothTime = 1.5
+    this.controls.minDistance = 1.3
     this.controls.maxDistance = 10
   }
 
@@ -85,12 +85,15 @@ export default class Camera {
   //   const parallaxX = -this.motion.x * this.parallaxIntensity
   //   const parallaxY = -this.motion.y * this.parallaxIntensity
 
-  //   this.instance.rotation.x += (parallaxY - this.instance.rotation.x) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
-  //   this.instance.rotation.y += (parallaxX - this.instance.rotation.y) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
+  //   this.controls.rotateAzimuthTo(Math.PI + parallaxX)
+  //   this.controls.rotatePolarTo(Math.PI * 0.5 + parallaxY)
+
+  //   //   this.instance.rotation.x += (parallaxY - this.instance.rotation.x) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
+  //   //   this.instance.rotation.y += (parallaxX - this.instance.rotation.y) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
   // }
 
   update() {
-    // this.updateParallax()
+    // if (this.lock) this.updateParallax()
     this.controls.update(this.time.delta)
   }
 
@@ -101,5 +104,6 @@ export default class Camera {
   async animation() {
     await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !Debug.instance.active)
     Debug.instance.active && this.controls.dolly(10)
+    // this.lock = true
   }
 }

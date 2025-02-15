@@ -8,8 +8,7 @@ export default class Pixel {
   constructor(x, y) {
     // Setup
     this.experience = Experience.instance
-
-    this.grid = this.experience.device.screen.grid
+    this.screen = this.experience.device.screen
 
     if (!Pixel.geometry) this.setGeometry()
     if (!Pixel.material) this.setMaterial()
@@ -18,7 +17,7 @@ export default class Pixel {
   }
 
   setGeometry() {
-    Pixel.geometry = new PlaneGeometry(this.grid.unit, this.grid.unit)
+    Pixel.geometry = new PlaneGeometry(this.screen.unit, this.screen.unit)
   }
 
   setMaterial() {
@@ -28,7 +27,7 @@ export default class Pixel {
   setMesh(x, y) {
     this.mesh = new Mesh(Pixel.geometry, Pixel.material)
 
-    this.mesh.position.x = x * this.grid.unit
-    this.mesh.position.y = y * this.grid.unit
+    this.mesh.position.x = x * this.screen.unit
+    this.mesh.position.y = y * this.screen.unit
   }
 }

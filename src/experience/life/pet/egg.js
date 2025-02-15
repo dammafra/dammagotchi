@@ -4,7 +4,10 @@ export default class Egg extends Pet {
   constructor() {
     super('misc')
 
-    this.transitionIn = null
+    this.stage = 'egg'
+
+    this.evolveIn = null
+    this.eat = null
   }
 
   idle = () => {
@@ -28,7 +31,7 @@ export default class Egg extends Pet {
     }
   }
 
-  transitionOut = () => {
+  evolveOut = () => {
     this.dispose && this.dispose()
 
     const hatching = this.sprites.get('egg').at(0)
@@ -36,7 +39,8 @@ export default class Egg extends Pet {
     hatching.mesh.visible = true
 
     this.updateSeconds = () => {
-      hatching.mesh.position.x += hatching.mesh.position.x < 0 ? this.grid.unit : -this.grid.unit
+      hatching.mesh.position.x +=
+        hatching.mesh.position.x < 0 ? this.screen.unit : -this.screen.unit
     }
 
     this.dispose = () => {

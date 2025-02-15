@@ -5,7 +5,7 @@ export default class Baby extends Pet {
     super('babies', model)
   }
 
-  transitionIn = () => {
+  evolveIn = () => {
     this.dispose && this.dispose()
 
     const hatching = this.sprites.get('hatching').at(0)

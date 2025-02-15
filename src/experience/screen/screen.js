@@ -1,17 +1,17 @@
 import {
-  AxesHelper,
+  GridHelper,
   Mesh,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
   PlaneGeometry,
   Scene,
+  Vector3,
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
 import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
-import ScreenGrid from './grid'
 
 export default class Screen {
   static debugName = '📺 screen'
@@ -25,20 +25,29 @@ export default class Screen {
     this.renderTarget = new WebGLRenderTarget(256, 256)
     this.scene = new Scene()
     this.screenCamera = new ScreenCamera()
-    this.grid = new ScreenGrid()
 
+    this.setGrid()
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
     this.setGlass()
 
     if (this.debug) {
-      const helper = new AxesHelper(3)
-      helper.position.z = this.grid.center.z
+      const helper = new GridHelper(10, 10)
+      helper.position.z = this.center.z - 0.001
+      helper.rotation.x = Math.PI * 0.5
       this.scene.add(helper)
 
       this.debug.addBinding(helper, 'visible', { label: 'helper' })
     }
+  }
+
+  setGrid() {
+    this.unit = 0.1
+    this.size = 24
+
+    const zeroCoordinate = this.unit / 2
+    this.center = new Vector3(zeroCoordinate, zeroCoordinate, zeroCoordinate - this.size / 4)
   }
 
   setGeometry() {
@@ -91,8 +100,6 @@ export default class Screen {
 
   ready() {
     this.environment = new ScreenEnvironment()
-    // this.room = new Room()
-
     this.debug?.addBinding(this.environment, 'flicker')
   }
 
@@ -106,5 +113,15 @@ export default class Screen {
     }
 
     if (this.environment) this.environment.update()
+  }
+
+  contains(sprite, position) {
+    const leftBound = position.clone()
+    leftBound.x += -this.unit * (sprite.width / 2)
+
+    const rightBound = position.clone()
+    rightBound.x += this.unit * (sprite.width / 2)
+
+    return this.screenCamera.canView(leftBound) && this.screenCamera.canView(rightBound)
   }
 }

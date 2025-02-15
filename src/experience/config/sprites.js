@@ -1,18 +1,26 @@
 const petConfig = [{ name: 'idle', index: 0, split: 2 }]
 
-const babyConfig = petConfig.concat([{ name: 'hatching', index: 13 }])
+const babyConfig = petConfig.concat([
+  { name: 'hatching', index: 13 },
+  { name: 'eat', index: 12, split: 2 },
+])
 
-const childConfig = petConfig
+const childConfig = petConfig.concat([{ name: 'eat', index: 12, split: 2 }])
 
-const teenagerConfig1 = petConfig
-const teenagerConfig2 = petConfig
+const teenagerBaseConfig = petConfig.concat([{ name: 'eat', index: 12, split: 2 }])
+const teenagerConfig1 = teenagerBaseConfig
+const teenagerConfig2 = teenagerBaseConfig
 
-const adultConfig1 = petConfig
-const adultConfig2 = petConfig
-const adultConfig3 = petConfig
-const adultConfig4 = petConfig
+const adultBaseConfig = petConfig.concat({ name: 'eat', index: 26, split: 2 })
+const adultConfig1 = adultBaseConfig
+const adultConfig2 = adultBaseConfig
+const adultConfig3 = adultBaseConfig
+const adultConfig4 = adultBaseConfig
 
-const seniorConfig = petConfig.concat([{ name: 'eyes-closed', index: 18 }])
+const seniorConfig = petConfig.concat([
+  { name: 'eyes-closed', index: 18 },
+  { name: 'eat', index: 25, split: 2 },
+])
 
 export default {
   pets: {
@@ -89,5 +97,36 @@ export default {
     { name: 'meter', index: 3, split: 2 },
     { name: 'poop', index: 4, split: 2 },
     { name: 'illnesses', index: 5, split: 3 },
+  ],
+  food: [
+    { name: 'meal.babies', index: 66 },
+    { name: 'meal.babies.partial', index: 67, split: 2 },
+
+    { name: 'meal.children', index: 66 },
+    { name: 'meal.children.partial', index: 67, split: 2 },
+
+    { name: 'meal.teenagers', index: 74 },
+    { name: 'meal.teenagers.partial', index: 75, split: 2 },
+
+    { name: 'meal.adults', index: 82 },
+    { name: 'meal.adults.partial', index: 83, split: 2 },
+
+    { name: 'meal.seniors', index: 90 },
+    { name: 'meal.seniors.partial', index: 91, split: 2 },
+
+    { name: 'snack.babies', index: 116 },
+    { name: 'snack.babies.partial', index: 117, split: 2 },
+
+    { name: 'snack.children', index: 116 },
+    { name: 'snack.children.partial', index: 117, split: 2 },
+
+    { name: 'snack.teenagers', index: 122 },
+    { name: 'snack.teenagers.partial', index: 123, split: 2 },
+
+    { name: 'snack.adults', index: 124 },
+    { name: 'snack.adults.partial', index: 125, split: 2 },
+
+    { name: 'snack.seniors', index: 126 },
+    { name: 'snack.seniors.partial', index: 127 },
   ],
 }

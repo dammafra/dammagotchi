@@ -4,8 +4,11 @@ export default class Death extends Pet {
   constructor() {
     super('misc')
 
-    this.transitionIn = null
-    this.transitionOut = null
+    this.stage = 'death'
+
+    this.evolveIn = null
+    this.evolveOut = null
+    this.eat = null
   }
 
   idle = () => {
@@ -19,7 +22,7 @@ export default class Death extends Pet {
 
     this.updateSeconds = () => {
       death.mesh.position.y +=
-        death.mesh.position.y > startPositionY ? -this.grid.unit : +this.grid.unit
+        death.mesh.position.y > startPositionY ? -this.screen.unit : +this.screen.unit
     }
 
     this.dispose = () => {

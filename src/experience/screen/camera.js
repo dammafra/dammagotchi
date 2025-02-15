@@ -14,11 +14,12 @@ export default class ScreenCamera {
 
   canView(position) {
     const frustum = new Frustum()
-    const matrix = new Matrix4().multiplyMatrices(
-      this.instance.projectionMatrix,
-      this.instance.matrixWorldInverse,
+    frustum.setFromProjectionMatrix(
+      new Matrix4().multiplyMatrices(
+        this.instance.projectionMatrix,
+        this.instance.matrixWorldInverse,
+      ),
     )
-    frustum.setFromProjectionMatrix(matrix)
     return frustum.containsPoint(position)
   }
 }

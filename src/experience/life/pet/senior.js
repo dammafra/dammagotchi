@@ -5,17 +5,17 @@ export default class Senior extends Pet {
     super('seniors', model)
   }
 
-  transitionOut = () => {
+  evolveOut = () => {
     this.dispose && this.dispose()
 
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
     eyesClosed.spawn()
 
-    const startedAt = this.time.elapsedSeconds
+    const startedAt = this.age
 
     this.updateSeconds = () => {
-      if (this.time.elapsedSeconds > startedAt + 3) {
-        eyesClosed.mesh.position.y += this.grid.unit * 4
+      if (this.age > startedAt + 3) {
+        eyesClosed.mesh.position.y += this.screen.unit * 4
       }
     }
 
