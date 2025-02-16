@@ -45,7 +45,7 @@ export default class ScreenEnvironment {
   update() {
     if (!this.flicker) return
 
-    const toggle = Math.floor(this.time.elapsed * this.flickerSpeed) % 2 === 0
+    const toggle = Math.floor(this.time.elapsed * this.time.speed * this.flickerSpeed) % 2 === 0
 
     this.scene.backgroundIntensity = toggle ? this.backgroundIntensity : 0.05
     Pixel.material.color.set(new Color(toggle ? 'black' : 'white'))

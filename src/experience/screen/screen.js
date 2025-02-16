@@ -12,6 +12,7 @@ import Experience from '../experience'
 import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
+import UI from './ui'
 
 export default class Screen {
   static debugName = '📺 screen'
@@ -77,7 +78,7 @@ export default class Screen {
     this.glassMaterial = new MeshPhysicalMaterial({
       metalness: 0.1,
       roughness: 0.15,
-      transmission: 0.9,
+      transmission: 1,
       thickness: 0.01,
       ior: 1.5,
     })
@@ -100,6 +101,7 @@ export default class Screen {
 
   ready() {
     this.environment = new ScreenEnvironment()
+    this.ui = new UI()
     this.debug?.addBinding(this.environment, 'flicker')
   }
 

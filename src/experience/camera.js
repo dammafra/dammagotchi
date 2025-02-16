@@ -103,7 +103,7 @@ export default class Camera {
 
   async animation() {
     await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !Debug.instance.active)
-    Debug.instance.active && this.controls.dolly(10)
+    Debug.instance.active && this.controls.dolly(2)
     // this.lock = true
   }
 }
