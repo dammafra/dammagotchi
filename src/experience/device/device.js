@@ -58,6 +58,7 @@ export default class Device {
         rotation: { x: -Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: 0.3, y: -0.6, z: -0.3 },
         color: '#996600',
+        onClick: () => this.onButtonA(),
       },
       {
         radius: 0.09,
@@ -65,6 +66,7 @@ export default class Device {
         rotation: { x: -Math.PI * 0.15, y: 0, z: 0 },
         position: { x: 0, y: -0.7, z: -0.3 },
         color: '#996600',
+        onClick: () => this.onButtonB(),
       },
       {
         radius: 0.09,
@@ -72,6 +74,7 @@ export default class Device {
         rotation: { x: -Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: -0.3 },
         color: '#996600',
+        onClick: () => this.onButtonC(),
       },
       {
         radius: 0.0405,
@@ -79,6 +82,7 @@ export default class Device {
         rotation: { x: Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: 0.28 },
         color: 'gray',
+        onClick: () => this.onResetButton(),
       },
     ],
     tab: {
@@ -86,12 +90,14 @@ export default class Device {
       height: 0.3,
       position: { x: -0.6, y: -0.3, z: 0 },
       visible: false,
+      onClick: () => this.onTab(),
     },
   }
 
   constructor() {
     this.experience = Experience.instance
     this.scene = this.experience.scene
+    this.pointer = this.experience.pointer
     this.screen = new Screen()
 
     this.setDebug()
@@ -115,6 +121,8 @@ export default class Device {
     this.mesh.castShadow = true
     this.mesh.receiveShadow = true
 
+    this.pointer.onClick(this.mesh)
+
     this.buttons = this.config.buttons.map(config => new Button(config))
     this.tab = new Tab(this.config.tab)
 
@@ -133,6 +141,27 @@ export default class Device {
 
   update() {
     this.screen.update()
+  }
+
+  onTab() {
+    console.log('tab clicked')
+  }
+
+  onButtonA() {
+    console.log('button A clicked')
+    this.screen.ui.selectIcon()
+  }
+
+  onButtonB() {
+    console.log('button B clicked')
+  }
+
+  onButtonC() {
+    console.log('button C clicked')
+  }
+
+  onResetButton() {
+    console.log('reset button clicked')
   }
 
   dispose() {

@@ -39,7 +39,6 @@ export default class Camera {
     this.debug = Debug.instance.gui?.addFolder({ title: Camera.debugName, expanded: false })
 
     this.sizes = this.experience.sizes
-    this.motion = this.experience.motion
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
 
@@ -81,19 +80,7 @@ export default class Camera {
     this.debug?.refresh()
   }
 
-  // updateParallax() {
-  //   const parallaxX = -this.motion.x * this.parallaxIntensity
-  //   const parallaxY = -this.motion.y * this.parallaxIntensity
-
-  //   this.controls.rotateAzimuthTo(Math.PI + parallaxX)
-  //   this.controls.rotatePolarTo(Math.PI * 0.5 + parallaxY)
-
-  //   //   this.instance.rotation.x += (parallaxY - this.instance.rotation.x) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
-  //   //   this.instance.rotation.y += (parallaxX - this.instance.rotation.y) * this.parallaxEase * (this.time.delta / 1000) //prettier-ignore
-  // }
-
   update() {
-    // if (this.lock) this.updateParallax()
     this.controls.update(this.time.delta)
   }
 
@@ -104,6 +91,5 @@ export default class Camera {
   async animation() {
     await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !Debug.instance.active)
     Debug.instance.active && this.controls.dolly(2)
-    // this.lock = true
   }
 }

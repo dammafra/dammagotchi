@@ -111,7 +111,7 @@ export default class Screen {
     this.renderer.instance.setRenderTarget(null)
 
     if (!Debug.instance.active) {
-      this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 1.5
+      this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 2.5
     }
 
     if (this.environment) this.environment.update()

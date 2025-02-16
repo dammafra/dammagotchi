@@ -1,11 +1,16 @@
 import { DoubleSide, Mesh, MeshStandardMaterial, PlaneGeometry } from 'three'
+import Experience from '../experience'
 
 export default class Tab {
-  constructor({ width, height, position, visible }) {
+  constructor({ width, height, position, visible, onClick }) {
+    this.experience = Experience.instance
+    this.pointer = this.experience.pointer
+
     this.width = width
     this.height = height
     this.position = position
     this.visible = visible
+    this.onClick = onClick
 
     this.setGeometry()
     this.setMaterial()
@@ -31,6 +36,8 @@ export default class Tab {
     this.mesh.visible = this.visible
     this.mesh.position.copy(this.position)
     this.mesh.castShadow = true
+
+    this.pointer.onClick(this.mesh, this.onClick)
   }
 
   dispose() {

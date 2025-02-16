@@ -6,7 +6,7 @@ import Life from './life/life'
 import Loading from './loading'
 import Renderer from './renderer'
 import Debug from './utils/debug'
-import Motion from './utils/motion'
+import Pointer from './utils/pointer'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
 import Time from './utils/time'
@@ -38,12 +38,12 @@ export default class Experience {
 
     this.time = Time.instance
     this.sizes = new Sizes()
-    this.motion = new Motion()
     this.resources = new Resources(sourcesConfig)
 
     this.scene = new Scene()
     this.camera = new Camera()
     this.renderer = new Renderer()
+    this.pointer = new Pointer()
     this.device = new Device()
 
     // Events

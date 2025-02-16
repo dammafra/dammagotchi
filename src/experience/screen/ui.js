@@ -15,6 +15,7 @@ export default class UI {
     this.scene = this.screen.scene
     this.resources = this.experience.resources
 
+    this.selectedIcon = 7
     this.baseOpacity = 0.3
 
     this.setIcons()
@@ -58,9 +59,26 @@ export default class UI {
     })
   }
 
-  selectIcon(index) {
-    this.icons.forEach((icon, i) => {
-      icon.material.opacity = i === index ? 1 : this.baseOpacity
+  selectIcon() {
+    this.selectedIcon = ++this.selectedIcon % 8
+    this.icons.forEach((icon, index) => {
+      icon.material.opacity = this.baseOpacity
+      if (this.selectedIcon === index && this.selectedIcon != 7) {
+        const buttonSound = new Audio('sounds/button.mp3')
+        buttonSound.load() // workaround for Safari audio delay
+        buttonSound.currentTime = 0
+        buttonSound.play()
+
+        icon.material.opacity = 1
+      }
     })
+  }
+
+  notifyAttention() {
+    this.icons.at(7).material.opacity = 1
+  }
+
+  resolveAttention() {
+    this.icons.at(7).material.opacity = this.baseOpacity
   }
 }
