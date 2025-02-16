@@ -17,6 +17,7 @@ export default class UI {
 
     this.selectedIcon = 7
     this.baseOpacity = 0.3
+    this.resetTimeout = null
 
     this.setIcons()
   }
@@ -72,10 +73,18 @@ export default class UI {
         icon.material.opacity = 1
       }
     })
+
+    this.resetTimeout && clearTimeout(this.resetTimeout)
+    this.resetTimeout = setTimeout(this.reset, 10000)
   }
 
   notifyAttention() {
     this.icons.at(7).material.opacity = 1
+  }
+
+  reset = () => {
+    this.icons.at(this.selectedIcon).material.opacity = this.baseOpacity
+    this.selectedIcon = 7
   }
 
   resolveAttention() {
