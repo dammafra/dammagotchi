@@ -1,4 +1,4 @@
-import * as EssentialsPlugin from '@tweakpane/plugin-essentials'
+import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { Pane } from 'tweakpane'
 import Experience from '../experience'
 
@@ -35,18 +35,10 @@ export default class Debug {
       window.Experience = Experience
     }
 
+    // Stats
     if (this.active || window.location.hash === '#stats') {
-      // Stats
-      this.stats = new Pane({ title: 'FPS' })
-      this.stats.registerPlugin(EssentialsPlugin)
-
-      this.stats.element.parentElement.style.left = '8px'
-
-      this.stats = this.stats.addBlade({
-        view: 'fpsgraph',
-        label: 'FPS',
-        rows: 2,
-      })
+      this.stats = new Stats()
+      document.body.appendChild(this.stats.dom)
     }
   }
 

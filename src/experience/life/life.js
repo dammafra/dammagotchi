@@ -149,7 +149,6 @@ export default class Life extends EventDispatcher {
 
   setActionsPane() {
     const actionsPane = new Pane({ title: 'ACTIONS' })
-    actionsPane.element.parentElement.style.left = '8px'
     actionsPane.element.parentElement.style.bottom = '96px'
     actionsPane.element.parentElement.style.top = 'unset'
 

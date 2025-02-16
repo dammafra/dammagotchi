@@ -75,7 +75,6 @@ export default class Time extends EventDispatcher {
 
   setSpeedSettingsPane() {
     const speedSettingsPane = new Pane({ title: '⏱️ TIME', expanded: false })
-    speedSettingsPane.element.parentElement.style.left = '8px'
     speedSettingsPane.element.parentElement.style.bottom = '64px'
     speedSettingsPane.element.parentElement.style.top = 'unset'
     speedSettingsPane.element.parentElement.style.zIndex = 2
