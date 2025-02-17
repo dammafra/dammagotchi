@@ -1,17 +1,52 @@
-export class SoundBoard {
-  static muted = false
+import Time from '../utils/time'
 
-  static #buttonA = new Audio('sounds/button.mp3')
+export class Soundboard {
+  /** @type {Soundboard} */
+  static instance
 
-  static setMuted(value) {
-    SoundBoard.muted = value
+  muted = false
+  #sounds = {
+    button: new Audio('sounds/button.mp3'),
+    hatching: new Audio('sounds/hatching.mp3'),
+    death: new Audio('sounds/death.mp3'),
   }
 
-  static playButtonA() {
-    SoundBoard.#buttonA.load() // workaround for Safari audio delay
+  static init() {
+    return new Soundboard()
+  }
 
-    SoundBoard.#buttonA.muted = SoundBoard.muted
-    SoundBoard.#buttonA.currentTime = 0
-    SoundBoard.#buttonA.play()
+  constructor() {
+    // Singleton
+    if (Soundboard.instance) {
+      return Soundboard.instance
+    }
+    Soundboard.instance = this
+    this.time = Time.instance
+  }
+
+  setMuted(value) {
+    this.muted = value
+  }
+
+  async play(sound, times = 1) {
+    let playCount = 0
+    const audio = this.#sounds[sound]
+    audio.load() // workaround for Safari audio delay
+
+    audio.addEventListener('ended', () => {
+      playCount++
+      if (playCount < times) {
+        this.#play(audio)
+      }
+    })
+
+    this.#play(audio)
+  }
+
+  #play(audio) {
+    audio.muted = this.muted || !this.time.speedSetting
+    audio.currentTime = 0
+    audio.playbackRate = this.time.speedSetting
+    audio.play()
   }
 }

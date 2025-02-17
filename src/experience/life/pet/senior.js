@@ -1,3 +1,4 @@
+import { Soundboard } from '../../ui/soundboard'
 import Pet from './pet'
 
 export default class Senior extends Pet {
@@ -12,6 +13,8 @@ export default class Senior extends Pet {
     eyesClosed.spawn()
 
     const startedAt = this.age
+
+    Soundboard.instance.play('death')
 
     this.updateSeconds = () => {
       if (this.age > startedAt + 3) {

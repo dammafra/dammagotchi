@@ -1,3 +1,4 @@
+import { Soundboard } from '../../ui/soundboard'
 import Pet from './pet'
 
 export default class Egg extends Pet {
@@ -35,6 +36,8 @@ export default class Egg extends Pet {
     const hatching = this.sprites.get('egg').at(0)
     hatching.spawn()
     hatching.mesh.visible = true
+
+    Soundboard.instance.play('hatching')
 
     this.updateSeconds = () => {
       hatching.mesh.position.x +=

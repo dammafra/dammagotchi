@@ -1,7 +1,7 @@
 import Experience from '../experience'
 import Icons, { Icon } from './icons'
 import Menu from './menu'
-import { SoundBoard } from './soundboard'
+import { Soundboard } from './soundboard'
 
 export default class UI {
   constructor() {
@@ -25,10 +25,10 @@ export default class UI {
 
     if (this.menu.visible) {
       this.menu.selectFoodType()
-      SoundBoard.playButtonA()
+      Soundboard.instance.play('button')
     } else {
       this.icons.cycle()
-      if (this.icons.selected !== Icon.ATTENTION) SoundBoard.playButtonA()
+      if (this.icons.selected !== Icon.ATTENTION) Soundboard.instance.play('button')
     }
 
     this.scheduleReset()
@@ -47,7 +47,7 @@ export default class UI {
       this.life.pet.no()
     }
 
-    SoundBoard.playButtonA()
+    Soundboard.instance.play('button')
     this.scheduleReset()
   }
 
@@ -60,7 +60,7 @@ export default class UI {
       this.icons.reset()
     }
 
-    SoundBoard.playButtonA()
+    Soundboard.instance.play('button')
     this.scheduleReset()
   }
 

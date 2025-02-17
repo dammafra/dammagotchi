@@ -5,6 +5,7 @@ import Device from './device/device'
 import Life from './life/life'
 import Loading from './loading'
 import Renderer from './renderer'
+import { Soundboard } from './ui/soundboard'
 import Debug from './utils/debug'
 import Pointer from './utils/pointer'
 import Resources from './utils/resources'
@@ -29,6 +30,7 @@ export default class Experience {
 
     Debug.init()
     Time.init()
+    Soundboard.init()
 
     // Options
     this.canvas = canvas
