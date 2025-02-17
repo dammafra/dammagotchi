@@ -8,7 +8,7 @@ export default class Sprite {
     this.experience = Experience.instance
 
     this.screen = this.experience.device.screen
-    this.scene = this.screen.scene
+    this.group = this.experience.life.group
 
     this.setMesh(matrix)
   }
@@ -30,7 +30,7 @@ export default class Sprite {
 
   spawn() {
     this.reset()
-    this.scene.add(this.mesh)
+    this.group.add(this.mesh)
   }
 
   reset() {
@@ -48,6 +48,6 @@ export default class Sprite {
   dispose() {
     this.reset()
     dispose(this.mesh)
-    this.scene.remove(this.mesh)
+    this.group.remove(this.mesh)
   }
 }

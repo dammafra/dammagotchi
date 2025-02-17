@@ -8,7 +8,7 @@ import {
 } from 'three'
 import Experience from '../experience'
 
-export default class UI {
+export default class Icons {
   constructor() {
     this.experience = Experience.instance
     this.screen = this.experience.device.screen

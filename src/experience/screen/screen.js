@@ -9,10 +9,11 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
+import Icons from '../ui/icons'
+import Menu from '../ui/menu'
 import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
-import UI from './ui'
 
 export default class Screen {
   static debugName = '📺 screen'
@@ -86,7 +87,7 @@ export default class Screen {
     this.glass = new Mesh(this.geometry, this.glassMaterial)
     this.glass.visible = !Debug.instance.active
     this.glass.scale.copy(this.mesh.scale)
-    this.glass.position.copy(this.mesh.position)
+    this.glass.position.z = this.mesh.position.z - 0.001
     this.glass.rotation.copy(this.mesh.rotation)
 
     this.experience.scene.add(this.glass)
@@ -101,7 +102,8 @@ export default class Screen {
 
   ready() {
     this.environment = new ScreenEnvironment()
-    this.ui = new UI()
+    this.ui = new Icons()
+    this.menu = new Menu()
     this.debug?.addBinding(this.environment, 'flicker')
   }
 

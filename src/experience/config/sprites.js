@@ -94,9 +94,8 @@ export default {
   items: [],
   misc: [
     { name: 'toilets', index: 0, split: 3 },
-    { name: 'meter', index: 1, split: 2 },
-    { name: 'poop', index: 2, split: 2 },
-    { name: 'illnesses', index: 3, split: 3 },
+    { name: 'poop', index: 1, split: 2 },
+    { name: 'illnesses', index: 2, split: 3 },
   ],
   food: [
     { name: 'meal.babies', index: 66 },

@@ -1,11 +1,24 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'TamaConnect';
+  src: url('/fonts/tamaconnecttype.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @utility font-kablammo {
   font-family: 'Kablammo', serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-variation-settings: 'MORF' 0;
+}
+
+@utility font-tama {
+  font-family: 'TamaConnect';
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {

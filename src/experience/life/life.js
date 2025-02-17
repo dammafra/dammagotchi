@@ -1,7 +1,8 @@
-import { EventDispatcher } from 'three'
+import { EventDispatcher, Group } from 'three'
 import { Pane } from 'tweakpane'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
+import Experience from '../experience'
 import Debug from '../utils/debug'
 import Food from './food'
 import Baby from './pet/baby'
@@ -24,6 +25,9 @@ export default class Life extends EventDispatcher {
   constructor() {
     super()
 
+    this.experience = Experience.instance
+    this.scene = this.experience.device.screen.scene
+
     // TODO: load saved state
     this.age = 0
     this.stageStart = 0
@@ -32,6 +36,8 @@ export default class Life extends EventDispatcher {
 
     this.stage = 'egg'
     this.model = ''
+    this.group = new Group()
+    this.scene.add(this.group)
 
     this.setPet()
     this.setActionsPane()
