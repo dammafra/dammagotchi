@@ -1,6 +1,7 @@
 import html2canvas from 'html2canvas-pro'
 import { CanvasTexture, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
 import Experience from '../experience'
+import Food from '../life/food'
 
 export default class Menu {
   constructor() {
@@ -9,6 +10,7 @@ export default class Menu {
     this.scene = this.experience.device.screen.scene
 
     this.feedMenu = document.getElementById('feed-menu')
+    this.foodType = Food.MEAL
     this.visible = false
 
     this.setGeometry()
@@ -58,6 +60,7 @@ export default class Menu {
     for (const arrow of arrows) {
       arrow.classList.toggle('invisible')
     }
+    this.foodType = this.foodType === Food.SNACK ? Food.MEAL : Food.SNACK
     this.refreshMenu()
   }
 
@@ -68,7 +71,7 @@ export default class Menu {
         el.nodeName !== 'HEAD' &&
         el.id !== 'html2canvas' &&
         !el.closest('#html2canvas') &&
-        !el.href?.includes('style.css'),
+        !el.href?.includes('.css'),
       backgroundColor: null,
     })
   }

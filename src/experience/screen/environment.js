@@ -11,9 +11,15 @@ export default class ScreenEnvironment {
 
     this.scene = this.experience.device.screen.scene
     this.resources = this.experience.resources
+    this.life = this.experience.life
+
+    this.flicker = false
+    this.flickerSpeed = 2
 
     this.setEnvironmentMap()
-    this.setFlicker()
+
+    this.life.addEventListener('start-evolving', e => this.setFlicker(e.flicker))
+    this.life.addEventListener('end-evolving', e => this.setFlicker(e.flicker))
   }
 
   setEnvironmentMap() {
@@ -26,20 +32,13 @@ export default class ScreenEnvironment {
     this.scene.backgroundIntensity = this.backgroundIntensity
   }
 
-  setFlicker() {
-    this.flicker = false
-    this.flickerSpeed = 2
-  }
+  setFlicker(value) {
+    this.flicker = value
 
-  startFlicker() {
-    this.flicker = true
-  }
-
-  stopFlicker() {
-    this.flicker = false
-
-    this.scene.backgroundIntensity = this.backgroundIntensity
-    Pixel.material?.color.set(new Color('black'))
+    if (!this.flicker) {
+      this.scene.backgroundIntensity = this.backgroundIntensity
+      Pixel.material?.color.set(new Color('black'))
+    }
   }
 
   update() {

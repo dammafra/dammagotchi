@@ -9,11 +9,11 @@ export default {
   },
   stages: {
     egg: 10,
-    babies: 20,
-    children: 20,
-    teenagers: 20,
-    adults: 20,
-    seniors: 20,
+    babies: 100,
+    children: 100,
+    teenagers: 100,
+    adults: 100,
+    seniors: 100,
     death: -1,
   },
 }

@@ -9,8 +9,6 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
-import Icons from '../ui/icons'
-import Menu from '../ui/menu'
 import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
@@ -102,8 +100,6 @@ export default class Screen {
 
   ready() {
     this.environment = new ScreenEnvironment()
-    this.ui = new Icons()
-    this.menu = new Menu()
     this.debug?.addBinding(this.environment, 'flicker')
   }
 

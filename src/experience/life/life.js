@@ -1,10 +1,8 @@
 import { EventDispatcher, Group } from 'three'
-import { Pane } from 'tweakpane'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
 import Debug from '../utils/debug'
-import Food from './food'
 import Baby from './pet/baby'
 import Death from './pet/death'
 import Egg from './pet/egg'
@@ -36,11 +34,9 @@ export default class Life extends EventDispatcher {
 
     this.stage = 'egg'
     this.model = ''
-    this.group = new Group()
-    this.scene.add(this.group)
 
+    this.setGroup()
     this.setPet()
-    this.setActionsPane()
 
     this.debug = Debug.instance.gui?.addFolder({ title: Life.debugName })
     this.debug?.addBinding(this, 'pause')
@@ -54,6 +50,11 @@ export default class Life extends EventDispatcher {
       multiline: true,
       rows: 5,
     })
+  }
+
+  setGroup() {
+    this.group = new Group()
+    this.scene.add(this.group)
   }
 
   setPet(evolving) {
@@ -109,15 +110,21 @@ export default class Life extends EventDispatcher {
     this.stageStart = this.age
     const stageDuration = lifeConfig.stages[this.stage]
     if (stageDuration > 0) this.schedule(this.evolveOut, stageDuration, 'evolve out')
+    this.dispatchEvent({ type: 'end-evolving' })
   }
 
   evolveOut = () => {
+    this.dispatchEvent({
+      type: 'start-evolving',
+      flicker: this.stage !== 'egg' && this.stage !== 'seniors',
+    })
+
     if (this.pet.evolveOut) {
       this.pet.evolveOut()
       const transitionDuration = lifeConfig.transitions[this.stage].out
       this.schedule(this.evolveIn, transitionDuration, 'evolve in')
     } else {
-      this.next()
+      this.evolveIn()
     }
   }
 
@@ -151,14 +158,5 @@ export default class Life extends EventDispatcher {
   getRandomModel() {
     const keys = Object.keys(spritesConfig.pets[this.stage])
     return keys[Math.floor(Math.random() * keys.length)]
-  }
-
-  setActionsPane() {
-    const actionsPane = new Pane({ title: 'ACTIONS' })
-    actionsPane.element.parentElement.style.bottom = '96px'
-    actionsPane.element.parentElement.style.top = 'unset'
-
-    actionsPane.addButton({ title: '🍔 eat meal' }).on('click', () => this.pet.eat && this.pet.eat(Food.MEAL)) //prettier-ignore
-    actionsPane.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.pet.eat(Food.SNACK)) //prettier-ignore
   }
 }

@@ -1,7 +1,9 @@
+import { EventDispatcher } from 'three'
 import { Evaluator, SUBTRACTION } from 'three-bvh-csg'
 import { radToDeg } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
 import Screen from '../screen/screen'
+import UI from '../ui/ui'
 import Debug from '../utils/debug'
 import Button from './button'
 import ButtonSlot from './button-slot'
@@ -11,7 +13,7 @@ import Notch from './notch'
 import Shell from './shell'
 import Tab from './tab'
 
-export default class Device {
+export default class Device extends EventDispatcher {
   static debugName = '🥚 device'
   static evaluator = new Evaluator()
 
@@ -58,7 +60,7 @@ export default class Device {
         rotation: { x: -Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: 0.3, y: -0.6, z: -0.3 },
         color: '#996600',
-        onClick: () => this.onButtonA(),
+        onClick: () => this.dispatchEvent({ type: 'button-A' }),
       },
       {
         radius: 0.09,
@@ -66,7 +68,7 @@ export default class Device {
         rotation: { x: -Math.PI * 0.15, y: 0, z: 0 },
         position: { x: 0, y: -0.7, z: -0.3 },
         color: '#996600',
-        onClick: () => this.onButtonB(),
+        onClick: () => this.dispatchEvent({ type: 'button-B' }),
       },
       {
         radius: 0.09,
@@ -74,7 +76,7 @@ export default class Device {
         rotation: { x: -Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: -0.3 },
         color: '#996600',
-        onClick: () => this.onButtonC(),
+        onClick: () => this.dispatchEvent({ type: 'button-C' }),
       },
       {
         radius: 0.0405,
@@ -82,7 +84,7 @@ export default class Device {
         rotation: { x: Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: 0.28 },
         color: 'gray',
-        onClick: () => this.onResetButton(),
+        onClick: () => this.dispatchEvent({ type: 'reset-button' }),
       },
     ],
     tab: {
@@ -90,11 +92,13 @@ export default class Device {
       height: 0.3,
       position: { x: -0.6, y: -0.3, z: 0 },
       visible: false,
-      onClick: () => this.onTab(),
+      onClick: () => this.dispatchEvent({ type: 'tab' }),
     },
   }
 
   constructor() {
+    super()
+
     this.experience = Experience.instance
     this.scene = this.experience.scene
     this.pointer = this.experience.pointer
@@ -133,35 +137,19 @@ export default class Device {
     this.environment = new Environment()
   }
 
+  setUI() {
+    this.ui = new UI()
+  }
+
   ready() {
     this.setMesh()
     this.setEnvironment()
+    this.setUI()
     this.screen.ready()
   }
 
   update() {
     this.screen.update()
-  }
-
-  onTab() {
-    console.log('tab clicked')
-  }
-
-  onButtonA() {
-    console.log('button A clicked')
-    this.screen.ui.selectIcon()
-  }
-
-  onButtonB() {
-    console.log('button B clicked')
-  }
-
-  onButtonC() {
-    console.log('button C clicked')
-  }
-
-  onResetButton() {
-    console.log('reset button clicked')
   }
 
   dispose() {

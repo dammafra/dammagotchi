@@ -3,23 +3,31 @@ const petConfig = [{ name: 'idle', index: 0, split: 2 }]
 const babyConfig = petConfig.concat([
   { name: 'hatching', index: 13 },
   { name: 'eat', index: 12, split: 2 },
+  { name: 'no', index: 14 },
 ])
 
-const childConfig = petConfig.concat([{ name: 'eat', index: 12, split: 2 }])
+const childConfig = petConfig.concat([
+  { name: 'eat', index: 12, split: 2 },
+  { name: 'no', index: 14 },
+])
 
-const teenagerBaseConfig = petConfig.concat([{ name: 'eat', index: 12, split: 2 }])
+const teenagerBaseConfig = petConfig.concat([
+  { name: 'eat', index: 12, split: 2 },
+  { name: 'no', index: 14 },
+])
 const teenagerConfig1 = teenagerBaseConfig
 const teenagerConfig2 = teenagerBaseConfig
 
 const adultBaseConfig = petConfig.concat({ name: 'eat', index: 26, split: 2 })
-const adultConfig1 = adultBaseConfig
-const adultConfig2 = adultBaseConfig
-const adultConfig3 = adultBaseConfig
-const adultConfig4 = adultBaseConfig
+const adultConfig1 = adultBaseConfig.concat([{ name: 'no', index: 29 }])
+const adultConfig2 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
+const adultConfig3 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
+const adultConfig4 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
 
 const seniorConfig = petConfig.concat([
   { name: 'eyes-closed', index: 18 },
   { name: 'eat', index: 25, split: 2 },
+  { name: 'no', index: 28 },
 ])
 
 export default {

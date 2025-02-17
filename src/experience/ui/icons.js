@@ -8,6 +8,17 @@ import {
 } from 'three'
 import Experience from '../experience'
 
+export const Icon = Object.freeze({
+  METER: 0,
+  FEED: 1,
+  DUCK: 2,
+  PLAY: 3,
+  DISCIPLINE: 4,
+  MEDICINE: 5,
+  LIGHT: 6,
+  ATTENTION: 7,
+})
+
 export default class Icons {
   constructor() {
     this.experience = Experience.instance
@@ -15,9 +26,8 @@ export default class Icons {
     this.scene = this.screen.scene
     this.resources = this.experience.resources
 
-    this.selectedIcon = 7
+    this.selected = Icon.ATTENTION
     this.baseOpacity = 0.3
-    this.resetTimeout = null
 
     this.setIcons()
   }
@@ -60,34 +70,26 @@ export default class Icons {
     })
   }
 
-  selectIcon() {
-    this.selectedIcon = ++this.selectedIcon % 8
+  cycle() {
+    this.selected = ++this.selected % 8
     this.icons.forEach((icon, index) => {
       icon.material.opacity = this.baseOpacity
-      if (this.selectedIcon === index && this.selectedIcon != 7) {
-        const buttonSound = new Audio('sounds/button.mp3')
-        buttonSound.load() // workaround for Safari audio delay
-        buttonSound.currentTime = 0
-        buttonSound.play()
-
+      if (this.selected === index && this.selected != Icon.ATTENTION) {
         icon.material.opacity = 1
       }
     })
-
-    this.resetTimeout && clearTimeout(this.resetTimeout)
-    this.resetTimeout = setTimeout(this.reset, 10000)
   }
 
   notifyAttention() {
-    this.icons.at(7).material.opacity = 1
-  }
-
-  reset = () => {
-    this.icons.at(this.selectedIcon).material.opacity = this.baseOpacity
-    this.selectedIcon = 7
+    this.icons.at(Icon.ATTENTION).material.opacity = 1
   }
 
   resolveAttention() {
-    this.icons.at(7).material.opacity = this.baseOpacity
+    this.icons.at(Icon.ATTENTION).material.opacity = this.baseOpacity
+  }
+
+  reset = () => {
+    this.icons.at(this.selected).material.opacity = this.baseOpacity
+    this.selected = Icon.ATTENTION
   }
 }

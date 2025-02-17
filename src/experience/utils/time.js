@@ -80,6 +80,7 @@ export default class Time extends EventDispatcher {
     speedSettingsPane.element.parentElement.style.zIndex = 2
 
     speedSettingsPane.addBinding(this, 'speedSetting', {
+      label: 'speed',
       readonly: true,
       format: speedSetting => (speedSetting === 0 ? 'MAX' : `${speedSetting}x`),
     })

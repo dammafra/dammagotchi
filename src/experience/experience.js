@@ -50,7 +50,7 @@ export default class Experience {
     this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updateSeconds)
-    this.resources.addEventListener('ready', this.ready)
+    this.resources.addEventListener('ready', this.readyResources)
   }
 
   resize = () => {
@@ -58,10 +58,8 @@ export default class Experience {
     this.renderer.resize()
   }
 
-  ready = () => {
+  readyResources = () => {
     this.resources.removeEventListener('ready', this.ready)
-
-    this.device.ready()
 
     this.life = new Life()
     this.life.addEventListener('ready', this.readyLife)
@@ -70,6 +68,7 @@ export default class Experience {
   readyLife = () => {
     this.life.removeEventListener('ready', this.readyLife)
 
+    this.device.ready()
     this.loading.ready()
 
     this.camera.animation()

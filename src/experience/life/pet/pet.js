@@ -15,11 +15,11 @@ export default class Pet extends EventDispatcher {
     this.experience = Experience.instance
 
     this.screen = this.experience.device.screen
-    this.environment = this.screen.environment
     this.screenCamera = this.screen.screenCamera
 
     this.stage = stage
     this.model = model
+    this.canInteract = false
 
     const sprite = this.model ? `pets.${this.stage}.${this.model}` : `pets.${this.stage}`
     this.sprites = Sprites.for(sprite)
@@ -33,18 +33,17 @@ export default class Pet extends EventDispatcher {
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
 
-    this.environment.startFlicker()
-
     this.updateSeconds = null
 
     this.dispose = () => {
       idle1.dispose()
-      this.environment.stopFlicker()
     }
   }
 
   idle = () => {
     this.dispose && this.dispose()
+
+    this.canInteract = true
 
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
@@ -71,6 +70,8 @@ export default class Pet extends EventDispatcher {
     }
 
     this.dispose = () => {
+      this.canInteract = false
+
       idle1.dispose()
       idle2.dispose()
     }
@@ -113,7 +114,6 @@ export default class Pet extends EventDispatcher {
         food1.mesh.position.y = this.screen.center.y
         idle1.mesh.visible = false
         eat2.mesh.visible = true
-        return
       }
 
       if (this.age === startedAt + 2) {
@@ -166,19 +166,51 @@ export default class Pet extends EventDispatcher {
     }
   }
 
+  no() {
+    this.dispose && this.dispose()
+
+    const no = this.sprites.get('no').at(0)
+    no.spawn()
+
+    const startedAt = this.age
+
+    this.updateSeconds = () => {
+      if (this.age === startedAt + 1) {
+        no.mesh.rotation.y += Math.PI
+      }
+
+      if (this.age === startedAt + 2) {
+        no.mesh.rotation.y += Math.PI
+      }
+
+      if (this.age === startedAt + 3) {
+        no.mesh.rotation.y += Math.PI
+      }
+
+      if (this.age === startedAt + 4) {
+        no.mesh.rotation.y += Math.PI
+      }
+
+      if (this.age === startedAt + 5) {
+        this.idle()
+      }
+    }
+
+    this.dispose = () => {
+      no.dispose()
+    }
+  }
+
   evolveOut() {
     this.dispose && this.dispose()
 
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
 
-    this.environment.startFlicker()
-
     this.updateSeconds = null
 
     this.dispose = () => {
       idle1.dispose()
-      this.environment.stopFlicker()
     }
   }
 }
