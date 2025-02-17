@@ -103,7 +103,10 @@ export default {
   misc: [
     { name: 'toilets', index: 0, split: 3 },
     { name: 'poop', index: 1, split: 2 },
-    { name: 'illnesses', index: 2, split: 3 },
+    { name: 'happy', index: 2 },
+    { name: 'illnesses', index: 3, split: 3 },
+    { name: 'sleep', index: 4, split: 3 },
+    { name: 'angry', index: 6, split: 3 },
   ],
   food: [
     { name: 'meal.babies', index: 66 },
