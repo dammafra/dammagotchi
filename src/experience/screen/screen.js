@@ -2,14 +2,17 @@ import {
   Color,
   GridHelper,
   Mesh,
-  MeshBasicMaterial,
   MeshPhysicalMaterial,
   PlaneGeometry,
   Scene,
+  ShaderMaterial,
   SRGBColorSpace,
+  Uniform,
   Vector3,
   WebGLRenderTarget,
 } from 'three'
+import lcdFragmentShader from '../../shaders/lcd/fragment.glsl'
+import lcdVertexShader from '../../shaders/lcd/vertex.glsl'
 import Experience from '../experience'
 import ScreenCamera from './camera'
 import Pixel from './pixel'
@@ -52,21 +55,28 @@ export default class Screen {
   }
 
   setMaterial() {
-    this.material = new MeshBasicMaterial({ map: this.renderTarget.texture })
+    this.material = new ShaderMaterial({
+      vertexShader: lcdVertexShader,
+      fragmentShader: lcdFragmentShader,
+      uniforms: {
+        uMap: new Uniform(this.renderTarget.texture),
+        uContrastFactor: new Uniform(2.0),
+      },
+    })
   }
 
   setMesh() {
     this.mesh = new Mesh(this.geometry, this.material)
 
     this.mesh.scale.setScalar(0.71)
-    this.mesh.position.z = -0.251
-    this.mesh.rotation.y = Math.PI
+    this.mesh.position.z = 0.251
 
     this.mainScene.add(this.mesh)
   }
 
   setGlass() {
     this.glassMaterial = new MeshPhysicalMaterial({
+      color: 0xbbbbbb,
       metalness: 0.1,
       roughness: 0.15,
       transmission: 1,
@@ -76,8 +86,7 @@ export default class Screen {
 
     this.glass = new Mesh(this.geometry, this.glassMaterial)
     this.glass.scale.copy(this.mesh.scale)
-    this.glass.position.z = this.mesh.position.z - 0.001
-    this.glass.rotation.copy(this.mesh.rotation)
+    this.glass.position.z = this.mesh.position.z + 0.001
 
     this.mainScene.add(this.glass)
   }
@@ -139,6 +148,8 @@ export default class Screen {
     helper.position.z = this.center.z - 0.001
     helper.rotation.x = Math.PI * 0.5
     this.scene.add(helper)
+
+    this.glass.visible = false
 
     this.debug.addBinding(helper, 'visible', { label: 'helper' })
 

@@ -16,7 +16,7 @@ export default class Environment {
 
   setLight() {
     this.directionalLight = new DirectionalLight('white', 4)
-    this.directionalLight.position.set(-3, 3, -2)
+    this.directionalLight.position.set(3, 3, 2)
 
     this.directionalLight.castShadow = true
     this.directionalLight.shadow.mapSize.set(512, 512)

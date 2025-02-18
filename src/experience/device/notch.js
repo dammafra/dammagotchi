@@ -29,7 +29,7 @@ export default class Notch {
     this.torus.updateMatrixWorld()
 
     this.box = new Brush(this.boxGeometry, Shell.material)
-    this.box.position.z = -(this.cut / 2)
+    this.box.position.z = this.cut / 2
     this.box.updateMatrixWorld()
 
     this.mesh = Device.evaluator.evaluate(this.torus, this.box, SUBTRACTION)

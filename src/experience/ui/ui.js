@@ -44,24 +44,23 @@ export default class UI {
       this.icons.reset()
       this.selectedMenu.action()
       this.selectedMenu = null
-      return
-    }
+    } else {
+      switch (this.icons.selected) {
+        case Icons.FEED:
+          this.selectedMenu = this.menuFeed
+          break
+        default:
+          this.life.pet?.no()
+          break
+      }
 
-    switch (this.icons.selected) {
-      case Icons.FEED:
-        this.selectedMenu = this.menuFeed
-        break
-      default:
-        this.life.pet?.no()
-        break
-    }
-
-    if (this.selectedMenu) {
-      if (this.selectedMenu.cycle) {
-        this.selectedMenu.show()
-      } else {
-        this.selectedMenu.action()
-        this.selectedMenu = null
+      if (this.selectedMenu) {
+        if (this.selectedMenu.cycle) {
+          this.selectedMenu.show()
+        } else {
+          this.selectedMenu.action()
+          this.selectedMenu = null
+        }
       }
     }
 

@@ -45,7 +45,7 @@ export default class Camera {
 
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.aspectRatio, 0.1, 100)
-    this.instance.position.set(0, 10, 0)
+    this.instance.position.set(0, 10, -3)
     this.scene.add(this.instance)
   }
 
@@ -72,7 +72,8 @@ export default class Camera {
   }
 
   async animation() {
-    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, true)
+    await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
+    await this.controls.dolly(2, true)
   }
 
   setDebug(debug) {
@@ -83,7 +84,7 @@ export default class Camera {
       .on('change', () => this.instance.updateProjectionMatrix())
     this.debug.addBinding(this.instance, 'position')
 
-    this.controls.setLookAt(0, 0, -3, 0, 0, 0)
+    this.controls.setLookAt(0, 0, 3, 0, 0, 0)
     this.controls.dolly(2)
   }
 }
