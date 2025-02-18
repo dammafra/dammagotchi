@@ -8,25 +8,23 @@ import {
 } from 'three'
 import Experience from '../experience'
 
-export const Icon = Object.freeze({
-  METER: 0,
-  FEED: 1,
-  DUCK: 2,
-  PLAY: 3,
-  DISCIPLINE: 4,
-  MEDICINE: 5,
-  LIGHT: 6,
-  ATTENTION: 7,
-})
-
 export default class Icons {
+  static METER = 0
+  static FEED = 1
+  static DUCK = 2
+  static PLAY = 3
+  static DISCIPLINE = 4
+  static MEDICINE = 5
+  static LIGHT = 6
+  static ATTENTION = 7
+
   constructor() {
     this.experience = Experience.instance
     this.screen = this.experience.device.screen
     this.scene = this.screen.scene
     this.resources = this.experience.resources
 
-    this.selected = Icon.ATTENTION
+    this.selected = Icons.ATTENTION
     this.baseOpacity = 0.3
 
     this.setIcons()
@@ -74,22 +72,22 @@ export default class Icons {
     this.selected = ++this.selected % 8
     this.icons.forEach((icon, index) => {
       icon.material.opacity = this.baseOpacity
-      if (this.selected === index && this.selected != Icon.ATTENTION) {
+      if (this.selected === index && this.selected != Icons.ATTENTION) {
         icon.material.opacity = 1
       }
     })
   }
 
   notifyAttention() {
-    this.icons.at(Icon.ATTENTION).material.opacity = 1
+    this.icons.at(Icons.ATTENTION).material.opacity = 1
   }
 
   resolveAttention() {
-    this.icons.at(Icon.ATTENTION).material.opacity = this.baseOpacity
+    this.icons.at(Icons.ATTENTION).material.opacity = this.baseOpacity
   }
 
   reset = () => {
     this.icons.at(this.selected).material.opacity = this.baseOpacity
-    this.selected = Icon.ATTENTION
+    this.selected = Icons.ATTENTION
   }
 }

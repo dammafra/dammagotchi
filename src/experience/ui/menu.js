@@ -1,40 +1,40 @@
 import html2canvas from 'html2canvas-pro'
 import { CanvasTexture, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
 import Experience from '../experience'
-import Food from '../life/food'
 
 export default class Menu {
-  constructor() {
+  constructor(element) {
     this.experience = Experience.instance
     this.life = this.experience.life
     this.scene = this.experience.device.screen.scene
 
-    this.feedMenu = document.getElementById('feed-menu')
-    this.foodType = Food.MEAL
-    this.visible = false
+    this.element = element
 
     this.setGeometry()
-    this.setMenu()
+    this.setMaterial()
+    this.setMesh()
   }
 
   setGeometry() {
     this.geometry = new PlaneGeometry()
   }
 
-  setMenu() {
+  setMaterial() {
     this.material = new MeshBasicMaterial({ transparent: true })
+  }
 
-    this.plane = new Mesh(this.geometry, this.material)
-    this.plane.position.z = -2
-    this.plane.position.y = 1.43
-    this.plane.visible = false
+  setMesh() {
+    this.mesh = new Mesh(this.geometry, this.material)
+    this.mesh.position.z = -2
+    this.mesh.position.y = 1.43
+    this.mesh.visible = false
 
-    this.scene.add(this.plane)
+    this.scene.add(this.mesh)
     this.refreshMenu()
   }
 
   async refreshMenu() {
-    const canvas = await this.getCanvas(this.feedMenu)
+    const canvas = await this.getCanvas(this.element)
     const texture = new CanvasTexture(canvas)
 
     this.material.map = texture
@@ -43,26 +43,28 @@ export default class Menu {
 
   show() {
     this.visible = true
-    this.plane.visible = true
-    this.experience.life.group.visible = false
-    this.experience.life.pause = true
+    this.mesh.visible = true
+
+    // TODO: improve
+    this.life.group.visible = false
+    this.life.pause = true
   }
 
   hide() {
     this.visible = false
-    this.plane.visible = false
-    this.experience.life.group.visible = true
-    this.experience.life.pause = false
-  }
+    this.mesh.visible = false
 
-  selectFoodType() {
-    const arrows = this.feedMenu.getElementsByClassName('arrow')
-    for (const arrow of arrows) {
-      arrow.classList.toggle('invisible')
-    }
-    this.foodType = this.foodType === Food.SNACK ? Food.MEAL : Food.SNACK
+    // TODO: improve
+    this.life.group.visible = true
+    this.life.pause = false
+
+    this.reset()
     this.refreshMenu()
   }
+
+  cycle() {}
+  reset() {}
+  action() {}
 
   getCanvas(element) {
     return html2canvas(element, {

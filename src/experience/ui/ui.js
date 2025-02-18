@@ -1,6 +1,6 @@
 import Experience from '../experience'
-import Icons, { Icon } from './icons'
-import Menu from './menu'
+import Icons from './icons'
+import MenuFeed from './menu-feed'
 import { Soundboard } from './soundboard'
 
 export default class UI {
@@ -10,8 +10,9 @@ export default class UI {
     this.life = this.experience.life
 
     this.icons = new Icons()
-    this.menu = new Menu()
+    this.menuFeed = new MenuFeed()
 
+    this.selectedMenu = null
     this.resetTimeout = null
 
     this.life.addEventListener('start-evolving', this.reset)
@@ -23,28 +24,42 @@ export default class UI {
   onButtonA = () => {
     if (!this.life.pet.canInteract) return
 
-    if (this.menu.visible) {
-      this.menu.selectFoodType()
-      Soundboard.instance.play('button')
+    if (this.selectedMenu) {
+      this.selectedMenu.cycle()
     } else {
       this.icons.cycle()
-      if (this.icons.selected !== Icon.ATTENTION) Soundboard.instance.play('button')
     }
 
+    if (this.icons.selected !== Icons.ATTENTION) Soundboard.instance.play('button')
     this.scheduleReset()
   }
 
   onButtonB = () => {
     if (!this.life.pet.canInteract) return
 
-    if (this.menu.visible) {
-      this.menu.hide()
+    if (this.selectedMenu) {
       this.icons.reset()
-      this.life.pet.eat(this.menu.foodType)
-    } else if (this.icons.selected === Icon.FEED) {
-      this.menu.show()
-    } else if (this.icons.selected < 7) {
-      this.life.pet.no()
+      this.selectedMenu.action()
+      this.selectedMenu = null
+      return
+    }
+
+    switch (this.icons.selected) {
+      case Icons.FEED:
+        this.selectedMenu = this.menuFeed
+        break
+      default:
+        this.life.pet.no()
+        break
+    }
+
+    if (this.selectedMenu) {
+      if (this.selectedMenu.cycle) {
+        this.selectedMenu.show()
+      } else {
+        this.selectedMenu.action()
+        this.selectedMenu = null
+      }
     }
 
     Soundboard.instance.play('button')
@@ -54,8 +69,9 @@ export default class UI {
   onButtonC = () => {
     if (!this.life.pet.canInteract) return
 
-    if (this.menu.visible) {
-      this.menu.hide()
+    if (this.selectedMenu) {
+      this.selectedMenu.hide()
+      this.selectedMenu = null
     } else {
       this.icons.reset()
     }
@@ -71,6 +87,7 @@ export default class UI {
 
   reset = () => {
     this.icons.reset()
-    this.menu.hide()
+    this.selectedMenu?.hide()
+    this.selectedMenu = null
   }
 }
