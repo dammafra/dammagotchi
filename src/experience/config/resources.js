@@ -2,12 +2,12 @@ export default [
   {
     name: 'sceneBackground',
     type: 'texture',
-    path: 'environment-maps/scene-background-tiny.jpg',
+    path: 'environment-maps/scene-background.webp',
   },
   {
     name: 'screenBackground',
     type: 'texture',
-    path: 'environment-maps/screen-background-desaturated-tiny.png',
+    path: 'environment-maps/screen-background.webp',
   },
   // {
   //   name: 'shellTexture',
