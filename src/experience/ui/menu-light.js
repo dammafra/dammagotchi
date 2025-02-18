@@ -9,6 +9,6 @@ export default class MenuLight extends Menu {
   reset() {}
 
   action() {
-    this.scene.backgroundIntensity = 0
+    this.screen.dark.visible = !this.screen.dark.visible
   }
 }

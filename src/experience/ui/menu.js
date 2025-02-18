@@ -6,13 +6,16 @@ export default class Menu {
   constructor(element) {
     this.experience = Experience.instance
     this.life = this.experience.life
-    this.scene = this.experience.screen.scene
+    this.screen = this.experience.screen
+    this.scene = this.screen.scene
 
     this.element = element
 
-    this.setGeometry()
-    this.setMaterial()
-    this.setMesh()
+    if (this.element) {
+      this.setGeometry()
+      this.setMaterial()
+      this.setMesh()
+    }
   }
 
   setGeometry() {

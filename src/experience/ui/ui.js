@@ -1,6 +1,7 @@
 import Experience from '../experience'
 import Icons from './icons'
 import MenuFeed from './menu-feed'
+import MenuLight from './menu-light'
 import { Soundboard } from './soundboard'
 
 export default class UI {
@@ -11,6 +12,7 @@ export default class UI {
 
     this.icons = new Icons()
     this.menuFeed = new MenuFeed()
+    this.menuLight = new MenuLight()
 
     this.selectedMenu = null
     this.resetTimeout = null
@@ -59,13 +61,16 @@ export default class UI {
     if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
-      this.icons.reset()
       this.selectedMenu.action()
+      this.selectedMenu.hide()
       this.selectedMenu = null
     } else {
       switch (this.icons.selected) {
         case Icons.FEED:
           this.selectedMenu = this.menuFeed
+          break
+        case Icons.LIGHT:
+          this.selectedMenu = this.menuLight
           break
         default:
           this.life.pet?.no()

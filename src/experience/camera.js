@@ -73,7 +73,6 @@ export default class Camera {
 
   async animation() {
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
-    await this.controls.dolly(2, true)
   }
 
   setDebug(debug) {

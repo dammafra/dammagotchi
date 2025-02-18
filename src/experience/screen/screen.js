@@ -2,6 +2,7 @@ import {
   Color,
   GridHelper,
   Mesh,
+  MeshBasicMaterial,
   MeshPhysicalMaterial,
   PlaneGeometry,
   Scene,
@@ -40,6 +41,7 @@ export default class Screen {
     this.setMaterial()
     this.setMesh()
     this.setGlass()
+    this.setDark()
   }
 
   setGrid() {
@@ -91,6 +93,18 @@ export default class Screen {
     this.mainScene.add(this.glass)
   }
 
+  setDark() {
+    this.darkMaterial = new MeshBasicMaterial({ color: 'black', depthWrite: false })
+
+    this.dark = new Mesh(this.geometry, this.darkMaterial)
+    this.dark.visible = false
+    this.dark.scale.y = 0.58
+    this.dark.position.z = -2
+    this.dark.position.y = 1.4
+
+    this.scene.add(this.dark)
+  }
+
   setEnvironmentMap() {
     const environmentMap = this.resources.items.screenBackground
     environmentMap.colorSpace = SRGBColorSpace
@@ -105,8 +119,8 @@ export default class Screen {
     this.flicker = value
 
     if (!this.flicker) {
-      this.scene.backgroundIntensity = this.backgroundIntensity
       Pixel.material?.color.set(new Color('black'))
+      this.dark.visible = false
     }
   }
 
@@ -126,9 +140,8 @@ export default class Screen {
     if (!this.flicker) return
 
     const toggle = Math.floor(this.time.elapsed * this.time.speed * this.flickerSpeed) % 2 === 0
-
-    this.scene.backgroundIntensity = toggle ? this.backgroundIntensity : 0.05
-    Pixel.material.color.set(new Color(toggle ? 'black' : 'white'))
+    this.dark.visible = toggle
+    Pixel.material.color.set(new Color(toggle ? 'white' : 'black'))
   }
 
   contains(sprite, position) {

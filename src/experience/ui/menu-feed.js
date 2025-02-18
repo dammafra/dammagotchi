@@ -29,6 +29,5 @@ export default class MenuFeed extends Menu {
 
   action() {
     this.life.pet.eat(this.foodType)
-    this.hide()
   }
 }
