@@ -18,6 +18,24 @@ export default class UI {
     this.device.addEventListener('button-A', this.onButtonA)
     this.device.addEventListener('button-B', this.onButtonB)
     this.device.addEventListener('button-C', this.onButtonC)
+
+    window.addEventListener('keydown', e => {
+      switch (e.key) {
+        case ' ':
+          this.onButtonA()
+          break
+        case 'ArrowUp':
+        case 'ArrowDown':
+          if (this.selectedMenu) this.onButtonA()
+          break
+        case 'Enter':
+          this.onButtonB()
+          break
+        case 'Escape':
+          this.onButtonC()
+          break
+      }
+    })
   }
 
   ready() {
