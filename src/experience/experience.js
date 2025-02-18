@@ -66,7 +66,6 @@ export default class Experience {
         }
 
         this.debug.loadState()
-        // Sprite.setDebug(this.debug)
       })
     }
   }

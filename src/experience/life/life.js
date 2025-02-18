@@ -24,7 +24,6 @@ export default class Life {
 
   constructor() {
     this.experience = Experience.instance
-    this.screen = this.experience.screen
 
     // TODO: load saved state
     this.age = 0
@@ -33,7 +32,7 @@ export default class Life {
     this.scheduled = new Map()
 
     this.group = new Group()
-    this.screen.scene.add(this.group)
+    this.experience.screen.scene.add(this.group)
 
     this.stage = 'egg'
     this.model = ''
@@ -98,11 +97,12 @@ export default class Life {
     const stageDuration = lifeConfig.stages[this.stage]
     if (stageDuration > 0) this.schedule(this.evolveOut, stageDuration, 'evolve out')
 
-    this.screen.setFlicker(false)
+    this.experience.screen.setFlicker(false)
   }
 
   evolveOut = () => {
-    this.screen.setFlicker(this.stage !== 'egg' && this.stage !== 'seniors')
+    this.experience.screen.setFlicker(this.stage !== 'egg' && this.stage !== 'seniors')
+    this.experience.ui.reset()
 
     if (this.pet.evolveOut) {
       this.pet.evolveOut()
