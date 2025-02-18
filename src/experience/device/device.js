@@ -4,7 +4,6 @@ import { radToDeg } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
 import Screen from '../screen/screen'
 import UI from '../ui/ui'
-import Debug from '../utils/debug'
 import Button from './button'
 import ButtonSlot from './button-slot'
 import Environment from './environment'
@@ -104,7 +103,7 @@ export default class Device extends EventDispatcher {
     this.pointer = this.experience.pointer
     this.screen = new Screen()
 
-    this.setDebug()
+    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setMesh() {
@@ -162,9 +161,8 @@ export default class Device extends EventDispatcher {
     this.scene.remove(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
   }
 
-  setDebug() {
-    this.debug = Debug.instance.gui?.addFolder({ title: Device.debugName, expanded: false })
-    if (!this.debug) return
+  setDebug = () => {
+    this.debug = this.experience.debug.gui.addFolder({ title: Device.debugName, expanded: false })
 
     const shellFolder = this.debug.addFolder({ title: 'shell', expanded: false })
     shellFolder.addBinding(this.config.shell, 'girth', { min: 0, max: 2, step: 0.01 })

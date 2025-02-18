@@ -1,8 +1,8 @@
 import { EventDispatcher } from 'three'
 import spritesConfig from '../config/sprites'
+import Experience from '../experience'
 import Sprite from '../screen/sprite'
 import { areColorsNear, rgbToHex } from './colors'
-import Debug from './debug'
 
 export default class Sprites extends EventDispatcher {
   /** @type {Map<string, Sprites} */
@@ -22,6 +22,8 @@ export default class Sprites extends EventDispatcher {
     super()
 
     Sprites.instances.set(sprite, this)
+
+    this.experience = Experience.instance
 
     this.loaded = new Map()
     this.img = new Image()
@@ -157,7 +159,7 @@ export default class Sprites extends EventDispatcher {
 
       subMatrix = this.reduce(subMatrix)
 
-      if (Debug.instance.active) {
+      if (this.experience.debugActive) {
         this.print(subMatrix)
       }
 

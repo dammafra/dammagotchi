@@ -12,7 +12,6 @@ import {
   Vector4,
 } from 'three'
 import Experience from './experience'
-import Debug from './utils/debug'
 import Time from './utils/time'
 
 const subsetOfTHREE = {
@@ -36,34 +35,21 @@ export default class Camera {
     // Setup
     this.experience = Experience.instance
     this.time = Time.instance
-    this.debug = Debug.instance.gui?.addFolder({ title: Camera.debugName, expanded: false })
 
     this.sizes = this.experience.sizes
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
 
     this.setInstance()
-    this.setParallax()
     this.setControls()
+
+    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.aspectRatio, 0.1, 100)
     this.instance.position.set(0, 10, 0)
     this.scene.add(this.instance)
-
-    this.debug
-      ?.addBinding(this.instance, 'fov', { min: 10, max: 100, step: 0.1 })
-      .on('change', () => this.instance.updateProjectionMatrix())
-    this.debug?.addBinding(this.instance, 'position')
-  }
-
-  setParallax() {
-    this.parallaxIntensity = 0.1
-    this.parallaxEase = 5
-
-    this.debug?.addBinding(this, 'parallaxIntensity', { min: 0, max: 2, step: 0.1 })
-    this.debug?.addBinding(this, 'parallaxEase', { min: 1, max: 10, step: 0.5 })
   }
 
   setControls() {
@@ -89,7 +75,16 @@ export default class Camera {
   }
 
   async animation() {
-    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !Debug.instance.active)
-    Debug.instance.active && this.controls.dolly(2)
+    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !this.experience.debugActive)
+    this.experience.debugActive && this.controls.dolly(2)
+  }
+
+  setDebug = () => {
+    this.debug = this.experience.debug.gui.addFolder({ title: Camera.debugName, expanded: false })
+
+    this.debug
+      .addBinding(this.instance, 'fov', { min: 10, max: 100, step: 0.1 })
+      .on('change', () => this.instance.updateProjectionMatrix())
+    this.debug.addBinding(this.instance, 'position')
   }
 }

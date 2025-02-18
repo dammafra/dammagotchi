@@ -1,7 +1,7 @@
 import { EventDispatcher } from 'three'
 import { Timer } from 'three/addons/misc/Timer.js'
 import { Pane } from 'tweakpane'
-import Debug from './debug'
+import Experience from '../experience'
 
 const TIME_SPEED_SETTINGS = Object.freeze({
   1: 2,
@@ -32,7 +32,7 @@ export default class Time extends EventDispatcher {
 
     Time.instance = this
 
-    // Setup
+    this.experience = Experience.instance
     this.timer = new Timer()
 
     this.elapsed = 0
@@ -40,16 +40,16 @@ export default class Time extends EventDispatcher {
     this.elapsedSeconds = 0
     this.speedSetting = 1
 
-    this.setSpeedSettingsPane()
-
     // don't call the tick method immediately to avoid having a delta equal to 0 on the first frame
     window.requestAnimationFrame(this.tick)
-
     window.addEventListener('keypress', e => this.setSpeedSetting(e.key))
+
+    this.setSpeedSettingsPane()
+    this.experience.addEventListener('debug', this.setDebug)
   }
 
   tick = () => {
-    Debug.instance.stats?.begin()
+    this.debug?.stats.begin()
 
     this.timer.update()
 
@@ -64,7 +64,7 @@ export default class Time extends EventDispatcher {
     }
     this.elapsedSeconds = currentSeconds
 
-    Debug.instance.stats?.end()
+    this.debug?.stats.end()
     this.animationFrame = window.requestAnimationFrame(this.tick)
   }
 
@@ -88,5 +88,9 @@ export default class Time extends EventDispatcher {
     speedSettingsPane.addButton({ title: '2x [key 2]' }).on('click', () => this.setSpeedSetting('2')) //prettier-ignore
     speedSettingsPane.addButton({ title: '3x [key 3]' }).on('click', () => this.setSpeedSetting('3')) //prettier-ignore
     speedSettingsPane.addButton({ title: 'MAX [key 0]' }).on('click', () => this.setSpeedSetting('0')) //prettier-ignore
+  }
+
+  setDebug = () => {
+    this.debug = this.experience.debug
   }
 }

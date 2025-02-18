@@ -2,7 +2,8 @@ import { EventDispatcher, Group } from 'three'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
-import Debug from '../utils/debug'
+import Food from './food'
+import Misc from './misc'
 import Baby from './pet/baby'
 import Death from './pet/death'
 import Egg from './pet/egg'
@@ -26,6 +27,9 @@ export default class Life extends EventDispatcher {
     this.experience = Experience.instance
     this.scene = this.experience.device.screen.scene
 
+    Food.init()
+    Misc.init()
+
     // TODO: load saved state
     this.age = 0
     this.stageStart = 0
@@ -38,18 +42,7 @@ export default class Life extends EventDispatcher {
     this.setGroup()
     this.setPet()
 
-    this.debug = Debug.instance.gui?.addFolder({ title: Life.debugName })
-    this.debug?.addBinding(this, 'pause')
-    this.debug?.addBinding(this, 'stage', { readonly: true })
-    this.debug?.addBinding(this, 'stageStart', { readonly: true })
-    this.debug?.addBinding(this, 'model', { readonly: true })
-    this.debug?.addBinding(this, 'age', { readonly: true })
-    this.debug?.addBinding(this, 'scheduledFormatted', {
-      label: 'schedule',
-      readonly: true,
-      multiline: true,
-      rows: 5,
-    })
+    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setGroup() {
@@ -158,5 +151,21 @@ export default class Life extends EventDispatcher {
   getRandomModel() {
     const keys = Object.keys(spritesConfig.pets[this.stage])
     return keys[Math.floor(Math.random() * keys.length)]
+  }
+
+  setDebug = () => {
+    this.debug = this.experience.debug.gui.addFolder({ title: Life.debugName })
+
+    this.debug.addBinding(this, 'pause')
+    this.debug.addBinding(this, 'stage', { readonly: true })
+    this.debug.addBinding(this, 'stageStart', { readonly: true })
+    this.debug.addBinding(this, 'model', { readonly: true })
+    this.debug.addBinding(this, 'age', { readonly: true })
+    this.debug.addBinding(this, 'scheduledFormatted', {
+      label: 'schedule',
+      readonly: true,
+      multiline: true,
+      rows: 5,
+    })
   }
 }

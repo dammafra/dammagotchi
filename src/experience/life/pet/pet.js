@@ -92,7 +92,7 @@ export default class Pet extends EventDispatcher {
     eat1.mesh.position.x = idle1.mesh.position.x
     eat2.mesh.position.x = idle1.mesh.position.x
 
-    const [food1, food2, food3] = Food.get(type, this.stage)
+    const [food1, food2, food3] = Food.instance.get(type, this.stage)
     food1.spawn()
     food2.spawn()
     food3.spawn()

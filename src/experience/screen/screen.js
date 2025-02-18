@@ -9,7 +9,6 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
-import Debug from '../utils/debug'
 import ScreenCamera from './camera'
 import ScreenEnvironment from './environment'
 
@@ -18,7 +17,6 @@ export default class Screen {
 
   constructor() {
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui?.addFolder({ title: Screen.debugName, expanded: false })
     this.renderer = this.experience.renderer
     this.mainCamera = this.experience.camera
 
@@ -32,14 +30,7 @@ export default class Screen {
     this.setMesh()
     this.setGlass()
 
-    if (this.debug) {
-      const helper = new GridHelper(10, 10)
-      helper.position.z = this.center.z - 0.001
-      helper.rotation.x = Math.PI * 0.5
-      this.scene.add(helper)
-
-      this.debug.addBinding(helper, 'visible', { label: 'helper' })
-    }
+    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setGrid() {
@@ -65,11 +56,6 @@ export default class Screen {
     this.mesh.position.z = -0.251
     this.mesh.rotation.y = Math.PI
 
-    this.debug
-      ?.addBinding(this.mesh.scale, 'x', { min: -1, max: 1, step: 0.001, label: 'scale' })
-      .on('change', e => this.mesh.scale.setScalar(e.value))
-    this.debug?.addBinding(this.mesh.position, 'z', {min: -1, max: 1, step: 0.001, label: 'positionZ'}) //prettier-ignore
-
     this.experience.scene.add(this.mesh)
   }
 
@@ -83,19 +69,12 @@ export default class Screen {
     })
 
     this.glass = new Mesh(this.geometry, this.glassMaterial)
-    this.glass.visible = !Debug.instance.active
+    this.glass.visible = !this.experience.debugActive
     this.glass.scale.copy(this.mesh.scale)
     this.glass.position.z = this.mesh.position.z - 0.001
     this.glass.rotation.copy(this.mesh.rotation)
 
     this.experience.scene.add(this.glass)
-
-    this.debug?.addBinding(this.glass, 'visible', { label: 'glass' })
-    this.debug?.addBinding(this.glassMaterial, 'metalness', { min: 0, max: 1, step: 0.001 })
-    this.debug?.addBinding(this.glassMaterial, 'roughness', { min: 0, max: 1, step: 0.001 })
-    this.debug?.addBinding(this.glassMaterial, 'transmission', { min: 0, max: 1, step: 0.001 })
-    this.debug?.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
-    this.debug?.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
   }
 
   ready() {
@@ -108,7 +87,7 @@ export default class Screen {
     this.renderer.instance.render(this.scene, this.screenCamera.instance)
     this.renderer.instance.setRenderTarget(null)
 
-    if (!Debug.instance.active) {
+    if (!this.experience.debugActive) {
       this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 2.5
     }
 
@@ -123,5 +102,28 @@ export default class Screen {
     rightBound.x += this.unit * (sprite.width / 2)
 
     return this.screenCamera.canView(leftBound) && this.screenCamera.canView(rightBound)
+  }
+
+  setDebug = () => {
+    this.debug = this.experience.debug?.gui.addFolder({ title: Screen.debugName, expanded: false })
+
+    const helper = new GridHelper(10, 10)
+    helper.position.z = this.center.z - 0.001
+    helper.rotation.x = Math.PI * 0.5
+    this.scene.add(helper)
+
+    this.debug.addBinding(helper, 'visible', { label: 'helper' })
+
+    this.debug
+      ?.addBinding(this.mesh.scale, 'x', { min: -1, max: 1, step: 0.001, label: 'scale' })
+      .on('change', e => this.mesh.scale.setScalar(e.value))
+    this.debug.addBinding(this.mesh.position, 'z', {min: -1, max: 1, step: 0.001, label: 'positionZ'}) //prettier-ignore
+
+    this.debug.addBinding(this.glass, 'visible', { label: 'glass' })
+    this.debug.addBinding(this.glassMaterial, 'metalness', { min: 0, max: 1, step: 0.001 })
+    this.debug.addBinding(this.glassMaterial, 'roughness', { min: 0, max: 1, step: 0.001 })
+    this.debug.addBinding(this.glassMaterial, 'transmission', { min: 0, max: 1, step: 0.001 })
+    this.debug.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
+    this.debug.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
   }
 }

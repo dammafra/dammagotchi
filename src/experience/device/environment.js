@@ -1,6 +1,5 @@
 import { DirectionalLight, EquirectangularReflectionMapping, SRGBColorSpace } from 'three'
 import Experience from '../experience'
-import Debug from '../utils/debug'
 
 export default class Environment {
   static debugName = '🏡 environment'
@@ -8,13 +7,14 @@ export default class Environment {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.debug = Debug.instance.gui?.addFolder({ title: Environment.debugName, expanded: false })
 
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
     this.setLight()
     this.setEnvironmentMap()
+
+    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setLight() {
@@ -27,10 +27,6 @@ export default class Environment {
     this.directionalLight.shadow.normalBias = 0.05
 
     this.scene.add(this.directionalLight)
-
-    this.debug?.addBinding(this.directionalLight, 'intensity', { label: 'light intensity' })
-    this.debug?.addBinding(this.directionalLight, 'position', { label: 'light position' })
-    this.debug?.addBinding(this.directionalLight, 'castShadow', { label: 'shadows' })
   }
 
   setEnvironmentMap() {
@@ -44,9 +40,20 @@ export default class Environment {
     this.scene.environmentIntensity = 2
     this.scene.backgroundIntensity = 2
     this.scene.backgroundBlurriness = 0.1
+  }
 
-    this.debug?.addBinding(this.scene, 'environmentIntensity', { min: 0, max: 10, step: 0.1 })
-    this.debug?.addBinding(this.scene, 'backgroundIntensity', { min: 0, max: 10, step: 0.1 })
-    this.debug?.addBinding(this.scene, 'backgroundBlurriness', { min: 0, max: 1, step: 0.001 })
+  setDebug = () => {
+    this.debug = this.experience.debug.gui.addFolder({
+      title: Environment.debugName,
+      expanded: false,
+    })
+
+    this.debug.addBinding(this.directionalLight, 'intensity', { label: 'light intensity' })
+    this.debug.addBinding(this.directionalLight, 'position', { label: 'light position' })
+    this.debug.addBinding(this.directionalLight, 'castShadow', { label: 'shadows' })
+
+    this.debug.addBinding(this.scene, 'environmentIntensity', { min: 0, max: 10, step: 0.1 })
+    this.debug.addBinding(this.scene, 'backgroundIntensity', { min: 0, max: 10, step: 0.1 })
+    this.debug.addBinding(this.scene, 'backgroundBlurriness', { min: 0, max: 1, step: 0.001 })
   }
 }

@@ -1,4 +1,4 @@
-import { Scene } from 'three'
+import { EventDispatcher, Scene } from 'three'
 import Camera from './camera'
 import sourcesConfig from './config/resources'
 import Device from './device/device'
@@ -6,13 +6,12 @@ import Life from './life/life'
 import Loading from './loading'
 import Renderer from './renderer'
 import { Soundboard } from './ui/soundboard'
-import Debug from './utils/debug'
 import Pointer from './utils/pointer'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
 import Time from './utils/time'
 
-export default class Experience {
+export default class Experience extends EventDispatcher {
   /** @type {Experience} */
   static instance
 
@@ -21,6 +20,8 @@ export default class Experience {
   }
 
   constructor(canvas) {
+    super()
+
     // Singleton
     if (Experience.instance) {
       return Experience.instance
@@ -28,7 +29,6 @@ export default class Experience {
 
     Experience.instance = this
 
-    Debug.init()
     Time.init()
     Soundboard.init()
 
@@ -53,6 +53,15 @@ export default class Experience {
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updateSeconds)
     this.resources.addEventListener('ready', this.readyResources)
+
+    if (window.location.hash === '#debug') {
+      this.debugActive = true
+
+      import('./utils/debug.js').then(({ default: Debug }) => {
+        this.debug = new Debug()
+        this.dispatchEvent({ type: 'debug' })
+      })
+    }
   }
 
   resize = () => {
@@ -74,7 +83,7 @@ export default class Experience {
     this.loading.ready()
 
     this.camera.animation()
-    Debug.instance.loadState()
+    this.debug?.loadState()
   }
 
   update = () => {

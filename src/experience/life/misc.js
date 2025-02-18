@@ -1,9 +1,24 @@
 import Sprites from '../utils/sprites'
 
 export default class Misc {
-  static sprites = Sprites.for('misc')
+  /** @type {Misc} */
+  static instance
 
-  static get(sprite) {
+  static init() {
+    return new Misc()
+  }
+
+  constructor() {
+    // Singleton
+    if (Misc.instance) {
+      return Misc.instance
+    }
+    Misc.instance = this
+
+    this.sprites = Sprites.for('misc')
+  }
+
+  get(sprite) {
     return Misc.sprites.get(sprite)
   }
 }
