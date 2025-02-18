@@ -5,24 +5,29 @@ import {
   MeshPhysicalMaterial,
   PlaneGeometry,
   Scene,
+  SRGBColorSpace,
   Vector3,
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
 import ScreenCamera from './camera'
-import ScreenEnvironment from './environment'
+import Pixel from './pixel'
 
 export default class Screen {
   static debugName = '📺 screen'
 
   constructor() {
     this.experience = Experience.instance
+    this.resources = this.experience.resources
     this.renderer = this.experience.renderer
     this.mainCamera = this.experience.camera
 
     this.renderTarget = new WebGLRenderTarget(256, 256)
     this.scene = new Scene()
     this.screenCamera = new ScreenCamera()
+
+    this.flicker = false
+    this.flickerSpeed = 2
 
     this.setGrid()
     this.setGeometry()
@@ -77,9 +82,27 @@ export default class Screen {
     this.experience.scene.add(this.glass)
   }
 
+  setEnvironmentMap() {
+    const environmentMap = this.resources.items.screenBackground
+    environmentMap.colorSpace = SRGBColorSpace
+
+    this.scene.background = environmentMap
+
+    this.backgroundIntensity = 0.5
+    this.scene.backgroundIntensity = this.backgroundIntensity
+  }
+
+  setFlicker(value) {
+    this.flicker = value
+
+    if (!this.flicker) {
+      this.scene.backgroundIntensity = this.backgroundIntensity
+      Pixel.material?.color.set(new Color('black'))
+    }
+  }
+
   ready() {
-    this.environment = new ScreenEnvironment()
-    this.debug?.addBinding(this.environment, 'flicker')
+    this.setEnvironmentMap()
   }
 
   update() {
@@ -91,7 +114,12 @@ export default class Screen {
       this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 2.5
     }
 
-    if (this.environment) this.environment.update()
+    if (!this.flicker) return
+
+    const toggle = Math.floor(this.time.elapsed * this.time.speed * this.flickerSpeed) % 2 === 0
+
+    this.scene.backgroundIntensity = toggle ? this.backgroundIntensity : 0.05
+    Pixel.material.color.set(new Color(toggle ? 'black' : 'white'))
   }
 
   contains(sprite, position) {
@@ -125,5 +153,7 @@ export default class Screen {
     this.debug.addBinding(this.glassMaterial, 'transmission', { min: 0, max: 1, step: 0.001 })
     this.debug.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
     this.debug.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
+
+    this.debug.addBinding(this.environment, 'flicker')
   }
 }

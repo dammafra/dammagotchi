@@ -7,7 +7,7 @@ export default class Sprite {
   constructor(matrix) {
     this.experience = Experience.instance
 
-    this.screen = this.experience.device.screen
+    this.screen = this.experience.screen
     this.group = this.experience.life.group
 
     this.setMesh(matrix)

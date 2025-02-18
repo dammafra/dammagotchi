@@ -2,11 +2,8 @@ import { EventDispatcher } from 'three'
 import { Evaluator, SUBTRACTION } from 'three-bvh-csg'
 import { radToDeg } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
-import Screen from '../screen/screen'
-import UI from '../ui/ui'
 import Button from './button'
 import ButtonSlot from './button-slot'
-import Environment from './environment'
 import Frame from './frame'
 import Notch from './notch'
 import Shell from './shell'
@@ -101,7 +98,8 @@ export default class Device extends EventDispatcher {
     this.experience = Experience.instance
     this.scene = this.experience.scene
     this.pointer = this.experience.pointer
-    this.screen = new Screen()
+
+    this.setMesh()
 
     this.experience.addEventListener('debug', this.setDebug)
   }
@@ -130,25 +128,6 @@ export default class Device extends EventDispatcher {
     this.tab = new Tab(this.config.tab)
 
     this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
-  }
-
-  setEnvironment() {
-    this.environment = new Environment()
-  }
-
-  setUI() {
-    this.ui = new UI()
-  }
-
-  ready() {
-    this.setMesh()
-    this.setEnvironment()
-    this.setUI()
-    this.screen.ready()
-  }
-
-  update() {
-    this.screen.update()
   }
 
   dispose() {

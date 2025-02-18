@@ -1,5 +1,5 @@
 import { DirectionalLight, EquirectangularReflectionMapping, SRGBColorSpace } from 'three'
-import Experience from '../experience'
+import Experience from './experience'
 
 export default class Environment {
   static debugName = '🏡 environment'
@@ -12,7 +12,6 @@ export default class Environment {
     this.resources = this.experience.resources
 
     this.setLight()
-    this.setEnvironmentMap()
 
     this.experience.addEventListener('debug', this.setDebug)
   }
@@ -40,6 +39,10 @@ export default class Environment {
     this.scene.environmentIntensity = 2
     this.scene.backgroundIntensity = 2
     this.scene.backgroundBlurriness = 0.1
+  }
+
+  ready() {
+    this.setEnvironmentMap()
   }
 
   setDebug = () => {

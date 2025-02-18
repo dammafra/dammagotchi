@@ -20,13 +20,15 @@ export default class Icons {
 
   constructor() {
     this.experience = Experience.instance
-    this.screen = this.experience.device.screen
+    this.screen = this.experience.screen
     this.scene = this.screen.scene
     this.resources = this.experience.resources
 
     this.selected = Icons.ATTENTION
     this.baseOpacity = 0.3
+  }
 
+  ready() {
     this.setIcons()
   }
 

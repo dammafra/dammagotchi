@@ -1,4 +1,4 @@
-import { EventDispatcher, Group } from 'three'
+import { Group } from 'three'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
@@ -10,7 +10,7 @@ import Egg from './pet/egg'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
 
-export default class Life extends EventDispatcher {
+export default class Life {
   static debugName = '📊 life'
 
   get scheduledFormatted() {
@@ -22,10 +22,8 @@ export default class Life extends EventDispatcher {
   }
 
   constructor() {
-    super()
-
     this.experience = Experience.instance
-    this.scene = this.experience.device.screen.scene
+    this.scene = this.experience.screen.scene
 
     Food.init()
     Misc.init()
@@ -36,18 +34,17 @@ export default class Life extends EventDispatcher {
     this.pause = false
     this.scheduled = new Map()
 
+    this.group = new Group()
+    this.scene.add(this.group)
+
     this.stage = 'egg'
     this.model = ''
-
-    this.setGroup()
-    this.setPet()
 
     this.experience.addEventListener('debug', this.setDebug)
   }
 
-  setGroup() {
-    this.group = new Group()
-    this.scene.add(this.group)
+  start() {
+    this.setPet()
   }
 
   setPet(evolving) {
@@ -93,8 +90,6 @@ export default class Life extends EventDispatcher {
     } else {
       this.startStage()
     }
-
-    this.dispatchEvent({ type: 'ready' })
   }
 
   startStage = () => {
@@ -103,15 +98,9 @@ export default class Life extends EventDispatcher {
     this.stageStart = this.age
     const stageDuration = lifeConfig.stages[this.stage]
     if (stageDuration > 0) this.schedule(this.evolveOut, stageDuration, 'evolve out')
-    this.dispatchEvent({ type: 'end-evolving' })
   }
 
   evolveOut = () => {
-    this.dispatchEvent({
-      type: 'start-evolving',
-      flicker: this.stage !== 'egg' && this.stage !== 'seniors',
-    })
-
     if (this.pet.evolveOut) {
       this.pet.evolveOut()
       const transitionDuration = lifeConfig.transitions[this.stage].out

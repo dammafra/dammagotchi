@@ -14,7 +14,7 @@ export default class Pet extends EventDispatcher {
 
     this.experience = Experience.instance
 
-    this.screen = this.experience.device.screen
+    this.screen = this.experience.screen
     this.screenCamera = this.screen.screenCamera
 
     this.stage = stage

@@ -6,7 +6,7 @@ export default class Menu {
   constructor(element) {
     this.experience = Experience.instance
     this.life = this.experience.life
-    this.scene = this.experience.device.screen.scene
+    this.scene = this.experience.screen.scene
 
     this.element = element
 

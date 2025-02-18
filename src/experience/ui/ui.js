@@ -15,14 +15,17 @@ export default class UI {
     this.selectedMenu = null
     this.resetTimeout = null
 
-    this.life.addEventListener('start-evolving', this.reset)
     this.device.addEventListener('button-A', this.onButtonA)
     this.device.addEventListener('button-B', this.onButtonB)
     this.device.addEventListener('button-C', this.onButtonC)
   }
 
+  ready() {
+    this.icons.ready()
+  }
+
   onButtonA = () => {
-    if (!this.life.pet.canInteract) return
+    if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
       this.selectedMenu.cycle()
@@ -35,7 +38,7 @@ export default class UI {
   }
 
   onButtonB = () => {
-    if (!this.life.pet.canInteract) return
+    if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
       this.icons.reset()
@@ -49,7 +52,7 @@ export default class UI {
         this.selectedMenu = this.menuFeed
         break
       default:
-        this.life.pet.no()
+        this.life.pet?.no()
         break
     }
 
@@ -67,7 +70,7 @@ export default class UI {
   }
 
   onButtonC = () => {
-    if (!this.life.pet.canInteract) return
+    if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
       this.selectedMenu.hide()
