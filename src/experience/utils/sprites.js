@@ -159,7 +159,7 @@ export default class Sprites extends EventDispatcher {
 
       subMatrix = this.reduce(subMatrix)
 
-      if (this.experience.debugActive) {
+      if (this.experience.debug) {
         this.print(subMatrix)
       }
 

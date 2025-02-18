@@ -11,7 +11,6 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
-import Time from '../utils/time'
 import ScreenCamera from './camera'
 import Pixel from './pixel'
 
@@ -20,10 +19,11 @@ export default class Screen {
 
   constructor() {
     this.experience = Experience.instance
-    this.time = Time.instance
+    this.time = this.experience.time
     this.resources = this.experience.resources
     this.renderer = this.experience.renderer
     this.mainCamera = this.experience.camera
+    this.mainScene = this.experience.scene
 
     this.renderTarget = new WebGLRenderTarget(256, 256)
     this.scene = new Scene()
@@ -37,8 +37,6 @@ export default class Screen {
     this.setMaterial()
     this.setMesh()
     this.setGlass()
-
-    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setGrid() {
@@ -64,7 +62,7 @@ export default class Screen {
     this.mesh.position.z = -0.251
     this.mesh.rotation.y = Math.PI
 
-    this.experience.scene.add(this.mesh)
+    this.mainScene.add(this.mesh)
   }
 
   setGlass() {
@@ -77,12 +75,11 @@ export default class Screen {
     })
 
     this.glass = new Mesh(this.geometry, this.glassMaterial)
-    this.glass.visible = !this.experience.debugActive
     this.glass.scale.copy(this.mesh.scale)
     this.glass.position.z = this.mesh.position.z - 0.001
     this.glass.rotation.copy(this.mesh.rotation)
 
-    this.experience.scene.add(this.glass)
+    this.mainScene.add(this.glass)
   }
 
   setEnvironmentMap() {
@@ -113,7 +110,7 @@ export default class Screen {
     this.renderer.instance.render(this.scene, this.screenCamera.instance)
     this.renderer.instance.setRenderTarget(null)
 
-    if (!this.experience.debugActive) {
+    if (!this.debug) {
       this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 2.5
     }
 
@@ -135,8 +132,8 @@ export default class Screen {
     return this.screenCamera.canView(leftBound) && this.screenCamera.canView(rightBound)
   }
 
-  setDebug = () => {
-    this.debug = this.experience.debug?.gui.addFolder({ title: Screen.debugName, expanded: false })
+  setDebug(debug) {
+    this.debug = debug.gui.addFolder({ title: Screen.debugName, expanded: false })
 
     const helper = new GridHelper(10, 10)
     helper.position.z = this.center.z - 0.001

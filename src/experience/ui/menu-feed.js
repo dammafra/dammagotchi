@@ -24,6 +24,7 @@ export default class MenuFeed extends Menu {
   reset() {
     this.mealArrow.classList.remove('invisible')
     this.snackArrow.classList.add('invisible')
+    this.foodType = Food.MEAL
   }
 
   action() {

@@ -11,26 +11,12 @@ const TIME_SPEED_SETTINGS = Object.freeze({
 })
 
 export default class Time extends EventDispatcher {
-  /** @type {Time} */
-  static instance
-
-  static init() {
-    return new Time()
-  }
-
   get speed() {
     return TIME_SPEED_SETTINGS[this.speedSetting]
   }
 
   constructor() {
     super()
-
-    // Singleton
-    if (Time.instance) {
-      return Time.instance
-    }
-
-    Time.instance = this
 
     this.experience = Experience.instance
     this.timer = new Timer()
@@ -45,7 +31,6 @@ export default class Time extends EventDispatcher {
     window.addEventListener('keypress', e => this.setSpeedSetting(e.key))
 
     this.setSpeedSettingsPane()
-    this.experience.addEventListener('debug', this.setDebug)
   }
 
   tick = () => {
@@ -90,7 +75,7 @@ export default class Time extends EventDispatcher {
     speedSettingsPane.addButton({ title: 'MAX [key 0]' }).on('click', () => this.setSpeedSetting('0')) //prettier-ignore
   }
 
-  setDebug = () => {
-    this.debug = this.experience.debug
+  setDebug(debug) {
+    this.debug = debug
   }
 }

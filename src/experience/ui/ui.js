@@ -88,6 +88,7 @@ export default class UI {
     this.resetTimeout = setTimeout(this.reset, 10000)
   }
 
+  // TODO: reset on evolution
   reset = () => {
     this.icons.reset()
     this.selectedMenu?.hide()

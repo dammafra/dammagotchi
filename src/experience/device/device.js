@@ -100,8 +100,6 @@ export default class Device extends EventDispatcher {
     this.pointer = this.experience.pointer
 
     this.setMesh()
-
-    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setMesh() {
@@ -140,8 +138,8 @@ export default class Device extends EventDispatcher {
     this.scene.remove(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
   }
 
-  setDebug = () => {
-    this.debug = this.experience.debug.gui.addFolder({ title: Device.debugName, expanded: false })
+  setDebug(debug) {
+    this.debug = debug.gui.addFolder({ title: Device.debugName, expanded: false })
 
     const shellFolder = this.debug.addFolder({ title: 'shell', expanded: false })
     shellFolder.addBinding(this.config.shell, 'girth', { min: 0, max: 2, step: 0.01 })

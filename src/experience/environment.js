@@ -12,8 +12,6 @@ export default class Environment {
     this.resources = this.experience.resources
 
     this.setLight()
-
-    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setLight() {
@@ -45,8 +43,8 @@ export default class Environment {
     this.setEnvironmentMap()
   }
 
-  setDebug = () => {
-    this.debug = this.experience.debug.gui.addFolder({
+  setDebug(debug) {
+    this.debug = debug.gui.addFolder({
       title: Environment.debugName,
       expanded: false,
     })

@@ -1,4 +1,4 @@
-import { EventDispatcher, Scene } from 'three'
+import { Scene } from 'three'
 import Camera from './camera'
 import sourcesConfig from './config/resources'
 import Device from './device/device'
@@ -7,14 +7,13 @@ import Life from './life/life'
 import Loading from './loading'
 import Renderer from './renderer'
 import Screen from './screen/screen.js'
-import { Soundboard } from './ui/soundboard'
 import UI from './ui/ui.js'
 import Pointer from './utils/pointer'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
 import Time from './utils/time'
 
-export default class Experience extends EventDispatcher {
+export default class Experience {
   /** @type {Experience} */
   static instance
 
@@ -23,8 +22,6 @@ export default class Experience extends EventDispatcher {
   }
 
   constructor(canvas) {
-    super()
-
     // Singleton
     if (Experience.instance) {
       return Experience.instance
@@ -32,18 +29,14 @@ export default class Experience extends EventDispatcher {
 
     Experience.instance = this
 
-    Time.init()
-    Soundboard.init()
-
     // Options
     this.canvas = canvas
 
     // Setup
-    this.loading = new Loading()
-
-    this.time = Time.instance
+    this.time = new Time()
     this.sizes = new Sizes()
     this.resources = new Resources(sourcesConfig)
+    this.loading = new Loading()
 
     this.scene = new Scene()
     this.camera = new Camera()
@@ -63,11 +56,17 @@ export default class Experience extends EventDispatcher {
     this.resources.addEventListener('ready', this.readyResources)
 
     if (window.location.hash === '#debug') {
-      this.debugActive = true
+      this.debug = true
 
       import('./utils/debug.js').then(({ default: Debug }) => {
         this.debug = new Debug()
-        this.dispatchEvent({ type: 'debug' })
+
+        for (const [key, value] of Object.entries(this)) {
+          value.setDebug && value.setDebug(this.debug)
+        }
+
+        this.debug.loadState()
+        // Sprite.setDebug(this.debug)
       })
     }
   }
@@ -85,11 +84,11 @@ export default class Experience extends EventDispatcher {
     this.ui.ready()
     this.loading.ready()
 
-    this.camera.animation()
+    if (!this.debug) {
+      this.camera.animation()
+    }
 
     this.life.start()
-
-    this.debug?.loadState()
   }
 
   update = () => {

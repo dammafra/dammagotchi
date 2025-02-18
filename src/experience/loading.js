@@ -1,8 +1,10 @@
-import Time from './utils/time'
+import Experience from './experience'
 
 export default class Loading {
   constructor() {
-    this.time = Time.instance
+    this.experience = Experience.instance
+    this.time = this.experience.time
+
     this.element = document.querySelector('.loading')
   }
 

@@ -12,7 +12,6 @@ import {
   Vector4,
 } from 'three'
 import Experience from './experience'
-import Time from './utils/time'
 
 const subsetOfTHREE = {
   Vector2: Vector2,
@@ -34,7 +33,7 @@ export default class Camera {
   constructor() {
     // Setup
     this.experience = Experience.instance
-    this.time = Time.instance
+    this.time = this.experience.time
 
     this.sizes = this.experience.sizes
     this.scene = this.experience.scene
@@ -42,8 +41,6 @@ export default class Camera {
 
     this.setInstance()
     this.setControls()
-
-    this.experience.addEventListener('debug', this.setDebug)
   }
 
   setInstance() {
@@ -75,16 +72,18 @@ export default class Camera {
   }
 
   async animation() {
-    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, !this.experience.debugActive)
-    this.experience.debugActive && this.controls.dolly(2)
+    await this.controls.setLookAt(0, 0, -3, 0, 0, 0, true)
   }
 
-  setDebug = () => {
-    this.debug = this.experience.debug.gui.addFolder({ title: Camera.debugName, expanded: false })
+  setDebug(debug) {
+    this.debug = debug.gui.addFolder({ title: Camera.debugName, expanded: false })
 
     this.debug
       .addBinding(this.instance, 'fov', { min: 10, max: 100, step: 0.1 })
       .on('change', () => this.instance.updateProjectionMatrix())
     this.debug.addBinding(this.instance, 'position')
+
+    this.controls.setLookAt(0, 0, -3, 0, 0, 0)
+    this.controls.dolly(2)
   }
 }

@@ -2,6 +2,7 @@ import { Group } from 'three'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
+import { Soundboard } from '../ui/soundboard'
 import Food from './food'
 import Misc from './misc'
 import Baby from './pet/baby'
@@ -24,7 +25,6 @@ export default class Life {
   constructor() {
     this.experience = Experience.instance
     this.screen = this.experience.screen
-    this.scene = this.screen.scene
 
     // TODO: load saved state
     this.age = 0
@@ -33,17 +33,16 @@ export default class Life {
     this.scheduled = new Map()
 
     this.group = new Group()
-    this.scene.add(this.group)
+    this.screen.scene.add(this.group)
 
     this.stage = 'egg'
     this.model = ''
-
-    this.experience.addEventListener('debug', this.setDebug)
   }
 
   start() {
     Food.init()
     Misc.init()
+    Soundboard.init()
     this.setPet()
   }
 
@@ -146,8 +145,8 @@ export default class Life {
     return keys[Math.floor(Math.random() * keys.length)]
   }
 
-  setDebug = () => {
-    this.debug = this.experience.debug.gui.addFolder({ title: Life.debugName })
+  setDebug(debug) {
+    this.debug = debug.gui.addFolder({ title: Life.debugName })
 
     this.debug.addBinding(this, 'pause')
     this.debug.addBinding(this, 'stage', { readonly: true })

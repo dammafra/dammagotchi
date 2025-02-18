@@ -1,4 +1,4 @@
-import Time from '../utils/time'
+import Experience from '../experience'
 
 export class Soundboard {
   /** @type {Soundboard} */
@@ -21,7 +21,8 @@ export class Soundboard {
       return Soundboard.instance
     }
     Soundboard.instance = this
-    this.time = Time.instance
+    this.experience = Experience.instance
+    this.time = this.experience.time
   }
 
   setMuted(value) {
