@@ -1,4 +1,5 @@
 import {
+  Color,
   GridHelper,
   Mesh,
   MeshBasicMaterial,
@@ -10,6 +11,7 @@ import {
   WebGLRenderTarget,
 } from 'three'
 import Experience from '../experience'
+import Time from '../utils/time'
 import ScreenCamera from './camera'
 import Pixel from './pixel'
 
@@ -18,6 +20,7 @@ export default class Screen {
 
   constructor() {
     this.experience = Experience.instance
+    this.time = Time.instance
     this.resources = this.experience.resources
     this.renderer = this.experience.renderer
     this.mainCamera = this.experience.camera
@@ -154,6 +157,6 @@ export default class Screen {
     this.debug.addBinding(this.glassMaterial, 'thickness', { min: 0, max: 1, step: 0.001 })
     this.debug.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
 
-    this.debug.addBinding(this.environment, 'flicker')
+    this.debug.addBinding(this, 'flicker')
   }
 }
