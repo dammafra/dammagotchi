@@ -9,11 +9,11 @@ export default class Tutorial {
     this.device = this.experience.device
     this.screen = this.experience.screen
     this.ui = this.experience.ui
+    this.pointer = this.experience.pointer
 
     this.overlay = document.querySelector('.tutorial-overlay')
     this.spotlight = document.querySelector('.tutorial-spotlight')
-
-    window.controls = this.camera.controls
+    this.completed = false // TODO: JSON.parse(localStorage.getItem('tutorial-completed'))
 
     this.tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -63,7 +63,7 @@ export default class Tutorial {
       {
         id: 'button-a',
         title: 'Button A',
-        text: '➡️ Press it to move between the menu icons and use it to choose an option before confirming it',
+        text: '➡️ Press it to move between menu icons and options',
         buttons: [skipButton, backButton, nextButton('Got it!')],
       },
       {
@@ -98,7 +98,7 @@ export default class Tutorial {
         {
           id: 'screen-duck',
           title: 'Clean',
-          text: '🧽 If your pet leaves a mess, it’s time to clean up! Flush away dirt and Don’t let the mess pile up',
+          text: '🧽 If your pet leaves a mess, it’s time to clean up! Flush away dirt and don’t let the mess pile up',
         },
         {
           id: 'screen-play',
@@ -140,13 +140,13 @@ export default class Tutorial {
         id: 'tab',
         title: 'Is all set!',
         text: '✨ Pull out the battery tab to turn on the device and your virtual pet will come to life!',
+        buttons: [nextButton('Done')],
       },
     ])
 
     this.tour.on('complete', this.end)
     this.tour.on('cancel', () => this.tour.show(this.tour.steps.length - 1))
     this.tour.on('show', this.animateCamera)
-    this.completed = JSON.parse(localStorage.getItem('tutorial-completed'))
   }
 
   toggleOverlay() {
@@ -165,6 +165,7 @@ export default class Tutorial {
 
   start() {
     if (this.completed) return
+    this.pointer.enabled = false
     this.tour.start()
     this.toggleOverlay()
   }
@@ -172,11 +173,15 @@ export default class Tutorial {
   end = async () => {
     this.hideSpotlight()
     setTimeout(() => this.toggleOverlay(), 1000)
-    await this.camera.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
-    localStorage.setItem('tutorial-completed', 'true')
+    this.pointer.enabled = true
+    await this.camera.intro()
+    // TODO
+    // localStorage.setItem('tutorial-completed', 'true')
   }
 
   animateCamera = async ({ step }) => {
+    this.camera.controls.smoothTime = 0.5
+
     const iconsX = -0.245
     const iconsXIncrement = 0.17
     const iconsY = 0.29
@@ -187,7 +192,7 @@ export default class Tutorial {
     switch (step.id) {
       case 'welcome':
         this.hideSpotlight()
-        await this.camera.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
+        await this.camera.intro()
         break
 
       case 'button-a':
@@ -247,18 +252,20 @@ export default class Tutorial {
         break
 
       case 'button-reset':
-        this.setSpotlight('sm')
+        this.hideSpotlight()
         this.ui.icons.resolveAttention()
         this.camera.controls.zoomTo(1, true)
-        this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
-        await this.camera.controls.rotateAzimuthTo(Math.PI, true)
+        this.camera.controls.rotateAzimuthTo(Math.PI, true)
+        await this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
+        this.setSpotlight('sm')
         break
 
       case 'tab':
         this.setSpotlight('md')
+        this.camera.controls.zoomTo(1, true)
+        this.camera.controls.fitToBox(this.device.tab.mesh, true)
         this.camera.controls.moveTo(tabX, tabY, 0, true)
         await this.camera.controls.rotateAzimuthTo(Math.PI * 0.25, true)
-        setTimeout(this.tour.complete, 1500)
         break
     }
   }

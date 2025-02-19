@@ -78,7 +78,7 @@ export default class Experience {
     this.renderer.resize()
   }
 
-  readyResources = () => {
+  readyResources = async () => {
     this.resources.removeEventListener('ready', this.ready)
 
     this.environment.ready()
@@ -87,10 +87,9 @@ export default class Experience {
     this.loading.ready()
 
     if (!this.debug) {
-      this.camera.animation()
+      await this.camera.intro()
+      this.tutorial.start()
     }
-
-    this.tutorial.start()
   }
 
   update = () => {
@@ -98,6 +97,7 @@ export default class Experience {
     this.camera.update()
     this.renderer.update()
     this.screen.update()
+    this.device.update()
   }
 
   updateSeconds = () => {

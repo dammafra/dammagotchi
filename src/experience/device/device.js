@@ -197,4 +197,8 @@ export default class Device extends EventDispatcher {
       this.setMesh()
     })
   }
+
+  update() {
+    this.tab.update()
+  }
 }

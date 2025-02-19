@@ -4,6 +4,8 @@ import Experience from '../experience'
 export default class Tab {
   constructor({ width, height, position, visible, onClick }) {
     this.experience = Experience.instance
+    this.scene = this.experience.scene
+    this.time = this.experience.time
     this.pointer = this.experience.pointer
 
     this.width = width
@@ -37,11 +39,28 @@ export default class Tab {
     this.mesh.position.copy(this.position)
     this.mesh.castShadow = true
 
-    this.pointer.onClick(this.mesh, this.onClick)
+    this.pointer.onClick(this.mesh, this.pull)
+  }
+
+  pull = () => {
+    this.pulled = true
+  }
+
+  update() {
+    if (!this.pulled) return
+
+    this.mesh.position.x += this.time.elapsed * 0.005
+    this.mesh.material.opacity -= this.time.elapsed * 0.003
+    if (this.mesh.material.opacity < 0) {
+      this.pulled = false
+      this.onClick()
+      this.dispose()
+    }
   }
 
   dispose() {
     this.geometry.dispose()
     this.material.dispose()
+    this.scene.remove(this.mesh)
   }
 }

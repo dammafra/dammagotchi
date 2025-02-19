@@ -25,9 +25,10 @@ export default class Life {
     this.experience = Experience.instance
 
     // TODO: load saved state
+    this.started = false
     this.age = 0
     this.stageStart = 0
-    this.pause = false
+    this.pause = true
     this.scheduled = new Map()
 
     this.group = new Group()
@@ -38,8 +39,12 @@ export default class Life {
   }
 
   start() {
+    if (this.started) return
+
     Food.init()
     Misc.init()
+    this.started = true
+    this.pause = false
     this.setPet()
   }
 

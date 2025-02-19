@@ -83,7 +83,7 @@ export default class Icons {
   }
 
   cycle() {
-    this.setSelected(this.selected + 1)
+    this.setSelected((this.selected + 1) % 8)
   }
 
   notifyAttention() {

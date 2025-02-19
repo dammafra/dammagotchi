@@ -7,6 +7,7 @@ export default class Pointer {
     this.sizes = this.experience.sizes
     this.camera = this.experience.camera
 
+    this.enabled = true
     this.raycaster = new Raycaster()
     this.objectsToTest = new Map()
     this.currentIntersect = null
@@ -33,8 +34,10 @@ export default class Pointer {
 
     this.updateRaycaster()
 
-    const callback = this.objectsToTest.get(this.currentIntersect?.object)
-    callback && callback()
+    if (this.enabled) {
+      const callback = this.objectsToTest.get(this.currentIntersect?.object)
+      callback && callback()
+    }
   }
 
   onClick(object, callback) {

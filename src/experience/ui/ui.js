@@ -7,6 +7,8 @@ import { Soundboard } from './soundboard'
 export default class UI {
   constructor() {
     this.experience = Experience.instance
+    this.camera = this.experience.camera
+
     this.device = this.experience.device
     this.life = this.experience.life
 
@@ -22,6 +24,7 @@ export default class UI {
     this.device.addEventListener('button-A', this.onButtonA)
     this.device.addEventListener('button-B', this.onButtonB)
     this.device.addEventListener('button-C', this.onButtonC)
+    this.device.addEventListener('tab', this.onTab)
 
     window.addEventListener('keydown', e => {
       switch (e.key) {
@@ -44,6 +47,11 @@ export default class UI {
 
   ready() {
     this.icons.ready()
+  }
+
+  onTab = () => {
+    this.camera.intro()
+    this.life.start()
   }
 
   onButtonA = () => {
