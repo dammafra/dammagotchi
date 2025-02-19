@@ -44,10 +44,10 @@ export default class Device extends EventDispatcher {
       cut: 1.1,
     },
     buttonSlots: [
-      { radius: 0.1, position: { x: 0.3, y: -0.6, z: 0.3 } },
-      { radius: 0.1, position: { x: 0, y: -0.7, z: 0.3 } },
       { radius: 0.1, position: { x: -0.3, y: -0.6, z: 0.3 } },
-      { radius: 0.05, position: { x: -0.3, y: -0.6, z: -0.3 } },
+      { radius: 0.1, position: { x: 0, y: -0.7, z: 0.3 } },
+      { radius: 0.1, position: { x: 0.3, y: -0.6, z: 0.3 } },
+      { radius: 0.05, position: { x: 0.3, y: -0.6, z: -0.3 } },
     ],
     buttons: [
       {
@@ -77,8 +77,8 @@ export default class Device extends EventDispatcher {
       {
         radius: 0.0405,
         scale: { x: 1, y: 1, z: 0.5 },
-        rotation: { x: -Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
-        position: { x: -0.3, y: -0.6, z: -0.28 },
+        rotation: { x: -Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
+        position: { x: 0.3, y: -0.6, z: -0.28 },
         color: 'gray',
         onClick: () => this.dispatchEvent({ type: 'reset-button' }),
       },
@@ -87,7 +87,7 @@ export default class Device extends EventDispatcher {
       width: 0.8,
       height: 0.3,
       position: { x: 0.6, y: -0.3, z: 0 },
-      visible: false,
+      visible: true,
       onClick: () => this.dispatchEvent({ type: 'tab' }),
     },
   }

@@ -9,6 +9,8 @@ export class Soundboard {
     button: new Audio('sounds/button.mp3'),
     hatching: new Audio('sounds/hatching.mp3'),
     death: new Audio('sounds/death.mp3'),
+    happy: new Audio('sounds/happy.mp3'),
+    attention: new Audio('sounds/attention.mp3'),
   }
 
   static init() {

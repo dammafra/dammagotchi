@@ -51,7 +51,7 @@ export default class Camera {
 
   setControls() {
     this.controls = new CameraControls(this.instance, this.canvas)
-    this.controls.smoothTime = 1.5
+    this.controls.smoothTime = 0.5
     this.controls.minDistance = 1.3
     this.controls.maxDistance = 10
   }

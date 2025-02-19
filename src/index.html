@@ -19,20 +19,26 @@
   </head>
   <!-- workaround for Safari: tells the browser to react to touch events (triggers "active" state on buttons)  -->
   <body>
-    <div class="loading">
-      <p>Loading...</p>
+    <main>
+      <div class="loading">
+        <p>Loading...</p>
 
-      <div class="progress">
-        <div></div>
+        <div class="progress">
+          <div></div>
+        </div>
       </div>
-    </div>
 
-    <canvas class="webgl"></canvas>
+      <div class="tutorial-overlay hidden">
+        <div class="tutorial-spotlight"></div>
+      </div>
 
-    <footer>
-      Developed with ❤️ by
-      <a href="https://github.com/dammafra" target="_blank" class="underline">@dammafra</a>
-    </footer>
+      <canvas class="webgl"></canvas>
+
+      <footer class="app-footer">
+        Developed with ❤️ by
+        <a href="https://github.com/dammafra" target="_blank" class="underline">@dammafra</a>
+      </footer>
+    </main>
 
     <script type="module" src="./script.js"></script>
 

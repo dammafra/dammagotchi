@@ -1,3 +1,5 @@
+@import 'shepherd.js/dist/css/shepherd.css';
+
 /* tailwind config */
 @import 'tailwindcss';
 
@@ -60,6 +62,7 @@ body {
 body {
   @apply w-screen h-[100svh];
   @apply bg-indigo-900;
+  @apply font-mono;
 }
 
 .loading {
@@ -97,7 +100,43 @@ body {
   @apply fixed top-0 left-0 outline-none;
 }
 
-footer {
+main footer {
   @apply fixed bottom-0 w-full p-5 z-10;
   @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
+}
+
+.tutorial-overlay {
+  @apply fixed inset-0 justify-center items-center z-30;
+}
+
+.tutorial-overlay .tutorial-spotlight {
+  @apply bg-transparent rounded-full size-[10000px] aspect-square border-black/80 border-[1000px] transition-all duration-1500;
+}
+
+.tutorial-step {
+  @apply rounded-none;
+}
+
+.tutorial-step:not(.welcome) {
+  @apply !top-[unset] !bottom-0 md:!left-0;
+}
+
+.tutorial-step .shepherd-text {
+  @apply text-center;
+}
+
+.tutorial-step .shepherd-footer {
+  @apply p-4 justify-center;
+}
+
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header {
+  @apply bg-white;
+}
+
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title {
+  @apply font-tama justify-center;
+}
+
+.tutorial-step .shepherd-button:not(.shepherd-button-secondary) {
+  @apply bg-indigo-500;
 }

@@ -7,6 +7,7 @@ import {
   SRGBColorSpace,
 } from 'three'
 import Experience from '../experience'
+import { Soundboard } from './soundboard'
 
 export default class Icons {
   static METER = 0
@@ -29,13 +30,13 @@ export default class Icons {
   }
 
   ready() {
-    this.setIcons()
+    this.setMeshes()
   }
 
-  setIcons() {
+  setMeshes() {
     const geometry = new PlaneGeometry()
 
-    this.icons = [
+    this.meshes = [
       'meter',
       'feed',
       'duck',
@@ -70,26 +71,31 @@ export default class Icons {
     })
   }
 
-  cycle() {
-    this.selected = ++this.selected % 8
-    this.icons.forEach((icon, index) => {
+  setSelected(selected) {
+    this.selected = selected
+    this.meshes.forEach((icon, index) => {
       icon.material.opacity = this.baseOpacity
       if (this.selected === index && this.selected != Icons.ATTENTION) {
+        Soundboard.instance.play('button')
         icon.material.opacity = 1
       }
     })
   }
 
+  cycle() {
+    this.setSelected(this.selected + 1)
+  }
+
   notifyAttention() {
-    this.icons.at(Icons.ATTENTION).material.opacity = 1
+    Soundboard.instance.play('attention')
+    this.meshes.at(Icons.ATTENTION).material.opacity = 1
   }
 
   resolveAttention() {
-    this.icons.at(Icons.ATTENTION).material.opacity = this.baseOpacity
+    this.meshes.at(Icons.ATTENTION).material.opacity = this.baseOpacity
   }
 
-  reset = () => {
-    this.icons.at(this.selected).material.opacity = this.baseOpacity
-    this.selected = Icons.ATTENTION
+  reset() {
+    this.setSelected(Icons.ATTENTION)
   }
 }

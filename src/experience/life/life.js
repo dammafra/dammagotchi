@@ -2,7 +2,6 @@ import { Group } from 'three'
 import lifeConfig from '../config/life'
 import spritesConfig from '../config/sprites'
 import Experience from '../experience'
-import { Soundboard } from '../ui/soundboard'
 import Food from './food'
 import Misc from './misc'
 import Baby from './pet/baby'
@@ -41,7 +40,6 @@ export default class Life {
   start() {
     Food.init()
     Misc.init()
-    Soundboard.init()
     this.setPet()
   }
 

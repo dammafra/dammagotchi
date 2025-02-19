@@ -7,6 +7,7 @@ import Life from './life/life'
 import Loading from './loading'
 import Renderer from './renderer'
 import Screen from './screen/screen.js'
+import Tutorial from './tutorial.js'
 import UI from './ui/ui.js'
 import Pointer from './utils/pointer'
 import Resources from './utils/resources'
@@ -49,6 +50,8 @@ export default class Experience {
     this.life = new Life()
     this.ui = new UI()
 
+    this.tutorial = new Tutorial()
+
     // Events
     this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
@@ -87,7 +90,7 @@ export default class Experience {
       this.camera.animation()
     }
 
-    this.life.start()
+    this.tutorial.start()
   }
 
   update = () => {

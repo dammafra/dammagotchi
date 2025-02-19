@@ -1,5 +1,6 @@
 import Food from '../life/food'
 import Menu from './menu'
+import { Soundboard } from './soundboard'
 
 export default class MenuFeed extends Menu {
   constructor() {
@@ -19,6 +20,7 @@ export default class MenuFeed extends Menu {
     this.foodType = this.foodType === Food.MEAL ? Food.SNACK : Food.MEAL
 
     this.refreshMenu()
+    Soundboard.instance.play('button')
   }
 
   reset() {

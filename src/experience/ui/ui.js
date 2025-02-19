@@ -17,6 +17,8 @@ export default class UI {
     this.selectedMenu = null
     this.resetTimeout = null
 
+    Soundboard.init()
+
     this.device.addEventListener('button-A', this.onButtonA)
     this.device.addEventListener('button-B', this.onButtonB)
     this.device.addEventListener('button-C', this.onButtonC)
@@ -53,7 +55,6 @@ export default class UI {
       this.icons.cycle()
     }
 
-    if (this.icons.selected !== Icons.ATTENTION) Soundboard.instance.play('button')
     this.scheduleReset()
   }
 

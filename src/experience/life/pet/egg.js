@@ -19,6 +19,8 @@ export default class Egg extends Pet {
     squeezed.spawn()
     squeezed.mesh.visible = false
 
+    Soundboard.instance.play('happy')
+
     this.updateSeconds = () => {
       normal.mesh.visible = !normal.mesh.visible
       squeezed.mesh.visible = !squeezed.mesh.visible
