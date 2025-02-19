@@ -47,6 +47,7 @@ export class Soundboard {
   }
 
   #play(audio) {
+    audio.volume = 0.5
     audio.muted = this.muted || !this.time.speedSetting
     audio.currentTime = 0
     audio.playbackRate = this.time.speedSetting

@@ -88,6 +88,8 @@ export default class Experience {
 
     if (!this.debug) {
       await this.camera.intro()
+      this.pointer.enabled = true
+      this.camera.controls.enabled = true
       this.tutorial.start()
     }
   }

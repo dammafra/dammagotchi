@@ -53,11 +53,11 @@ export default class Tutorial {
         attachTo: undefined,
         buttons: [
           {
-            text: 'Yes,<br/>I’m a pro!',
+            text: '😎 Yes,<br/>I’m a pro!',
             secondary: true,
             action: () => this.tour.show(this.tour.steps.length - 1),
           },
-          nextButton('No,<br/>teach me'),
+          nextButton('🤔 No,<br/>teach me'),
         ],
       },
       {
@@ -138,7 +138,7 @@ export default class Tutorial {
       },
       {
         id: 'tab',
-        title: 'Is all set!',
+        title: "It's all set!",
         text: '✨ Pull out the battery tab to turn on the device and your virtual pet will come to life!',
         buttons: [nextButton('Done')],
       },
@@ -165,7 +165,10 @@ export default class Tutorial {
 
   start() {
     if (this.completed) return
+
     this.pointer.enabled = false
+    this.camera.controls.enabled = false
+
     this.tour.start()
     this.toggleOverlay()
   }
@@ -173,8 +176,9 @@ export default class Tutorial {
   end = async () => {
     this.hideSpotlight()
     setTimeout(() => this.toggleOverlay(), 1000)
+
     this.pointer.enabled = true
-    await this.camera.intro()
+    this.camera.controls.enabled = true
     // TODO
     // localStorage.setItem('tutorial-completed', 'true')
   }

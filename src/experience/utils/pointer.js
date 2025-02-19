@@ -1,15 +1,24 @@
 import { Raycaster, Vector2 } from 'three'
+import { DragControls } from 'three/addons/controls/DragControls.js'
 import Experience from '../experience'
 
 export default class Pointer {
+  #enabled = false
+
+  set enabled(value) {
+    this.#enabled = value
+    this.drag.enabled = value
+  }
+
   constructor() {
     this.experience = Experience.instance
+    this.canvas = this.experience.canvas
     this.sizes = this.experience.sizes
     this.camera = this.experience.camera
 
-    this.enabled = true
     this.raycaster = new Raycaster()
-    this.objectsToTest = new Map()
+    this.clickableObjects = new Map()
+    this.draggableObjects = new Map()
     this.currentIntersect = null
 
     // Setup
@@ -34,20 +43,51 @@ export default class Pointer {
 
     this.updateRaycaster()
 
-    if (this.enabled) {
-      const callback = this.objectsToTest.get(this.currentIntersect?.object)
+    if (this.#enabled) {
+      const callback = this.clickableObjects.get(this.currentIntersect?.object)
       callback && callback()
     }
   }
 
   onClick(object, callback) {
-    this.objectsToTest.set(object, callback)
+    this.clickableObjects.set(object, callback)
+  }
+
+  cancelClicl(object) {
+    this.clickableObjects.delete(object)
+  }
+
+  onDrag(object, callback) {
+    const previousObjects = this.drag?.getObjects() || []
+    this.draggableObjects.set(object, callback)
+
+    this.setDrag([...previousObjects, object])
+  }
+
+  cancelDrag(object) {
+    const filteredObjects = this.drag?.getObjects().filter(o => o.uuid !== object.uuid) || []
+    this.draggableObjects.delete(object)
+
+    this.setDrag(filteredObjects)
+  }
+
+  setDrag(objects) {
+    this.drag?.dispose()
+    this.drag = new DragControls(objects, this.camera.instance, this.canvas)
+    this.drag.enabled = this.#enabled
+
+    this.drag.addEventListener('dragstart', () => (this.camera.controls.enabled = false))
+    this.drag.addEventListener('dragend', () => (this.camera.controls.enabled = true))
+    this.drag.addEventListener('drag', e => {
+      const callback = this.draggableObjects.get(e.object)
+      callback && callback()
+    })
   }
 
   updateRaycaster() {
     this.raycaster.setFromCamera(new Vector2(this.x, this.y), this.camera.instance)
 
-    const test = Array.from(this.objectsToTest.keys())
+    const test = Array.from(this.clickableObjects.keys())
     const intersects = this.raycaster.intersectObjects(test)
     this.currentIntersect = intersects.length ? intersects[0] : null
   }

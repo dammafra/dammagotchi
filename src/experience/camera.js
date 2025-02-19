@@ -51,6 +51,7 @@ export default class Camera {
 
   setControls() {
     this.controls = new CameraControls(this.instance, this.canvas)
+    this.controls.enabled = false
     this.controls.minDistance = 1.3
     this.controls.maxDistance = 10
   }

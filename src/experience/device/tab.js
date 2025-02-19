@@ -2,7 +2,7 @@ import { DoubleSide, Mesh, MeshStandardMaterial, PlaneGeometry } from 'three'
 import Experience from '../experience'
 
 export default class Tab {
-  constructor({ width, height, position, visible, onClick }) {
+  constructor({ width, height, position, visible, onPull }) {
     this.experience = Experience.instance
     this.scene = this.experience.scene
     this.time = this.experience.time
@@ -12,7 +12,7 @@ export default class Tab {
     this.height = height
     this.position = position
     this.visible = visible
-    this.onClick = onClick
+    this.onPull = onPull
 
     this.setGeometry()
     this.setMaterial()
@@ -39,11 +39,17 @@ export default class Tab {
     this.mesh.position.copy(this.position)
     this.mesh.castShadow = true
 
-    this.pointer.onClick(this.mesh, this.pull)
+    this.pointer.onDrag(this.mesh, this.pull)
   }
 
   pull = () => {
-    this.pulled = true
+    this.mesh.position.y = this.position.y
+    this.mesh.position.z = this.position.z
+    if (this.mesh.position.x < this.position.x) {
+      this.mesh.position.x = this.position.x
+    } else if (this.mesh.position.x > this.position.x + 0.1) {
+      this.pulled = true
+    }
   }
 
   update() {
@@ -53,7 +59,7 @@ export default class Tab {
     this.mesh.material.opacity -= this.time.elapsed * 0.003
     if (this.mesh.material.opacity < 0) {
       this.pulled = false
-      this.onClick()
+      this.onPull()
       this.dispose()
     }
   }
@@ -61,6 +67,7 @@ export default class Tab {
   dispose() {
     this.geometry.dispose()
     this.material.dispose()
+    this.pointer.cancelDrag(this.mesh)
     this.scene.remove(this.mesh)
   }
 }

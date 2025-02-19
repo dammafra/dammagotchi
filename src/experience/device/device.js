@@ -88,7 +88,7 @@ export default class Device extends EventDispatcher {
       height: 0.3,
       position: { x: 0.6, y: -0.3, z: 0 },
       visible: true,
-      onClick: () => this.dispatchEvent({ type: 'tab' }),
+      onPull: () => this.dispatchEvent({ type: 'tab' }),
     },
   }
 
