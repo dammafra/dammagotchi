@@ -34,13 +34,15 @@
 
       <canvas class="webgl"></canvas>
 
+      <button id="colors" class="fixed z-10 bottom-35 left-2.5 fab hidden">🎨</button>
+      <button id="muted" class="fixed z-10 bottom-25 left-2.5 fab">🔇</button>
+      <button id="speed-settings" class="fixed z-10 bottom-15 left-2.5 fab">⏵</button>
+
       <footer class="app-footer">
-        <button
-          id="tutorial"
-          class="rounded-full bg-white hover:bg-gray-200 flex items-center justify-around size-8 text-indigo-900 text-xl cursor-pointer"
-        >
-          ?
-        </button>
+        <div class="flex gap-2">
+          <button id="tutorial" class="fab">?</button>
+          <button class="fab">i</button>
+        </div>
         <span>
           Developed with ❤️ by
           <a href="https://github.com/dammafra" target="_blank" class="underline">@dammafra</a>

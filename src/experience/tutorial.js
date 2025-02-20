@@ -15,7 +15,10 @@ export default class Tutorial {
     this.spotlight = document.querySelector('.tutorial-spotlight')
     this.completed = JSON.parse(localStorage.getItem('tutorial-completed'))
 
-    document.getElementById('tutorial').onclick = this.start
+    document.getElementById('tutorial').addEventListener('click', e => {
+      this.start()
+      e.target.blur()
+    })
 
     this.tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -49,7 +52,7 @@ export default class Tutorial {
     this.tour.addSteps([
       {
         id: 'welcome',
-        classes: 'welcome',
+        classes: 'ignore',
         title: 'Hey there!',
         text: 'Ever had a virtual pet before?',
         attachTo: undefined,
@@ -64,19 +67,19 @@ export default class Tutorial {
       },
       {
         id: 'button-a',
-        title: 'Button A',
+        title: 'A Button [spacebar]',
         text: '➡️ Press it to move between menu icons and options',
         buttons: [skipButton, backButton, nextButton('Got it!')],
       },
       {
         id: 'button-b',
-        title: 'Button B',
+        title: 'B Button [enter]',
         text: '🚀 Press it to confirm selections, interact with your pet, and make things happen!',
         buttons: [skipButton, backButton, nextButton('Understood!')],
       },
       {
         id: 'button-c',
-        title: 'Button C',
+        title: 'C Button [esc]',
         text: '❌ Press it to go back, cancel selection, or close menus',
         buttons: [skipButton, backButton, nextButton('Okay!')],
       },
@@ -130,13 +133,46 @@ export default class Tutorial {
         id: 'screen-attention',
         title: 'Attention',
         text: '📢 When this icon lights up, your pet is calling for help! Take care of it!',
-        buttons: [skipButton, backButton, nextButton("Let\'s go!")],
+        buttons: [skipButton, backButton, nextButton('Continue')],
       },
       {
         id: 'button-reset',
         title: 'Reset',
         text: '🔄 Everything comes to an end… whether it’s when your pet passes away, or if you ever want a fresh start, just hit the reset button',
-        buttons: [skipButton, backButton, nextButton('All set!')],
+        buttons: [skipButton, backButton, nextButton('What’s next?')],
+      },
+      {
+        id: 'customization',
+        title: 'Customization',
+        text: ' 🌈 Change the frame and shell colors to make it truly yours!',
+        classes: 'ignore',
+        attachTo: {
+          element: '#colors',
+          on: 'top',
+        },
+        buttons: [skipButton, backButton, nextButton("It's clear")],
+      },
+      {
+        id: 'sounds',
+        title: 'Sounds [M]',
+        text: '🎶 Turn the game sound on or off whenever you like!',
+        classes: 'ignore',
+        attachTo: {
+          element: '#muted',
+          on: 'top',
+        },
+        buttons: [skipButton, backButton, nextButton('Sounds good!')],
+      },
+      {
+        id: 'time-speed',
+        title: 'Time Speed [1][2][3]',
+        text: '⏱️ You can adjust how fast time passes in the game.<br/>Choose the pace that fits your style between three options',
+        classes: 'ignore',
+        attachTo: {
+          element: '#speed-settings',
+          on: 'top',
+        },
+        buttons: [skipButton, backButton, nextButton('Time to go')],
       },
     ])
 
@@ -171,6 +207,8 @@ export default class Tutorial {
   }
 
   start = () => {
+    if (this.tour.isActive()) return
+
     this.pointer.enabled = false
     this.camera.controls.enabled = false
 
@@ -263,12 +301,19 @@ export default class Tutorial {
         break
 
       case 'button-reset':
-        this.hideSpotlight()
+        this.setSpotlight('lg')
         this.ui.icons.resolveAttention()
         this.camera.controls.zoomTo(1, true)
         this.camera.controls.rotateAzimuthTo(Math.PI, true)
         await this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
         this.setSpotlight('sm')
+        break
+
+      case 'customization':
+      case 'sounds':
+      case 'time-speed':
+        this.hideSpotlight()
+        this.camera.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
         break
 
       case 'tab':

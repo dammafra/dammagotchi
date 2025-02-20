@@ -4,7 +4,7 @@ export class Soundboard {
   /** @type {Soundboard} */
   static instance
 
-  muted = false
+  muted = true
   audioContext = new (window.AudioContext || window.webkitAudioContext)()
   buffers = {}
 
@@ -22,10 +22,13 @@ export class Soundboard {
     Soundboard.instance = this
     this.experience = Experience.instance
     this.time = this.experience.time
+
+    this.setMutedButton()
   }
 
   async loadSounds() {
     const soundFiles = {
+      'time-speed': 'sounds/time-speed.mp3',
       button: 'sounds/button.mp3',
       hatching: 'sounds/hatching.mp3',
       death: 'sounds/death.mp3',
@@ -66,5 +69,22 @@ export class Soundboard {
     }
 
     playSound()
+  }
+
+  toggleMuted = () => {
+    this.muted = !this.muted
+    this.refreshButton()
+  }
+
+  setMutedButton() {
+    window.addEventListener('keypress', e => e.key === 'm' && this.toggleMuted())
+
+    this.button = document.getElementById('muted')
+    this.button.addEventListener('click', this.toggleMuted)
+  }
+
+  refreshButton() {
+    this.button.innerText = this.muted ? '🔇' : '🔈'
+    this.button.blur()
   }
 }

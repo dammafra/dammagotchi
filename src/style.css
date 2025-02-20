@@ -66,7 +66,7 @@ body {
 }
 
 .loading {
-  @apply fixed top-0 w-full h-full z-10;
+  @apply fixed top-0 w-full h-full z-20;
   @apply flex flex-col gap-8 justify-center items-center bg-indigo-900;
   @apply transition-[height] duration-700;
 }
@@ -106,6 +106,10 @@ main footer {
   @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
 }
 
+button.fab {
+  @apply rounded-full bg-white hover:bg-gray-200 flex items-center justify-around size-8 text-indigo-900 text-xl cursor-pointer;
+}
+
 .tutorial-overlay {
   @apply fixed inset-0 justify-center items-center z-30;
 }
@@ -114,11 +118,12 @@ main footer {
   @apply bg-transparent rounded-full size-[10000px] aspect-square border-black/60 border-[1000px] transition-all duration-1500;
 }
 
+/* shepherd customization  */
 .tutorial-step {
   @apply rounded-none;
 }
 
-.tutorial-step:not(.welcome) {
+.tutorial-step:not(.ignore) {
   @apply !top-[unset] !bottom-0 md:!left-0;
 }
 

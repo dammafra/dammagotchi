@@ -1,13 +1,12 @@
 import { EventDispatcher } from 'three'
 import { Timer } from 'three/addons/misc/Timer.js'
-import { Pane } from 'tweakpane'
 import Experience from '../experience'
+import { Soundboard } from '../ui/soundboard'
 
 const TIME_SPEED_SETTINGS = Object.freeze({
   1: 2,
   2: 5,
   3: 10,
-  0: 1000,
 })
 
 export default class Time extends EventDispatcher {
@@ -28,9 +27,8 @@ export default class Time extends EventDispatcher {
 
     // don't call the tick method immediately to avoid having a delta equal to 0 on the first frame
     window.requestAnimationFrame(this.tick)
-    window.addEventListener('keypress', e => this.setSpeedSetting(e.key))
 
-    this.setSpeedSettingsPane()
+    this.setSpeedSettingsButton()
   }
 
   tick = () => {
@@ -54,25 +52,26 @@ export default class Time extends EventDispatcher {
   }
 
   setSpeedSetting(value) {
-    if (!Object.keys(TIME_SPEED_SETTINGS).includes(value)) return
+    if (!Object.keys(TIME_SPEED_SETTINGS).map(Number).includes(value)) return
+    if (!this.experience.device.tab.pulled) return
+
     this.speedSetting = value
+    this.refreshButton()
+    Soundboard.instance.play('time-speed', this.speedSetting)
   }
 
-  setSpeedSettingsPane() {
-    const speedSettingsPane = new Pane({ title: '⏱️ TIME', expanded: false })
-    speedSettingsPane.element.parentElement.style.bottom = '64px'
-    speedSettingsPane.element.parentElement.style.top = 'unset'
-    speedSettingsPane.element.parentElement.style.zIndex = 2
+  setSpeedSettingsButton() {
+    window.addEventListener('keypress', e => this.setSpeedSetting(+e.key))
+    this.button = document.getElementById('speed-settings')
+    this.button.addEventListener('click', () =>
+      this.setSpeedSetting(this.speedSetting === 1 ? 2 : this.speedSetting === 2 ? 3 : 1),
+    )
+  }
 
-    speedSettingsPane.addBinding(this, 'speedSetting', {
-      label: 'speed',
-      readonly: true,
-      format: speedSetting => (speedSetting === 0 ? 'MAX' : `${speedSetting}x`),
-    })
-    speedSettingsPane.addButton({ title: '1x [key 1]' }).on('click', () => this.setSpeedSetting('1')) //prettier-ignore
-    speedSettingsPane.addButton({ title: '2x [key 2]' }).on('click', () => this.setSpeedSetting('2')) //prettier-ignore
-    speedSettingsPane.addButton({ title: '3x [key 3]' }).on('click', () => this.setSpeedSetting('3')) //prettier-ignore
-    speedSettingsPane.addButton({ title: 'MAX [key 0]' }).on('click', () => this.setSpeedSetting('0')) //prettier-ignore
+  refreshButton() {
+    this.button.innerText = this.speedSetting === 1 ? '⏵' : this.speedSetting === 2 ? '⏵⏵' : '⏵⏵⏵'
+    this.button.style.letterSpacing = this.speedSetting === 1 ? 'unset' : '-3px'
+    this.button.blur()
   }
 
   setDebug(debug) {
