@@ -5,16 +5,13 @@ export class Soundboard {
   static instance
 
   muted = false
-  #sounds = {
-    button: new Audio('sounds/button.mp3'),
-    hatching: new Audio('sounds/hatching.mp3'),
-    death: new Audio('sounds/death.mp3'),
-    happy: new Audio('sounds/happy.mp3'),
-    attention: new Audio('sounds/attention.mp3'),
-  }
+  audioContext = new (window.AudioContext || window.webkitAudioContext)()
+  buffers = {}
 
-  static init() {
-    return new Soundboard()
+  static async init() {
+    const instance = new Soundboard()
+    await instance.loadSounds()
+    return instance
   }
 
   constructor() {
@@ -27,30 +24,47 @@ export class Soundboard {
     this.time = this.experience.time
   }
 
+  async loadSounds() {
+    const soundFiles = {
+      button: 'sounds/button.mp3',
+      hatching: 'sounds/hatching.mp3',
+      death: 'sounds/death.mp3',
+      happy: 'sounds/happy.mp3',
+      attention: 'sounds/attention.mp3',
+    }
+
+    const promises = Object.entries(soundFiles).map(async ([key, url]) => {
+      const response = await fetch(url)
+      const arrayBuffer = await response.arrayBuffer()
+      this.buffers[key] = await this.audioContext.decodeAudioData(arrayBuffer)
+    })
+
+    await Promise.all(promises)
+  }
+
   setMuted(value) {
     this.muted = value
   }
 
   async play(sound, times = 1) {
+    if (!this.buffers[sound] || this.muted || !this.time.speedSetting) return
+
     let playCount = 0
-    const audio = this.#sounds[sound]
-    audio.load() // workaround for Safari audio delay
-
-    audio.addEventListener('ended', () => {
+    const playSound = () => {
+      if (playCount >= times) return
       playCount++
-      if (playCount < times) {
-        this.#play(audio)
-      }
-    })
+      const source = this.audioContext.createBufferSource()
+      source.buffer = this.buffers[sound]
 
-    this.#play(audio)
-  }
+      const gainNode = this.audioContext.createGain()
+      gainNode.gain.value = 0.5
 
-  #play(audio) {
-    audio.volume = 0.5
-    audio.muted = this.muted || !this.time.speedSetting
-    audio.currentTime = 0
-    audio.playbackRate = this.time.speedSetting
-    audio.play()
+      source.playbackRate.value = this.time.speedSetting
+      source.connect(gainNode).connect(this.audioContext.destination)
+      source.start()
+      source.onended = playSound
+    }
+
+    playSound()
   }
 }
