@@ -54,6 +54,7 @@ export default class Camera {
     this.controls.enabled = false
     this.controls.minDistance = 1.3
     this.controls.maxDistance = 10
+    this.controls.truckSpeed = 0
   }
 
   resize() {
@@ -82,8 +83,10 @@ export default class Camera {
   }
 
   async intro() {
+    this.controls.enabled = false
     this.controls.smoothTime = 1.5
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
+    this.controls.enabled = true
   }
 
   setDebug(debug) {

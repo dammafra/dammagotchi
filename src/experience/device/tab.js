@@ -59,8 +59,9 @@ export default class Tab {
     this.mesh.material.opacity -= this.time.elapsed * 0.003
     if (this.mesh.material.opacity < 0) {
       this.pulled = false
-      this.onPull()
       this.dispose()
+
+      this.onPull()
     }
   }
 

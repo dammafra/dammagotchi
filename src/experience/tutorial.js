@@ -196,7 +196,7 @@ export default class Tutorial {
     switch (step.id) {
       case 'welcome':
         this.hideSpotlight()
-        await this.camera.intro()
+        await this.camera.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
         break
 
       case 'button-a':
