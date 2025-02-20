@@ -13,7 +13,9 @@ export default class Tutorial {
 
     this.overlay = document.querySelector('.tutorial-overlay')
     this.spotlight = document.querySelector('.tutorial-spotlight')
-    this.completed = false // TODO: JSON.parse(localStorage.getItem('tutorial-completed'))
+    this.completed = JSON.parse(localStorage.getItem('tutorial-completed'))
+
+    document.getElementById('tutorial').onclick = this.start
 
     this.tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -55,7 +57,7 @@ export default class Tutorial {
           {
             text: '😎 Yes,<br/>I’m a pro!',
             secondary: true,
-            action: () => this.tour.show(this.tour.steps.length - 1),
+            action: () => (!this.device.tab.pulled ? this.tour.show('tab') : this.tour.complete()),
           },
           nextButton('🤔 No,<br/>teach me'),
         ],
@@ -136,16 +138,21 @@ export default class Tutorial {
         text: '🔄 Everything comes to an end… whether it’s when your pet passes away, or if you ever want a fresh start, just hit the reset button',
         buttons: [skipButton, backButton, nextButton('All set!')],
       },
-      {
+    ])
+
+    if (!this.device.tab.pulled) {
+      this.tour.addStep({
         id: 'tab',
         title: "It's all set!",
         text: '✨ Pull out the battery tab to turn on the device and your virtual pet will come to life!',
         buttons: [nextButton('Done')],
-      },
-    ])
+      })
+    }
 
     this.tour.on('complete', this.end)
-    this.tour.on('cancel', () => this.tour.show(this.tour.steps.length - 1))
+    this.tour.on('cancel', () =>
+      !this.device.tab.pulled ? this.tour.show('tab') : this.tour.complete(),
+    )
     this.tour.on('show', this.animateCamera)
   }
 
@@ -163,9 +170,7 @@ export default class Tutorial {
       dimension === 'lg' ? `4650px` : dimension === 'md' ? '4800px' : '4900px'
   }
 
-  start() {
-    if (this.completed) return
-
+  start = () => {
     this.pointer.enabled = false
     this.camera.controls.enabled = false
 
@@ -179,8 +184,10 @@ export default class Tutorial {
 
     this.pointer.enabled = true
     this.camera.controls.enabled = true
-    // TODO
-    // localStorage.setItem('tutorial-completed', 'true')
+
+    if (this.device.tab.pulled) this.camera.intro()
+
+    localStorage.setItem('tutorial-completed', 'true')
   }
 
   animateCamera = async ({ step }) => {

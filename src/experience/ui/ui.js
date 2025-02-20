@@ -53,6 +53,7 @@ export default class UI {
     this.camera.intro()
     this.camera.unlockRotation()
     this.life.start()
+    this.experience.resetTutorial()
   }
 
   onButtonA = () => {

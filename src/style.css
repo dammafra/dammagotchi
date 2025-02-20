@@ -101,7 +101,8 @@ body {
 }
 
 main footer {
-  @apply fixed bottom-0 w-full p-5 z-10;
+  @apply fixed bottom-0 w-full p-2.5 z-10;
+  @apply flex justify-between items-center;
   @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
 }
 

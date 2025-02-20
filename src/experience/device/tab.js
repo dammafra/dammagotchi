@@ -14,6 +14,9 @@ export default class Tab {
     this.visible = visible
     this.onPull = onPull
 
+    this.pulling = false
+    this.pulled = false
+
     this.setGeometry()
     this.setMaterial()
     this.setMesh()
@@ -48,17 +51,17 @@ export default class Tab {
     if (this.mesh.position.x < this.position.x) {
       this.mesh.position.x = this.position.x
     } else if (this.mesh.position.x > this.position.x + 0.1) {
-      this.pulled = true
+      this.pulling = true
     }
   }
 
   update() {
-    if (!this.pulled) return
+    if (!this.pulling || this.pulled) return
 
     this.mesh.position.x += this.time.elapsed * 0.005
     this.mesh.material.opacity -= this.time.elapsed * 0.003
     if (this.mesh.material.opacity < 0) {
-      this.pulled = false
+      this.pulled = true
       this.dispose()
 
       this.onPull()

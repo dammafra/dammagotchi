@@ -89,7 +89,8 @@ export default class Experience {
     if (!this.debug) {
       await this.camera.intro()
       this.pointer.enabled = true
-      this.tutorial.start()
+
+      if (!this.tutorial.completed) this.tutorial.start()
     }
   }
 
@@ -103,5 +104,9 @@ export default class Experience {
 
   updateSeconds = () => {
     this.life.updateSeconds()
+  }
+
+  resetTutorial() {
+    this.tutorial = new Tutorial()
   }
 }
