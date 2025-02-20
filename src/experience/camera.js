@@ -71,6 +71,16 @@ export default class Camera {
     return this.instance.position.distanceTo(position)
   }
 
+  lockRotation() {
+    this.controls.minAzimuthAngle = 0
+    this.controls.maxAzimuthAngle = Math.PI
+  }
+
+  unlockRotation() {
+    this.controls.minAzimuthAngle = -Infinity
+    this.controls.maxAzimuthAngle = +Infinity
+  }
+
   async intro() {
     this.controls.smoothTime = 1.5
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)

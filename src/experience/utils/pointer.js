@@ -69,6 +69,7 @@ export default class Pointer {
     this.draggableObjects.delete(object)
 
     this.setDrag(filteredObjects)
+    this.camera.controls.enabled = true
   }
 
   setDrag(objects) {

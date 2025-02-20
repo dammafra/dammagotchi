@@ -51,6 +51,7 @@ export default class UI {
 
   onTab = () => {
     this.camera.intro()
+    this.camera.unlockRotation()
     this.life.start()
   }
 

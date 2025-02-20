@@ -270,6 +270,7 @@ export default class Tutorial {
         this.camera.controls.fitToBox(this.device.tab.mesh, true)
         this.camera.controls.moveTo(tabX, tabY, 0, true)
         await this.camera.controls.rotateAzimuthTo(Math.PI * 0.25, true)
+        this.camera.lockRotation()
         break
     }
   }
