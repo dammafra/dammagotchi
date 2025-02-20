@@ -1,6 +1,5 @@
 import Shepherd from 'shepherd.js'
 import Experience from './experience'
-import Icons from './ui/icons'
 
 export default class Tutorial {
   constructor() {
@@ -8,17 +7,13 @@ export default class Tutorial {
     this.camera = this.experience.camera
     this.device = this.experience.device
     this.screen = this.experience.screen
-    this.ui = this.experience.ui
     this.pointer = this.experience.pointer
 
     this.overlay = document.querySelector('.tutorial-overlay')
     this.spotlight = document.querySelector('.tutorial-spotlight')
     this.completed = JSON.parse(localStorage.getItem('tutorial-completed'))
 
-    document.getElementById('tutorial').addEventListener('click', e => {
-      this.start()
-      e.target.blur()
-    })
+    this.setTutorialButton()
 
     this.tour = new Shepherd.Tour({
       useModalOverlay: true,
@@ -89,50 +84,27 @@ export default class Tutorial {
         text: '📺 This is where your pet lives, eats, sleeps, and plays!<br/>Ready to learn about the actions?',
         buttons: [skipButton, backButton, nextButton("I'm Ready!")],
       },
-      ...[
-        {
-          id: 'screen-meter',
-          title: 'Meter',
-          text: '❤️ This is where you check how your pet is doing! Keep an eye on these stats to keep your pet happy and healthy!',
-        },
-        {
-          id: 'screen-feed',
-          title: 'Feed',
-          text: '🍔 Time to Eat! Feed your pet with meals when it’s hungry or choose a snack for a little treat<br/>(but don’t overdo it!)',
-        },
-        {
-          id: 'screen-duck',
-          title: 'Clean',
-          text: '🧽 If your pet leaves a mess, it’s time to clean up! Flush away dirt and don’t let the mess pile up',
-        },
-        {
-          id: 'screen-play',
-          title: 'Play',
-          text: '🎮 Keep your pet entertained for a happy, healthy life! Have Some Fun!',
-        },
-        {
-          id: 'screen-discipline',
-          title: 'Discipline',
-          text: '⚖️ Sometimes, your pet misbehaves, ignoring food or calling for no reason. Teach good behavior!',
-        },
-        {
-          id: 'screen-medicine',
-          title: 'Medicine',
-          text: '💉 If your pet gets sick, use this to give it medicine and help it recover!',
-        },
-        {
-          id: 'screen-light',
-          title: 'Light',
-          text: '💤 Your pet needs rest! Turn the light off when it goes to sleep and back on when it wakes up',
-        },
-      ].map(config => ({
-        ...config,
-        buttons: [skipButton, backButton, nextButton()],
-      })),
+
       {
-        id: 'screen-attention',
-        title: 'Attention',
-        text: '📢 When this icon lights up, your pet is calling for help! Take care of it!',
+        id: 'screen-top',
+        classes: 'small',
+        text: `<ul>
+          <li>❤️ <strong>Meter</strong> - This is where you check how your pet is doing, keep an eye on these stats!</li>
+          <li>🍔 <strong>Feed</strong> -  Feed your pet with meals when it’s hungry or choose a snack for a little treat</li>
+          <li>🧽 <strong>Clean</strong> - If your pet leaves a mess flush it away and don’t let it pile up</li>
+          <li>🎮 <strong>Play</strong> - Keep your pet entertained for a happy, healthy life!</li>
+          </ul>`,
+        buttons: [skipButton, backButton, nextButton()],
+      },
+      {
+        id: 'screen-bottom',
+        classes: 'small',
+        text: `<ul>
+        <li>⚖️ <strong>Discipline</strong> - Sometimes your pet misbehaves, ignoring food or calling for no reason. Teach good behavior!</li>
+        <li>💉 <strong>Medicine</strong> - If your pet gets sick, use this to give it medicine and help it recover</li>
+        <li>💤 <strong>Light</strong> - Turn the light off when it goes to sleep and back on when it wakes up</li>
+        <li>📢 <strong>Attention</strong> - When this icon lights up, your pet needs something</li>
+        </ul>`,
         buttons: [skipButton, backButton, nextButton('Continue')],
       },
       {
@@ -228,12 +200,21 @@ export default class Tutorial {
     localStorage.setItem('tutorial-completed', 'true')
   }
 
+  setTutorialButton() {
+    this.button = document.getElementById('tutorial')
+    this.button.onclick = () => {
+      this.start()
+      this.button.blur()
+    }
+  }
+
   animateCamera = async ({ step }) => {
     this.camera.controls.smoothTime = 0.5
 
-    const iconsX = -0.245
-    const iconsXIncrement = 0.17
-    const iconsY = 0.29
+    const iconsXStart = -0.245
+    const iconsXEnd = iconsXStart + 0.17 * 3
+    const iconsYTop = 0.2
+    const iconsYBottom = -0.4
 
     const tabX = 0.9
     const tabY = -0.3
@@ -257,56 +238,34 @@ export default class Tutorial {
         break
 
       case 'screen':
+        this.camera.controls.smoothTime = 0.5
         this.setSpotlight('lg')
-        this.ui.icons.reset()
         this.camera.controls.zoomTo(1, true)
         await this.camera.controls.fitToBox(this.screen.mesh, true)
         break
 
-      case 'screen-meter':
-        this.setSpotlight('sm')
-        this.ui.icons.setSelected(Icons.METER)
+      case 'screen-top':
+        this.hideSpotlight()
         this.camera.controls.zoomTo(1.5, true)
-        await this.camera.controls.moveTo(iconsX, iconsY, 0, true)
+        await this.camera.controls.moveTo(iconsXStart, iconsYTop, 0, true)
+        this.camera.controls.smoothTime = 2
+        await this.camera.controls.moveTo(iconsXEnd, iconsYTop, 0, true)
         break
-      case 'screen-feed':
-        this.ui.icons.setSelected(Icons.FEED)
-        await this.camera.controls.moveTo(iconsX + iconsXIncrement, iconsY, 0, true)
-        break
-      case 'screen-duck':
-        this.ui.icons.setSelected(Icons.DUCK)
-        await this.camera.controls.moveTo(iconsX + iconsXIncrement * 2, iconsY, 0, true)
-        break
-      case 'screen-play':
-        this.ui.icons.setSelected(Icons.PLAY)
-        await this.camera.controls.moveTo(iconsX + iconsXIncrement * 3, iconsY, 0, true)
-        break
-      case 'screen-discipline':
-        this.ui.icons.setSelected(Icons.DISCIPLINE)
-        await this.camera.controls.moveTo(iconsX, -iconsY, 0, true)
-        break
-      case 'screen-medicine':
-        this.ui.icons.setSelected(Icons.MEDICINE)
-        await this.camera.controls.moveTo(iconsX + iconsXIncrement, -iconsY, 0, true)
-        break
-      case 'screen-light':
-        this.ui.icons.setSelected(Icons.LIGHT)
-        await this.camera.controls.moveTo(iconsX + iconsXIncrement * 2, -iconsY, 0, true)
-        break
-      case 'screen-attention':
-        this.ui.icons.reset()
-        this.ui.icons.notifyAttention()
+      case 'screen-bottom':
+        this.hideSpotlight()
+        this.camera.controls.zoomTo(1.5, true)
         this.camera.controls.rotateAzimuthTo(0, true)
-        await this.camera.controls.moveTo(iconsX + iconsXIncrement * 3, -iconsY, 0, true)
+        await this.camera.controls.moveTo(iconsXStart, iconsYBottom, 0, true)
+        this.camera.controls.smoothTime = 2
+        await this.camera.controls.moveTo(iconsXEnd, iconsYBottom, 0, true)
         break
 
       case 'button-reset':
-        this.setSpotlight('lg')
-        this.ui.icons.resolveAttention()
+        this.camera.controls.smoothTime = 0.5
         this.camera.controls.zoomTo(1, true)
         this.camera.controls.rotateAzimuthTo(Math.PI, true)
-        await this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
         this.setSpotlight('sm')
+        await this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
         break
 
       case 'customization':

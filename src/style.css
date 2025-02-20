@@ -131,6 +131,10 @@ button.fab {
   @apply text-center;
 }
 
+.tutorial-step.small .shepherd-text {
+  @apply text-left text-sm;
+}
+
 .tutorial-step .shepherd-footer {
   @apply p-4 justify-center;
 }

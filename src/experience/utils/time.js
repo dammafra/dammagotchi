@@ -69,8 +69,14 @@ export default class Time extends EventDispatcher {
   }
 
   refreshButton() {
-    this.button.innerText = this.speedSetting === 1 ? '⏵' : this.speedSetting === 2 ? '⏵⏵' : '⏵⏵⏵'
-    this.button.style.letterSpacing = this.speedSetting === 1 ? 'unset' : '-3px'
+    this.button.innerHTML =
+      this.speedSetting === 1
+        ? '&#9654;'
+        : this.speedSetting === 2
+          ? '&#9654;&#9654;'
+          : '&#9654;&#9654;&#9654;'
+    this.button.style.letterSpacing = this.speedSetting === 1 ? 'unset' : '-4px'
+    this.button.style.paddingLeft = this.speedSetting === 1 ? '4px' : 'unset'
     this.button.blur()
   }
 
