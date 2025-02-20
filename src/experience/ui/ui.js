@@ -82,6 +82,8 @@ export default class UI {
         case Icons.LIGHT:
           this.selectedMenu = this.menuLight
           break
+        case Icons.ATTENTION:
+          break
         default:
           this.life.pet?.no()
           break
