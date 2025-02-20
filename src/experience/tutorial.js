@@ -8,6 +8,7 @@ export default class Tutorial {
     this.device = this.experience.device
     this.screen = this.experience.screen
     this.pointer = this.experience.pointer
+    this.picker = this.experience.picker
 
     this.overlay = document.querySelector('.tutorial-overlay')
     this.spotlight = document.querySelector('.tutorial-spotlight')
@@ -183,6 +184,7 @@ export default class Tutorial {
 
     this.pointer.enabled = false
     this.camera.controls.enabled = false
+    this.picker.hide()
 
     this.tour.start()
     this.toggleOverlay()

@@ -49,6 +49,10 @@
   font-style: normal;
 }
 
+:root {
+  --color-primary: var(--color-indigo-900);
+}
+
 /* styles */
 * {
   @apply select-none;
@@ -61,14 +65,15 @@ body {
 
 body {
   @apply w-screen h-[100svh];
-  @apply bg-indigo-900;
   @apply font-mono;
+  background-color: var(--color-primary);
 }
 
 .loading {
   @apply fixed top-0 w-full h-full z-20;
-  @apply flex flex-col gap-8 justify-center items-center bg-indigo-900;
+  @apply flex flex-col gap-8 justify-center items-center;
   @apply transition-[height] duration-700;
+  background-color: var(--color-primary);
 }
 
 .loading p {
@@ -81,7 +86,9 @@ body {
 }
 
 .loading .progress > div {
-  @apply animate-progress origin-[0%_50%] h-full bg-indigo-500;
+  @apply animate-progress origin-[0%_50%] h-full;
+  background-color: var(--color-primary);
+  filter: brightness(1.75);
 }
 
 .loading.end {
@@ -103,11 +110,13 @@ body {
 main footer {
   @apply fixed bottom-0 w-full p-2.5 z-10;
   @apply flex justify-between items-center;
-  @apply bg-indigo-900 text-white font-mono text-right text-xs font-bold;
+  @apply text-white font-mono text-right text-xs font-bold drop-shadow shadow-black;
+  background-color: var(--color-primary);
 }
 
 button.fab {
-  @apply rounded-full bg-white hover:bg-gray-200 flex items-center justify-around size-8 text-indigo-900 text-xl cursor-pointer;
+  @apply rounded-full bg-white hover:bg-gray-200 flex items-center justify-around size-8 text-xl cursor-pointer drop-shadow shadow-black;
+  color: var(--color-primary);
 }
 
 .tutorial-overlay {
@@ -148,5 +157,5 @@ button.fab {
 }
 
 .tutorial-step .shepherd-button:not(.shepherd-button-secondary) {
-  @apply bg-indigo-500;
+  background-color: var(--color-primary);
 }

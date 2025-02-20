@@ -9,6 +9,7 @@ import Renderer from './renderer'
 import Screen from './screen/screen.js'
 import Tutorial from './tutorial.js'
 import UI from './ui/ui.js'
+import ColorPicker from './utils/color-picker.js'
 import Pointer from './utils/pointer'
 import Resources from './utils/resources'
 import Sizes from './utils/sizes'
@@ -50,6 +51,7 @@ export default class Experience {
     this.life = new Life()
     this.ui = new UI()
 
+    this.picker = new ColorPicker()
     this.tutorial = new Tutorial()
 
     // Events

@@ -16,6 +16,7 @@
     "vite-plugin-restart": "^0.4.1"
   },
   "dependencies": {
+    "@jaames/iro": "^5.5.2",
     "@tailwindcss/vite": "^4.0.1",
     "camera-controls": "^2.10.0",
     "gsap": "^3.12.7",

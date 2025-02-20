@@ -3,8 +3,6 @@ import Experience from '../experience'
 import Frame from './frame'
 
 export default class Button {
-  static material = null
-
   constructor({ radius, scale, position, rotation, color, onClick }) {
     this.experience = Experience.instance
     this.pointer = this.experience.pointer

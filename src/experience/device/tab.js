@@ -40,7 +40,7 @@ export default class Tab {
     this.mesh = new Mesh(this.geometry, this.material || Frame.material)
     this.mesh.visible = this.visible
     this.mesh.position.copy(this.position)
-    this.mesh.castShadow = true
+    this.mesh.castShadow = false
 
     this.pointer.onDrag(this.mesh, this.pull)
   }
