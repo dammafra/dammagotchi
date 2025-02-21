@@ -72,9 +72,9 @@ export default class Camera {
     return this.instance.position.distanceTo(position)
   }
 
-  async intro() {
+  async intro(speed = 1.5) {
     this.controls.enabled = false
-    this.controls.smoothTime = 1.5
+    this.controls.smoothTime = speed
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
     this.controls.enabled = true
   }

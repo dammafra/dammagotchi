@@ -139,7 +139,7 @@ export default class Tutorial {
       {
         id: 'time-speed',
         title: 'Time Speed [1][2][3]',
-        text: '⏱️ You can adjust how fast time passes in the game.<br/>Choose the pace that fits your style between three options',
+        text: '⏱️ You can adjust how fast time passes in the game. Choose the pace that fits your style between three options',
         classes: 'ignore',
         attachTo: {
           element: '#speed-settings',
@@ -195,8 +195,9 @@ export default class Tutorial {
     this.hideSpotlight()
     setTimeout(() => this.toggleOverlay(), 1000)
 
-    this.camera.controls.stop()
     await this.camera.intro()
+    this.camera.controls.moveTo(0, 0, 0, true)
+    this.camera.controls.stop()
 
     localStorage.setItem('tutorial-completed', 'true')
   }
@@ -220,7 +221,7 @@ export default class Tutorial {
     switch (step.id) {
       case 'welcome':
         this.hideSpotlight()
-        this.camera.intro()
+        this.camera.intro(0.5)
         break
 
       case 'button-a':
@@ -246,7 +247,7 @@ export default class Tutorial {
         this.camera.controls.zoomTo(1.5, true)
         await this.camera.controls.moveTo(iconsXStart, iconsYTop, 0, true)
         this.camera.controls.smoothTime = 2
-        // this.camera.controls.moveTo(iconsXEnd, iconsYTop, 0, true)
+        this.camera.controls.moveTo(iconsXEnd, iconsYTop, 0, true)
         break
       case 'screen-bottom':
         this.hideSpotlight()
@@ -254,7 +255,7 @@ export default class Tutorial {
         this.camera.controls.rotateAzimuthTo(0, true)
         await this.camera.controls.moveTo(iconsXStart, iconsYBottom, 0, true)
         this.camera.controls.smoothTime = 2
-        // this.camera.controls.moveTo(iconsXEnd, iconsYBottom, 0, true)
+        this.camera.controls.moveTo(iconsXEnd, iconsYBottom, 0, true)
         break
 
       case 'button-reset':
@@ -268,7 +269,7 @@ export default class Tutorial {
       case 'sounds':
       case 'time-speed':
         this.hideSpotlight()
-        this.camera.intro()
+        this.camera.intro(0.5)
         break
 
       case 'tab':
