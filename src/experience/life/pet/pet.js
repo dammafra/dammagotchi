@@ -1,5 +1,6 @@
 import { EventDispatcher } from 'three'
 import Experience from '../../experience'
+import { Soundboard } from '../../ui/soundboard'
 import Random from '../../utils/random'
 import Sprites from '../../utils/sprites'
 import Food from '../food'
@@ -204,6 +205,8 @@ export default class Pet extends EventDispatcher {
 
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
+
+    Soundboard.instance.play('evolution')
 
     this.updateSeconds = null
 

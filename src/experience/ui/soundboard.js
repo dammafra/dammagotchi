@@ -34,6 +34,7 @@ export class Soundboard {
       death: 'sounds/death.mp3',
       happy: 'sounds/happy.mp3',
       attention: 'sounds/attention.mp3',
+      evolution: 'sounds/evolution.mp3',
     }
 
     const promises = Object.entries(soundFiles).map(async ([key, url]) => {
