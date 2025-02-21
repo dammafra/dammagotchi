@@ -134,6 +134,10 @@ main footer {
   background-color: var(--color-primary);
 }
 
+.standalone main footer {
+  @apply pb-10;
+}
+
 button {
   @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer drop-shadow shadow-black px-4 py-2;
   color: var(--color-primary);
@@ -169,6 +173,10 @@ button.fab {
 
 .tutorial-step .shepherd-footer {
   @apply p-4 justify-center;
+}
+
+.standalone .tutorial-step .shepherd-footer {
+  @apply pb-10;
 }
 
 .tutorial-step.shepherd-has-title .shepherd-content .shepherd-header {
