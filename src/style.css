@@ -134,9 +134,12 @@ main footer {
   background-color: var(--color-primary);
 }
 
-button.fab {
-  @apply rounded-full bg-white hover:bg-gray-200 flex items-center justify-around size-10 text-xl cursor-pointer drop-shadow shadow-black;
+button {
+  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer drop-shadow shadow-black px-4 py-2;
   color: var(--color-primary);
+}
+button.fab {
+  @apply rounded-full size-10 text-xl p-0;
 }
 
 .tutorial-overlay {
