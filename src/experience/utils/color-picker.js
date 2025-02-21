@@ -3,7 +3,7 @@ import { Color } from 'three'
 import Frame from '../device/frame'
 import Shell from '../device/shell'
 import Experience from '../experience'
-import { areColorsNear } from './colors'
+import { areColorsNear, randomColor } from './colors'
 
 export default class ColorPicker {
   constructor() {
@@ -12,14 +12,16 @@ export default class ColorPicker {
     this.camera = this.experience.camera
 
     this.button = document.getElementById('colors')
+    this.randomize = document.getElementById('randomize')
     this.element = document.getElementById('picker')
 
     this.button.onclick = this.toggle
+    this.randomize.onclick = () => this.colorPicker.setColors([randomColor(), randomColor()])
 
     this.colorPicker = new iro.ColorPicker('#picker', {
       width: 200,
       layoutDirection: 'horizontal',
-      colors: this.loadState() || ['#224488', '#996600'],
+      colors: this.loadState(),
       layout: [
         {
           component: iro.ui.Box,
@@ -40,6 +42,10 @@ export default class ColorPicker {
     })
 
     this.colorPicker.on('color:change', this.onColorsChange)
+    this.colorPicker.on('color:setAll', ([c1, c2]) => {
+      this.onColorsChange(c1)
+      this.onColorsChange(c2)
+    })
   }
 
   onColorsChange = color => {
@@ -88,11 +94,15 @@ export default class ColorPicker {
 
   loadState = () => {
     const state = localStorage.getItem('colors')
-    const colors = JSON.parse(state)
-    if (colors) {
-      this.setPrimaryColor(colors.at(0))
-      this.setSecondaryColor(colors.at(1))
+    let colors = JSON.parse(state)
+
+    if (!colors) {
+      colors = [randomColor(), randomColor()]
+      localStorage.setItem('colors', JSON.stringify(colors))
     }
+
+    this.setPrimaryColor(colors.at(0))
+    this.setSecondaryColor(colors.at(1))
 
     return colors
   }
