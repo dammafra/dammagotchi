@@ -103,6 +103,26 @@ body {
   @apply opacity-0;
 }
 
+.credits {
+  @apply fixed bottom-0 w-full h-0 z-20 overflow-hidden;
+  @apply transition-[height] duration-700;
+  background-color: var(--color-primary);
+}
+
+.credits .content {
+  @apply opacity-0 transition-opacity;
+  @apply flex flex-col items-center justify-center gap-8 w-full h-full px-4;
+  @apply text-white font-mono drop-shadow shadow-black text-center;
+}
+
+.credits.open {
+  @apply h-full;
+}
+
+.credits.open .content {
+  @apply opacity-100;
+}
+
 .webgl {
   @apply fixed top-0 left-0 outline-none;
 }
@@ -110,7 +130,7 @@ body {
 main footer {
   @apply fixed bottom-0 w-full p-2.5 z-10;
   @apply flex justify-between items-center;
-  @apply text-white font-mono text-right text-xs font-bold drop-shadow shadow-black;
+  @apply text-white font-mono text-right text-sm drop-shadow shadow-black;
   background-color: var(--color-primary);
 }
 
@@ -133,7 +153,7 @@ button.fab {
 }
 
 .tutorial-step:not(.ignore) {
-  @apply !top-[unset] !bottom-0 md:!left-0;
+  @apply !top-[unset] !bottom-0 !left-0;
 }
 
 .tutorial-step .shepherd-text {
