@@ -3,13 +3,6 @@ import { DragControls } from 'three/addons/controls/DragControls.js'
 import Experience from '../experience'
 
 export default class Pointer {
-  #enabled = false
-
-  set enabled(value) {
-    this.#enabled = value
-    this.drag.enabled = value
-  }
-
   constructor() {
     this.experience = Experience.instance
     this.canvas = this.experience.canvas
@@ -43,10 +36,8 @@ export default class Pointer {
 
     this.updateRaycaster()
 
-    if (this.#enabled) {
-      const callback = this.clickableObjects.get(this.currentIntersect?.object)
-      callback && callback()
-    }
+    const callback = this.clickableObjects.get(this.currentIntersect?.object)
+    callback && callback()
   }
 
   onClick(object, callback) {
@@ -75,7 +66,6 @@ export default class Pointer {
   setDrag(objects) {
     this.drag?.dispose()
     this.drag = new DragControls(objects, this.camera.instance, this.canvas)
-    this.drag.enabled = this.#enabled
 
     this.drag.addEventListener('dragstart', () => (this.camera.controls.enabled = false))
     this.drag.addEventListener('dragend', () => (this.camera.controls.enabled = true))

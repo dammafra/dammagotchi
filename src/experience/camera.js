@@ -72,16 +72,6 @@ export default class Camera {
     return this.instance.position.distanceTo(position)
   }
 
-  lockRotation() {
-    this.controls.minAzimuthAngle = 0
-    this.controls.maxAzimuthAngle = Math.PI
-  }
-
-  unlockRotation() {
-    this.controls.minAzimuthAngle = -Infinity
-    this.controls.maxAzimuthAngle = +Infinity
-  }
-
   async intro() {
     this.controls.enabled = false
     this.controls.smoothTime = 1.5

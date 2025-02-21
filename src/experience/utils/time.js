@@ -56,8 +56,9 @@ export default class Time extends EventDispatcher {
     if (!this.experience.device.tab.pulled) return
 
     this.speedSetting = value
-    this.refreshButton()
     Soundboard.instance.play('time-speed', this.speedSetting)
+
+    this.updateButton()
   }
 
   setSpeedSettingsButton() {
@@ -68,16 +69,18 @@ export default class Time extends EventDispatcher {
     )
   }
 
-  refreshButton() {
-    this.button.innerHTML =
-      this.speedSetting === 1
-        ? '&#9654;'
-        : this.speedSetting === 2
-          ? '&#9654;&#9654;'
-          : '&#9654;&#9654;&#9654;'
-    this.button.style.letterSpacing = this.speedSetting === 1 ? 'unset' : '-4px'
-    this.button.style.paddingLeft = this.speedSetting === 1 ? '4px' : 'unset'
-    this.button.blur()
+  updateButton() {
+    const container = this.button.firstElementChild
+
+    container.innerHTML = Array(this.speedSetting)
+      .fill(true)
+      .map((_, index) => {
+        const icon = container.firstElementChild.cloneNode()
+        if (index > 0) icon.style.marginLeft = '-6px'
+        return icon
+      })
+      .map(i => i.outerHTML)
+      .join('')
   }
 
   setDebug(debug) {

@@ -70,8 +70,11 @@ export default class ColorPicker {
 
   toggle = async () => {
     const visible = !this.element.classList.toggle('hidden')
-    this.camera.controls.dollyTo(visible ? 5 : 3, true)
-    this.camera.controls.truck(0, visible ? 0.5 : -0.5, true)
+    await this.camera.intro()
+    if (visible) {
+      this.camera.controls.dollyTo(5, true)
+      this.camera.controls.truck(0, 0.5, true)
+    }
   }
 
   hide() {

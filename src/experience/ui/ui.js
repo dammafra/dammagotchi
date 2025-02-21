@@ -1,4 +1,5 @@
 import Experience from '../experience'
+import ColorPicker from '../utils/color-picker'
 import Icons from './icons'
 import MenuFeed from './menu-feed'
 import MenuLight from './menu-light'
@@ -8,6 +9,7 @@ export default class UI {
   constructor() {
     this.experience = Experience.instance
     this.camera = this.experience.camera
+    this.picker = new ColorPicker()
 
     this.device = this.experience.device
     this.life = this.experience.life
@@ -51,7 +53,6 @@ export default class UI {
 
   onTab = () => {
     this.camera.intro()
-    this.camera.unlockRotation()
     this.life.start()
     this.experience.resetTutorial()
   }

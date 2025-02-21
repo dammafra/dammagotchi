@@ -73,7 +73,9 @@ export class Soundboard {
 
   toggleMuted = () => {
     this.muted = !this.muted
-    this.refreshButton()
+
+    this.button.firstElementChild.classList.toggle('fa-volume-high')
+    this.button.firstElementChild.classList.toggle('fa-volume-xmark')
   }
 
   setMutedButton() {
@@ -81,10 +83,5 @@ export class Soundboard {
 
     this.button = document.getElementById('muted')
     this.button.addEventListener('click', this.toggleMuted)
-  }
-
-  refreshButton() {
-    this.button.innerText = this.muted ? '🔇' : '🔈'
-    this.button.blur()
   }
 }

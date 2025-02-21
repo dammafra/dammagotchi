@@ -8,7 +8,7 @@ export default class Tutorial {
     this.device = this.experience.device
     this.screen = this.experience.screen
     this.pointer = this.experience.pointer
-    this.picker = this.experience.picker
+    this.ui = this.experience.ui
 
     this.overlay = document.querySelector('.tutorial-overlay')
     this.spotlight = document.querySelector('.tutorial-spotlight')
@@ -160,7 +160,9 @@ export default class Tutorial {
 
     this.tour.on('complete', this.end)
     this.tour.on('cancel', () =>
-      !this.device.tab.pulled ? this.tour.show('tab') : this.tour.complete(),
+      !this.device.tab.pulled && this.tour.currentStep.id !== 'tab'
+        ? this.tour.show('tab')
+        : this.tour.complete(),
     )
     this.tour.on('show', this.animateCamera)
   }
@@ -182,9 +184,8 @@ export default class Tutorial {
   start = () => {
     if (this.tour.isActive()) return
 
-    this.pointer.enabled = false
     this.camera.controls.enabled = false
-    this.picker.hide()
+    this.ui.picker.hide()
 
     this.tour.start()
     this.toggleOverlay()
@@ -194,20 +195,15 @@ export default class Tutorial {
     this.hideSpotlight()
     setTimeout(() => this.toggleOverlay(), 1000)
 
-    this.pointer.enabled = true
-    this.camera.controls.enabled = true
-
-    if (this.device.tab.pulled) this.camera.intro()
+    this.camera.controls.stop()
+    await this.camera.intro()
 
     localStorage.setItem('tutorial-completed', 'true')
   }
 
   setTutorialButton() {
     this.button = document.getElementById('tutorial')
-    this.button.onclick = () => {
-      this.start()
-      this.button.blur()
-    }
+    this.button.onclick = this.start
   }
 
   animateCamera = async ({ step }) => {
@@ -224,26 +220,25 @@ export default class Tutorial {
     switch (step.id) {
       case 'welcome':
         this.hideSpotlight()
-        await this.camera.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
+        this.camera.intro()
         break
 
       case 'button-a':
         this.setSpotlight('sm')
-        await this.camera.controls.fitToBox(this.device.buttonSlots.at(0).mesh, true)
+        this.camera.controls.fitToBox(this.device.buttonSlots.at(0).mesh, true)
         break
       case 'button-b':
-        await this.camera.controls.fitToBox(this.device.buttonSlots.at(1).mesh, true)
+        this.camera.controls.fitToBox(this.device.buttonSlots.at(1).mesh, true)
         break
       case 'button-c':
         this.setSpotlight('sm')
-        await this.camera.controls.fitToBox(this.device.buttonSlots.at(2).mesh, true)
+        this.camera.controls.fitToBox(this.device.buttonSlots.at(2).mesh, true)
         break
 
       case 'screen':
-        this.camera.controls.smoothTime = 0.5
         this.setSpotlight('lg')
         this.camera.controls.zoomTo(1, true)
-        await this.camera.controls.fitToBox(this.screen.mesh, true)
+        this.camera.controls.fitToBox(this.screen.mesh, true)
         break
 
       case 'screen-top':
@@ -251,7 +246,7 @@ export default class Tutorial {
         this.camera.controls.zoomTo(1.5, true)
         await this.camera.controls.moveTo(iconsXStart, iconsYTop, 0, true)
         this.camera.controls.smoothTime = 2
-        await this.camera.controls.moveTo(iconsXEnd, iconsYTop, 0, true)
+        // this.camera.controls.moveTo(iconsXEnd, iconsYTop, 0, true)
         break
       case 'screen-bottom':
         this.hideSpotlight()
@@ -259,22 +254,21 @@ export default class Tutorial {
         this.camera.controls.rotateAzimuthTo(0, true)
         await this.camera.controls.moveTo(iconsXStart, iconsYBottom, 0, true)
         this.camera.controls.smoothTime = 2
-        await this.camera.controls.moveTo(iconsXEnd, iconsYBottom, 0, true)
+        // this.camera.controls.moveTo(iconsXEnd, iconsYBottom, 0, true)
         break
 
       case 'button-reset':
-        this.camera.controls.smoothTime = 0.5
         this.camera.controls.zoomTo(1, true)
         this.camera.controls.rotateAzimuthTo(Math.PI, true)
         this.setSpotlight('sm')
-        await this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
+        this.camera.controls.fitToBox(this.device.buttonSlots.at(3).mesh, true)
         break
 
       case 'customization':
       case 'sounds':
       case 'time-speed':
         this.hideSpotlight()
-        this.camera.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
+        this.camera.intro()
         break
 
       case 'tab':
@@ -282,8 +276,7 @@ export default class Tutorial {
         this.camera.controls.zoomTo(1, true)
         this.camera.controls.fitToBox(this.device.tab.mesh, true)
         this.camera.controls.moveTo(tabX, tabY, 0, true)
-        await this.camera.controls.rotateAzimuthTo(Math.PI * 0.25, true)
-        this.camera.lockRotation()
+        this.camera.controls.rotateAzimuthTo(Math.PI * 0.25, true)
         break
     }
   }

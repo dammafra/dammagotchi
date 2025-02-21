@@ -16,6 +16,8 @@
     <link rel="manifest" href="favicon/site.webmanifest" />
 
     <meta name="theme-color" content="#312c85" />
+
+    <script src="https://kit.fontawesome.com/7fdff1040a.js" crossorigin="anonymous"></script>
   </head>
   <!-- workaround for Safari: tells the browser to react to touch events (triggers "active" state on buttons)  -->
   <body>
@@ -34,18 +36,24 @@
 
       <canvas class="webgl"></canvas>
 
-      <button id="colors" class="fixed z-10 bottom-35 left-2.5 fab hidden">🎨</button>
-      <button id="muted" class="fixed z-10 bottom-25 left-2.5 fab">🔇</button>
-      <button id="speed-settings" class="fixed z-10 bottom-15 left-2.5 fab pb-px pl-1">
-        &#9654;
+      <button id="colors" class="fixed z-10 bottom-40 left-2.5 fab hidden">
+        <i class="fa-solid fa-palette"></i>
+      </button>
+      <button id="muted" class="fixed z-10 bottom-28 left-2.5 fab">
+        <i class="fa-solid fa-volume-xmark"></i>
+      </button>
+      <button id="speed-settings" class="fixed z-10 bottom-16 left-2.5 fab">
+        <div class="flex gap-0">
+          <i class="fa-solid fa-play"></i>
+        </div>
       </button>
 
       <div id="picker" class="fixed z-10 bottom-15 left-16 hidden"></div>
 
       <footer class="app-footer">
         <div class="flex gap-2">
-          <button id="tutorial" class="fab">?</button>
-          <button class="fab">i</button>
+          <button id="tutorial" class="fab"><i class="fa-solid fa-question"></i></button>
+          <button class="fab"><i class="fa-solid fa-info"></i></button>
         </div>
         <span>
           Developed with ❤️ by
