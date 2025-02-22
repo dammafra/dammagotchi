@@ -1,6 +1,6 @@
+import Experience from '@experience'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { Pane } from 'tweakpane'
-import Experience from '../experience'
 
 export default class Debug {
   constructor() {

@@ -1,5 +1,5 @@
-import Food from '../../life/food'
-import { Soundboard } from '../soundboard'
+import Food from '@life/food'
+import { Soundboard } from '@ui/soundboard'
 import Menu from './menu'
 
 export default class MenuFeed extends Menu {

@@ -1,6 +1,6 @@
+import Experience from '@experience'
+import Sprites from '@utils/sprites'
 import { EventDispatcher } from 'three'
-import Experience from '../../experience'
-import Sprites from '../../utils/sprites'
 import eat from './animations/eat'
 import evolveIn from './animations/evolve-in'
 import evolveOut from './animations/evolve-out'

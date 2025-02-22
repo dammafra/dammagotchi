@@ -1,6 +1,6 @@
+import Experience from '@experience'
 import { CylinderGeometry, MeshStandardMaterial } from 'three'
 import { Brush } from 'three-bvh-csg'
-import Experience from '../experience'
 
 export default class Frame {
   static material = null

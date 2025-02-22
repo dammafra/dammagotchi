@@ -1,7 +1,7 @@
+import Experience from '@experience'
 import { EventDispatcher } from 'three'
 import { Evaluator, SUBTRACTION } from 'three-bvh-csg'
 import { radToDeg } from 'three/src/math/MathUtils.js'
-import Experience from '../experience'
 import Button from './button'
 import ButtonSlot from './button-slot'
 import ColorPicker from './color-picker'

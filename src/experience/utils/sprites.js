@@ -1,7 +1,7 @@
+import spritesConfig from '@config/sprites'
+import Experience from '@experience'
+import Sprite from '@screen/sprite'
 import { EventDispatcher } from 'three'
-import spritesConfig from '../config/sprites'
-import Experience from '../experience'
-import Sprite from '../screen/sprite'
 import { areColorsNear, rgbToHex } from './colors'
 
 export default class Sprites extends EventDispatcher {

@@ -1,7 +1,7 @@
+import Experience from '@experience'
 import { LatheGeometry, MeshStandardMaterial, Vector2 } from 'three'
 import { Brush } from 'three-bvh-csg'
 import { degToRad } from 'three/src/math/MathUtils.js'
-import Experience from '../experience'
 
 export default class Shell {
   static material = null

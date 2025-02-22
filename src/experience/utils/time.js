@@ -1,7 +1,7 @@
+import Experience from '@experience'
+import { Soundboard } from '@ui/soundboard'
 import { EventDispatcher } from 'three'
 import { Timer } from 'three/addons/misc/Timer.js'
-import Experience from '../experience'
-import { Soundboard } from '../ui/soundboard'
 
 const TIME_SPEED_SETTINGS = Object.freeze({
   1: 2,

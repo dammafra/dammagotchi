@@ -1,4 +1,4 @@
-import Food from '../../food'
+import Food from '@life/food'
 
 export default {
   default(type) {

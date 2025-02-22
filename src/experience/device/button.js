@@ -1,5 +1,5 @@
+import Experience from '@experience'
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
-import Experience from '../experience'
 
 export default class Button {
   static geometry = null

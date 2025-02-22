@@ -1,9 +1,9 @@
+import Frame from '@device/frame'
+import Shell from '@device/shell'
+import Experience from '@experience'
 import iro from '@jaames/iro'
+import { areColorsNear, randomColor } from '@utils/colors'
 import { Color } from 'three'
-import Frame from '../device/frame'
-import Shell from '../device/shell'
-import Experience from '../experience'
-import { areColorsNear, randomColor } from '../utils/colors'
 import Button from './button'
 
 export default class ColorPicker {

@@ -1,6 +1,6 @@
+import Experience from '@experience'
 import html2canvas from 'html2canvas-pro'
 import { CanvasTexture, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
-import Experience from '../../experience'
 
 export default class Menu {
   constructor(element) {

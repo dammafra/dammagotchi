@@ -1,4 +1,4 @@
-import Experience from '../experience'
+import Experience from '@experience'
 import Icons from './icons'
 import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'

@@ -1,4 +1,4 @@
-import { Soundboard } from '../../../ui/soundboard'
+import { Soundboard } from '@ui/soundboard'
 
 export default {
   default() {

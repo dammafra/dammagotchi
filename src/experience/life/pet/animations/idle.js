@@ -1,5 +1,5 @@
-import { Soundboard } from '../../../ui/soundboard'
-import Random from '../../../utils/random'
+import { Soundboard } from '@ui/soundboard'
+import Random from '@utils/random'
 
 export default {
   default() {

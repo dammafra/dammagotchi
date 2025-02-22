@@ -1,5 +1,5 @@
+import Experience from '@experience'
 import { DoubleSide, Mesh, MeshStandardMaterial, PlaneGeometry } from 'three'
-import Experience from '../experience'
 
 export default class Tab {
   constructor({ width, height, position, visible, onPull }) {

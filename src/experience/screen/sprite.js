@@ -1,6 +1,6 @@
+import Experience from '@experience'
+import { dispose } from '@utils/dispose'
 import { Group } from 'three'
-import Experience from '../experience'
-import { dispose } from '../utils/dispose'
 import Pixel from './pixel'
 
 export default class Sprite {

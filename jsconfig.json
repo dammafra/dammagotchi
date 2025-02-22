@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@config/*": ["./src/experience/config/*"],
+      "@device/*": ["./src/experience/device/*"],
+      "@experience": ["./src/experience/experience.js"],
+      "@life/*": ["./src/experience/life/*"],
+      "@screen/*": ["./src/experience/screen/*"],
+      "@shaders/*": ["./src/shaders/*"],
+      "@ui/*": ["./src/experience/ui/*"],
+      "@utils/*": ["./src/experience/utils/*"]
+    }
+  }
+}

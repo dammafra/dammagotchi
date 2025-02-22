@@ -1,5 +1,5 @@
+import Experience from '@experience'
 import { DoubleSide, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
-import Experience from '../experience'
 
 export default class Pixel {
   static geometry = null

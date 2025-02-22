@@ -1,4 +1,4 @@
-import Sprites from '../utils/sprites'
+import Sprites from '@utils/sprites'
 
 export default class Food {
   /** @type {Food} */

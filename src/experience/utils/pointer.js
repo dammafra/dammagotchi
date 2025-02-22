@@ -1,6 +1,6 @@
+import Experience from '@experience'
 import { Raycaster, Vector2 } from 'three'
 import { DragControls } from 'three/addons/controls/DragControls.js'
-import Experience from '../experience'
 
 export default class Pointer {
   constructor() {

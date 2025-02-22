@@ -1,3 +1,6 @@
+import Experience from '@experience'
+import lcdFragmentShader from '@shaders/lcd/fragment.glsl'
+import lcdVertexShader from '@shaders/lcd/vertex.glsl'
 import {
   Color,
   GridHelper,
@@ -12,9 +15,6 @@ import {
   Vector3,
   WebGLRenderTarget,
 } from 'three'
-import lcdFragmentShader from '../../shaders/lcd/fragment.glsl'
-import lcdVertexShader from '../../shaders/lcd/vertex.glsl'
-import Experience from '../experience'
 import ScreenCamera from './camera'
 import Pixel from './pixel'
 

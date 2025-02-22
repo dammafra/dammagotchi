@@ -1,3 +1,4 @@
+import Experience from '@experience'
 import {
   DoubleSide,
   Mesh,
@@ -6,7 +7,6 @@ import {
   PlaneGeometry,
   SRGBColorSpace,
 } from 'three'
-import Experience from '../experience'
 import { Soundboard } from './soundboard'
 
 export default class Icons {
