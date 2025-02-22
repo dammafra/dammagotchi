@@ -134,7 +134,7 @@ main footer {
   background-color: var(--color-primary);
 }
 
-.standalone main footer {
+.fullscreen main footer {
   @apply pb-10;
 }
 
@@ -183,7 +183,7 @@ button.fab {
   @apply p-4 justify-center;
 }
 
-.standalone .tutorial-step .shepherd-footer {
+.fullscreen .tutorial-step .shepherd-footer {
   @apply pb-10;
 }
 

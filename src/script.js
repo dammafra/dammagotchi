@@ -3,6 +3,8 @@ import Experience from './experience/experience'
 Experience.init(document.querySelector('canvas.webgl'))
 document.querySelectorAll('.fab').forEach(b => b.addEventListener('focus', e => e.target.blur()))
 
+const isMobile = () => /Mobi|Android|iPhone|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent)
+
 const fullScreenButton = document.getElementById('fullscreen')
 fullScreenButton.addEventListener('click', () => {
   const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
@@ -21,7 +23,7 @@ fullScreenButton.addEventListener('click', () => {
     }
   }
 
-  document.body.classList.toggle('standalone')
+  if (isMobile()) document.body.classList.toggle('fullscreen')
   fullScreenButton.firstElementChild.classList.toggle('fa-compress')
   fullScreenButton.firstElementChild.classList.toggle('fa-expand')
 })
@@ -30,7 +32,7 @@ const isStandalone = () =>
   window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone
 
 if (isStandalone()) {
-  document.body.classList.add('standalone')
+  if (isMobile()) document.body.classList.add('fullscreen')
   fullScreenButton.remove()
 }
 

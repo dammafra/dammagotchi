@@ -18,8 +18,8 @@ export default class Pointer {
     this.x = 0
     this.y = 0
 
-    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-    if (this.isTouchDevice) {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    if (isTouchDevice) {
       window.addEventListener('touchstart', this.touchstart)
       window.addEventListener('touchend', this.mouseup)
     } else {
