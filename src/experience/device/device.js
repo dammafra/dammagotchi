@@ -57,7 +57,7 @@ export default class Device extends EventDispatcher {
         rotation: { x: Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: 0.3 },
         color: '#996600',
-        onClick: () => this.dispatchEvent({ type: 'button-A' }),
+        onPress: () => this.dispatchEvent({ type: 'press-button-A' }),
       },
       {
         radius: 0.09,
@@ -65,7 +65,7 @@ export default class Device extends EventDispatcher {
         rotation: { x: Math.PI * 0.15, y: 0, z: 0 },
         position: { x: 0, y: -0.7, z: 0.3 },
         color: '#996600',
-        onClick: () => this.dispatchEvent({ type: 'button-B' }),
+        onPress: () => this.dispatchEvent({ type: 'press-button-B' }),
       },
       {
         radius: 0.09,
@@ -73,7 +73,7 @@ export default class Device extends EventDispatcher {
         rotation: { x: Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
         position: { x: 0.3, y: -0.6, z: 0.3 },
         color: '#996600',
-        onClick: () => this.dispatchEvent({ type: 'button-C' }),
+        onPress: () => this.dispatchEvent({ type: 'press-button-C' }),
       },
       {
         radius: 0.0405,
@@ -81,7 +81,8 @@ export default class Device extends EventDispatcher {
         rotation: { x: -Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: 0.3, y: -0.6, z: -0.28 },
         color: 'gray',
-        onClick: () => this.dispatchEvent({ type: 'reset-button' }),
+        onPress: () => this.dispatchEvent({ type: 'press-reset-button' }),
+        onRelease: () => this.dispatchEvent({ type: 'release-reset-button' }),
         detach: true,
       },
     ],

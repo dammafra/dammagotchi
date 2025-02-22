@@ -19,32 +19,47 @@ export default class Pointer {
     this.y = 0
 
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-
-    this.isTouchDevice
-      ? window.addEventListener('touchend', this.touchend)
-      : window.addEventListener('click', this.click)
+    if (this.isTouchDevice) {
+      window.addEventListener('touchstart', this.touchstart)
+      window.addEventListener('touchend', this.mouseup)
+    } else {
+      window.addEventListener('mousedown', this.mousedown)
+      window.addEventListener('mouseup', this.mouseup)
+    }
   }
 
-  touchend = event => {
+  touchstart = event => {
     const touch = event.changedTouches[0]
-    this.click(touch)
+    this.mousedown(touch)
   }
 
-  click = event => {
+  mousedown = event => {
     this.x = (event.clientX / this.sizes.width) * 2 - 1
     this.y = -((event.clientY / this.sizes.height) * 2 - 1)
 
     this.updateRaycaster()
+    const callback = this.clickableObjects.get(this.currentIntersect)
+    callback && callback.start && callback.start()
+  }
 
-    const callback = this.clickableObjects.get(this.currentIntersect?.object)
-    callback && callback()
+  mouseup = () => {
+    const callback = this.clickableObjects.get(this.currentIntersect)
+    callback && callback.end && callback.end()
+  }
+
+  updateRaycaster() {
+    this.raycaster.setFromCamera(new Vector2(this.x, this.y), this.camera.instance)
+
+    const test = Array.from(this.clickableObjects.keys())
+    const intersects = this.raycaster.intersectObjects(test)
+    this.currentIntersect = intersects.length ? intersects[0].object : null
   }
 
   onClick(object, callback) {
     this.clickableObjects.set(object, callback)
   }
 
-  cancelClicl(object) {
+  cancelClick(object) {
     this.clickableObjects.delete(object)
   }
 
@@ -73,13 +88,5 @@ export default class Pointer {
       const callback = this.draggableObjects.get(e.object)
       callback && callback()
     })
-  }
-
-  updateRaycaster() {
-    this.raycaster.setFromCamera(new Vector2(this.x, this.y), this.camera.instance)
-
-    const test = Array.from(this.clickableObjects.keys())
-    const intersects = this.raycaster.intersectObjects(test)
-    this.currentIntersect = intersects.length ? intersects[0] : null
   }
 }

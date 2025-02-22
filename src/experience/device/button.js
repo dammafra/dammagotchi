@@ -5,7 +5,7 @@ export default class Button {
   static geometry = null
   static material = null
 
-  constructor({ radius, scale, position, rotation, color, onClick, detach }) {
+  constructor({ radius, scale, position, rotation, color, onPress, onRelease, detach }) {
     this.experience = Experience.instance
     this.pointer = this.experience.pointer
 
@@ -14,7 +14,8 @@ export default class Button {
     this.position = position
     this.rotation = rotation
     this.color = color
-    this.onClick = onClick
+    this.onPress = onPress
+    this.onRelease = onRelease
 
     if (detach || !Button.geometry) this.setGeometry(detach)
     if (detach || !Button.material) this.setMaterial(detach)
@@ -37,18 +38,18 @@ export default class Button {
     this.mesh.position.copy(this.position)
     this.mesh.rotation.setFromVector3(this.rotation)
 
-    this.pointer.onClick(this.mesh, this.push)
+    this.pointer.onClick(this.mesh, { start: this.press, end: this.release })
   }
 
-  push = () => {
-    const direction = this.mesh.position.z > 0 ? -0.03 : +0.03
+  press = () => {
+    const direction = this.position.z > 0 ? -1 : 1
+    this.mesh.position.z = this.position.z + 0.03 * direction
+    this.onPress && this.onPress()
+  }
 
-    this.mesh.position.z += direction
-    setTimeout(() => {
-      this.mesh.position.z -= direction
-    }, 100)
-
-    this.onClick()
+  release = () => {
+    this.mesh.position.z = this.position.z
+    this.onRelease && this.onRelease()
   }
 
   dispose() {

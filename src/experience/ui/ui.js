@@ -20,9 +20,9 @@ export default class UI {
 
     Soundboard.init()
 
-    this.device.addEventListener('button-A', this.onButtonA)
-    this.device.addEventListener('button-B', this.onButtonB)
-    this.device.addEventListener('button-C', this.onButtonC)
+    this.device.addEventListener('press-button-A', this.onButtonA)
+    this.device.addEventListener('press-button-B', this.onButtonB)
+    this.device.addEventListener('press-button-C', this.onButtonC)
     this.device.addEventListener('tab', this.onTab)
 
     window.addEventListener('keydown', e => {
