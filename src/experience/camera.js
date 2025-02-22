@@ -87,7 +87,7 @@ export default class Camera {
       .on('change', () => this.instance.updateProjectionMatrix())
     this.debug.addBinding(this.instance, 'position')
 
+    this.controls.enabled = true
     this.controls.setLookAt(0, 0, 3, 0, 0, 0)
-    this.controls.dolly(2)
   }
 }

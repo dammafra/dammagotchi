@@ -1,5 +1,5 @@
 import Experience from '@experience'
-import html2canvas from 'html2canvas-pro'
+import { getCanvasFrom } from '@utils/canvas'
 import { CanvasTexture, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
 
 export default class Menu {
@@ -37,7 +37,7 @@ export default class Menu {
   }
 
   async refreshMenu() {
-    const canvas = await this.getCanvas(this.element)
+    const canvas = await getCanvasFrom(this.element)
     const texture = new CanvasTexture(canvas)
 
     this.material.map = texture
@@ -68,16 +68,4 @@ export default class Menu {
   cycle() {}
   reset() {}
   action() {}
-
-  getCanvas(element) {
-    return html2canvas(element, {
-      ignoreElements: el =>
-        el.nodeName !== 'BODY' &&
-        el.nodeName !== 'HEAD' &&
-        el.id !== 'html2canvas' &&
-        !el.closest('#html2canvas') &&
-        !el.href?.includes('.css'),
-      backgroundColor: null,
-    })
-  }
 }

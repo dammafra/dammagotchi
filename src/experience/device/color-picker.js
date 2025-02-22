@@ -7,20 +7,7 @@ import { Color } from 'three'
 import Button from './button'
 
 export default class ColorPicker {
-  /** @type {ColorPicker} */
-  static instance
-
-  static init() {
-    return new ColorPicker()
-  }
-
   constructor() {
-    // Singleton
-    if (ColorPicker.instance) {
-      return ColorPicker.instance
-    }
-    ColorPicker.instance = this
-
     this.experience = Experience.instance
     this.camera = this.experience.camera
 

@@ -153,7 +153,7 @@ export default class Tutorial {
       this.tour.addStep({
         id: 'tab',
         title: "It's all set!",
-        text: '✨ Pull out the battery tab to turn on the device and your virtual pet will come to life!',
+        text: '✨ Pull and remove the battery plastic strip to turn on the device and your virtual pet will come to life!',
         buttons: [nextButton('Done')],
       })
     }
@@ -185,7 +185,7 @@ export default class Tutorial {
     if (this.tour.isActive()) return
 
     this.camera.controls.enabled = false
-    this.ui.picker.hide()
+    this.device.colorPicker.hide()
 
     this.tour.start()
     this.toggleOverlay()
@@ -215,8 +215,8 @@ export default class Tutorial {
     const iconsYTop = 0.2
     const iconsYBottom = -0.4
 
-    const tabX = 0.9
-    const tabY = -0.3
+    const tabX = 1
+    const tabY = -0.2
 
     switch (step.id) {
       case 'welcome':
@@ -273,7 +273,7 @@ export default class Tutorial {
         break
 
       case 'tab':
-        this.setSpotlight('md')
+        this.setSpotlight('lg')
         this.camera.controls.zoomTo(1, true)
         this.camera.controls.fitToBox(this.device.tab.mesh, true)
         this.camera.controls.moveTo(tabX, tabY, 0, true)

@@ -88,7 +88,8 @@ export default class Device extends EventDispatcher {
     tab: {
       width: 0.8,
       height: 0.3,
-      position: { x: 0.6, y: -0.3, z: 0 },
+      radius: 0.25,
+      position: { x: 0.85, y: -0.2, z: 0 },
       visible: true,
       onPull: () => this.dispatchEvent({ type: 'tab' }),
     },
@@ -102,7 +103,7 @@ export default class Device extends EventDispatcher {
     this.pointer = this.experience.pointer
 
     this.setMesh()
-    ColorPicker.init()
+    this.colorPicker = new ColorPicker()
   }
 
   setMesh() {
