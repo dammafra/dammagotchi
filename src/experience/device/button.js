@@ -1,9 +1,11 @@
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import Experience from '../experience'
-import Frame from './frame'
 
 export default class Button {
-  constructor({ radius, scale, position, rotation, color, onClick }) {
+  static geometry = null
+  static material = null
+
+  constructor({ radius, scale, position, rotation, color, onClick, detach }) {
     this.experience = Experience.instance
     this.pointer = this.experience.pointer
 
@@ -14,21 +16,23 @@ export default class Button {
     this.color = color
     this.onClick = onClick
 
-    this.setGeometry()
-    this.setMaterial()
+    if (detach || !Button.geometry) this.setGeometry(detach)
+    if (detach || !Button.material) this.setMaterial(detach)
     this.setMesh()
   }
 
-  setGeometry() {
-    this.geometry = new SphereGeometry(this.radius)
+  setGeometry(detach) {
+    const geometry = new SphereGeometry(this.radius)
+    detach ? (this.geometry = geometry) : (Button.geometry = geometry)
   }
 
-  setMaterial() {
-    this.material = new MeshStandardMaterial({ color: this.color, metalness: 0, roughness: 0.7 })
+  setMaterial(detach) {
+    const material = new MeshStandardMaterial({ color: this.color, metalness: 0, roughness: 0.7 })
+    detach ? (this.material = material) : (Button.material = material)
   }
 
   setMesh() {
-    this.mesh = new Mesh(this.geometry, this.material || Frame.material)
+    this.mesh = new Mesh(this.geometry || Button.geometry, this.material || Button.material)
     this.mesh.scale.copy(this.scale)
     this.mesh.position.copy(this.position)
     this.mesh.rotation.setFromVector3(this.rotation)
@@ -48,7 +52,10 @@ export default class Button {
   }
 
   dispose() {
-    this.geometry.dispose()
-    this.material.dispose()
+    this.geometry?.dispose()
+    Button.geometry.dispose()
+
+    this.material?.dispose()
+    Button.material.dispose()
   }
 }

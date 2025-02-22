@@ -1,16 +1,13 @@
 import Experience from '../experience'
-import ColorPicker from '../utils/color-picker'
 import Icons from './icons'
-import MenuFeed from './menu-feed'
-import MenuLight from './menu-light'
+import MenuFeed from './menu/menu-feed'
+import MenuLight from './menu/menu-light'
 import { Soundboard } from './soundboard'
 
 export default class UI {
   constructor() {
     this.experience = Experience.instance
     this.camera = this.experience.camera
-    this.picker = new ColorPicker()
-
     this.device = this.experience.device
     this.life = this.experience.life
 
@@ -124,7 +121,7 @@ export default class UI {
     this.resetTimeout = setTimeout(this.reset, 10000)
   }
 
-  // TODO: reset on evolution
+  // TODO:* improve reset on evolution
   reset = () => {
     this.icons.reset()
     this.selectedMenu?.hide()

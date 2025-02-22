@@ -105,6 +105,7 @@ export default class Life {
 
   evolveOut = () => {
     this.experience.screen.setFlicker(this.stage !== 'egg' && this.stage !== 'seniors')
+    // TODO:* improve
     this.experience.ui.reset()
 
     if (this.pet.evolveOut) {

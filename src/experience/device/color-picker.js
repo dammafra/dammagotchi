@@ -3,20 +3,33 @@ import { Color } from 'three'
 import Frame from '../device/frame'
 import Shell from '../device/shell'
 import Experience from '../experience'
-import { areColorsNear, randomColor } from './colors'
+import { areColorsNear, randomColor } from '../utils/colors'
+import Button from './button'
 
 export default class ColorPicker {
+  /** @type {ColorPicker} */
+  static instance
+
+  static init() {
+    return new ColorPicker()
+  }
+
   constructor() {
+    // Singleton
+    if (ColorPicker.instance) {
+      return ColorPicker.instance
+    }
+    ColorPicker.instance = this
+
     this.experience = Experience.instance
-    this.device = this.experience.device
     this.camera = this.experience.camera
 
-    this.button = document.getElementById('colors')
-    this.randomize = document.getElementById('randomize')
+    this.toggleButton = document.getElementById('colors')
+    this.randomizeButton = document.getElementById('randomize')
     this.element = document.getElementById('picker')
 
-    this.button.onclick = this.toggle
-    this.randomize.onclick = () => this.colorPicker.setColors([randomColor(), randomColor()])
+    this.toggleButton.onclick = this.toggle
+    this.randomizeButton.onclick = () => this.colorPicker.setColors([randomColor(), randomColor()])
 
     this.colorPicker = new iro.ColorPicker('#picker', {
       width: 200,
@@ -66,12 +79,7 @@ export default class ColorPicker {
   }
 
   setSecondaryColor(color) {
-    Frame.material.color = new Color(color)
-
-    const [a, b, c] = this.device.buttons
-    a.mesh.material.color = new Color(color)
-    b.mesh.material.color = new Color(color)
-    c.mesh.material.color = new Color(color)
+    Frame.material.color = Button.material.color = new Color(color)
   }
 
   toggle = async () => {

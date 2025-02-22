@@ -1,6 +1,6 @@
-import Food from '../life/food'
+import Food from '../../life/food'
+import { Soundboard } from '../soundboard'
 import Menu from './menu'
-import { Soundboard } from './soundboard'
 
 export default class MenuFeed extends Menu {
   constructor() {

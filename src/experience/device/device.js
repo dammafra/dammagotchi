@@ -4,6 +4,7 @@ import { radToDeg } from 'three/src/math/MathUtils.js'
 import Experience from '../experience'
 import Button from './button'
 import ButtonSlot from './button-slot'
+import ColorPicker from './color-picker'
 import Frame from './frame'
 import Notch from './notch'
 import Shell from './shell'
@@ -81,6 +82,7 @@ export default class Device extends EventDispatcher {
         position: { x: 0.3, y: -0.6, z: -0.28 },
         color: 'gray',
         onClick: () => this.dispatchEvent({ type: 'reset-button' }),
+        detach: true,
       },
     ],
     tab: {
@@ -100,6 +102,7 @@ export default class Device extends EventDispatcher {
     this.pointer = this.experience.pointer
 
     this.setMesh()
+    ColorPicker.init()
   }
 
   setMesh() {
