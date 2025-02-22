@@ -34,6 +34,11 @@ export default class Pointer {
   }
 
   mousedown = event => {
+    if (event.target !== this.canvas) return
+
+    this.clientX = event.clientX
+    this.clientY = event.clientY
+
     this.x = (event.clientX / this.sizes.width) * 2 - 1
     this.y = -((event.clientY / this.sizes.height) * 2 - 1)
 

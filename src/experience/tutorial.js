@@ -4,6 +4,7 @@ import Experience from './experience'
 export default class Tutorial {
   constructor() {
     this.experience = Experience.instance
+    this.sizes = this.experience.sizes
     this.camera = this.experience.camera
     this.device = this.experience.device
     this.screen = this.experience.screen
@@ -238,8 +239,8 @@ export default class Tutorial {
 
       case 'screen':
         this.setSpotlight('lg')
-        this.camera.controls.zoomTo(1, true)
         this.camera.controls.fitToBox(this.screen.mesh, true)
+        this.sizes.aspectRatio < 1 && this.camera.controls.moveTo(0, -0.2, 0.5, true)
         break
 
       case 'screen-top':
@@ -273,7 +274,7 @@ export default class Tutorial {
         break
 
       case 'tab':
-        this.setSpotlight('lg')
+        this.setSpotlight(this.sizes.aspectRatio < 1 ? 'md' : 'lg')
         this.camera.controls.zoomTo(1, true)
         this.camera.controls.fitToBox(this.device.tab.mesh, true)
         this.camera.controls.moveTo(tabX, tabY, 0, true)

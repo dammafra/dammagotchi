@@ -57,7 +57,7 @@ export default class Device extends EventDispatcher {
         rotation: { x: Math.PI * 0.1, y: -Math.PI * 0.1, z: 0 },
         position: { x: -0.3, y: -0.6, z: 0.3 },
         color: '#996600',
-        onPress: () => this.dispatchEvent({ type: 'press-button-A' }),
+        onPress: () => this.dispatchEvent({ type: 'press-A-button' }),
       },
       {
         radius: 0.09,
@@ -65,7 +65,7 @@ export default class Device extends EventDispatcher {
         rotation: { x: Math.PI * 0.15, y: 0, z: 0 },
         position: { x: 0, y: -0.7, z: 0.3 },
         color: '#996600',
-        onPress: () => this.dispatchEvent({ type: 'press-button-B' }),
+        onPress: () => this.dispatchEvent({ type: 'press-B-button' }),
       },
       {
         radius: 0.09,
@@ -73,7 +73,7 @@ export default class Device extends EventDispatcher {
         rotation: { x: Math.PI * 0.1, y: Math.PI * 0.1, z: 0 },
         position: { x: 0.3, y: -0.6, z: 0.3 },
         color: '#996600',
-        onPress: () => this.dispatchEvent({ type: 'press-button-C' }),
+        onPress: () => this.dispatchEvent({ type: 'press-C-button' }),
       },
       {
         radius: 0.0405,

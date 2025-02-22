@@ -53,7 +53,7 @@ export default class Time extends EventDispatcher {
 
   setSpeedSetting(value) {
     if (!Object.keys(TIME_SPEED_SETTINGS).map(Number).includes(value)) return
-    if (!this.experience.device.tab.pulled) return
+    if (!this.experience.life.started) return
 
     this.speedSetting = value
     Soundboard.instance.play('time-speed', this.speedSetting)

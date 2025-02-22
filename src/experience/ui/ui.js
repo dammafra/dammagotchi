@@ -1,4 +1,5 @@
 import Experience from '@experience'
+import Countdown from './countdown'
 import Icons from './icons'
 import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
@@ -20,25 +21,27 @@ export default class UI {
 
     Soundboard.init()
 
-    this.device.addEventListener('press-button-A', this.onButtonA)
-    this.device.addEventListener('press-button-B', this.onButtonB)
-    this.device.addEventListener('press-button-C', this.onButtonC)
+    this.device.addEventListener('press-A-button', this.onA)
+    this.device.addEventListener('press-B-button', this.onB)
+    this.device.addEventListener('press-C-button', this.onC)
+    this.device.addEventListener('press-reset-button', this.onResetPress)
+    this.device.addEventListener('release-reset-button', this.onResetRelease)
     this.device.addEventListener('tab', this.onTab)
 
     window.addEventListener('keydown', e => {
       switch (e.key) {
         case ' ':
-          this.onButtonA()
+          this.onA()
           break
         case 'ArrowUp':
         case 'ArrowDown':
-          if (this.selectedMenu) this.onButtonA()
+          if (this.selectedMenu) this.onA()
           break
         case 'Enter':
-          this.onButtonB()
+          this.onB()
           break
         case 'Escape':
-          this.onButtonC()
+          this.onC()
           break
       }
     })
@@ -54,7 +57,7 @@ export default class UI {
     this.experience.resetTutorial()
   }
 
-  onButtonA = () => {
+  onA = () => {
     if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
@@ -66,7 +69,7 @@ export default class UI {
     this.scheduleReset()
   }
 
-  onButtonB = () => {
+  onB = () => {
     if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
@@ -102,7 +105,7 @@ export default class UI {
     this.scheduleReset()
   }
 
-  onButtonC = () => {
+  onC = () => {
     if (!this.life.pet?.canInteract) return
 
     if (this.selectedMenu) {
@@ -114,6 +117,18 @@ export default class UI {
 
     Soundboard.instance.play('button')
     this.scheduleReset()
+  }
+
+  onResetPress = () => {
+    if (!this.life.started) return
+
+    this.camera.controls.enabled = false
+    this.countdown = new Countdown(3)
+  }
+
+  onResetRelease = () => {
+    this.camera.controls.enabled = true
+    this.countdown?.reset()
   }
 
   scheduleReset() {

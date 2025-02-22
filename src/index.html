@@ -161,7 +161,10 @@
       </footer>
     </main>
 
-    <script type="module" src="./script.js"></script>
+    <svg id="countdown" width="150" height="150" class="hidden">
+      <circle class="stroke-red-500" cx="75" cy="75" r="60"></circle>
+      <circle id="progress" class="stroke-white" cx="75" cy="75" r="60"></circle>
+    </svg>
 
     <div id="html2canvas">
       <div id="battery-tab" class="flex">
@@ -191,5 +194,7 @@
         </div>
       </div>
     </div>
+
+    <script type="module" src="./script.js"></script>
   </body>
 </html>
