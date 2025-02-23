@@ -58,7 +58,7 @@ export default class Experience {
     this.time.addEventListener('tick-seconds', this.updateSeconds)
     this.resources.addEventListener('ready', this.readyResources)
 
-    if (window.location.hash === '#debug') {
+    if (window.location.hash === '#debug' || document.querySelector('.debug')) {
       this.debug = true
 
       import('./utils/debug.js').then(({ default: Debug }) => {

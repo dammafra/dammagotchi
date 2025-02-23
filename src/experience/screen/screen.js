@@ -21,6 +21,10 @@ import Pixel from './pixel'
 export default class Screen {
   static debugName = '📺 screen'
 
+  get isBlank() {
+    return this.blank.visible
+  }
+
   constructor() {
     this.experience = Experience.instance
     this.time = this.experience.time
@@ -41,7 +45,7 @@ export default class Screen {
     this.setMaterial()
     this.setMesh()
     this.setGlass()
-    this.setDark()
+    this.setBlank()
   }
 
   setGrid() {
@@ -93,16 +97,15 @@ export default class Screen {
     this.mainScene.add(this.glass)
   }
 
-  setDark() {
-    this.darkMaterial = new MeshBasicMaterial({ color: 'black', depthWrite: false })
+  setBlank() {
+    this.blankMaterial = new MeshBasicMaterial({ color: 'black', depthWrite: false })
+    this.blank = new Mesh(this.geometry, this.blankMaterial)
+    this.blank.visible = false
+    this.blank.scale.y = 0.58
+    this.blank.position.z = -2
+    this.blank.position.y = 1.4
 
-    this.dark = new Mesh(this.geometry, this.darkMaterial)
-    this.dark.visible = false
-    this.dark.scale.y = 0.58
-    this.dark.position.z = -2
-    this.dark.position.y = 1.4
-
-    this.scene.add(this.dark)
+    this.scene.add(this.blank)
   }
 
   setEnvironmentMap() {
@@ -117,11 +120,18 @@ export default class Screen {
 
   setFlicker(value) {
     this.flicker = value
-
     if (!this.flicker) {
       Pixel.material?.color.set(new Color('black'))
-      this.dark.visible = false
+      this.blank.visible = false
     }
+  }
+
+  turnOn() {
+    this.blank.visible = false
+  }
+
+  turnOff() {
+    this.blank.visible = true
   }
 
   ready() {
@@ -138,7 +148,7 @@ export default class Screen {
     if (!this.flicker) return
 
     const toggle = Math.floor(this.time.elapsed * this.time.speed * this.flickerSpeed) % 2 === 0
-    this.dark.visible = toggle
+    this.blank.visible = toggle
     Pixel.material.color.set(new Color(toggle ? 'white' : 'black'))
   }
 
@@ -176,5 +186,6 @@ export default class Screen {
     this.debug.addBinding(this.glassMaterial, 'ior', { min: 1, max: 2.333, step: 0.001 })
 
     this.debug.addBinding(this, 'flicker')
+    this.debug.addBinding(this.blank, 'visible', { label: 'blank' })
   }
 }

@@ -6,9 +6,7 @@ export default class MenuLight extends Menu {
     this.cycle = null
   }
 
-  reset() {}
-
   action() {
-    this.screen.dark.visible = !this.screen.dark.visible
+    this.screen.isBlank ? this.screen.turnOn() : this.screen.turnOff()
   }
 }

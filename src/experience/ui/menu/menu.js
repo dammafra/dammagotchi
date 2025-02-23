@@ -15,6 +15,8 @@ export default class Menu {
       this.setGeometry()
       this.setMaterial()
       this.setMesh()
+
+      this.element.classList.contains('debug') && this.show()
     }
   }
 
@@ -49,6 +51,9 @@ export default class Menu {
     this.mesh.visible = true
 
     this.life.hide()
+
+    this.previouslyBlank = this.screen.isBlank
+    this.screen.turnOn()
   }
 
   hide() {
@@ -56,6 +61,7 @@ export default class Menu {
     this.mesh.visible = false
 
     this.life.show()
+    this.previouslyBlank && this.screen.turnOff()
 
     this.reset()
     this.refreshMenu()
