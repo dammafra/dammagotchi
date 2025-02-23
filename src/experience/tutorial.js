@@ -28,6 +28,20 @@ export default class Tutorial {
           element: '.webgl',
           on: 'bottom',
         },
+        when: {
+          show() {
+            const currentStep = this.tour.getCurrentStep()
+            const currentStepElement = currentStep?.getElement()
+            const header = currentStepElement?.querySelector('.shepherd-header')
+            if (header) {
+              const progress = document.createElement('span')
+              progress.style.position = 'absolute'
+              progress.style.fontSize = '12px'
+              progress.innerText = `${this.tour.steps.indexOf(currentStep) + 1}/${this.tour.steps.length}`
+              header.append(progress)
+            }
+          },
+        },
       },
     })
 
@@ -201,7 +215,7 @@ export default class Tutorial {
     if (this.tour.isActive()) return
 
     this.camera.controls.enabled = false
-    this.device.colorPicker.hide()
+    if (this.device.colorPicker.visible) this.device.colorPicker.toggle()
 
     this.tour.start()
     this.toggleOverlay()

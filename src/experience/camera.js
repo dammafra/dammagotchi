@@ -1,6 +1,7 @@
 import CameraControls from 'camera-controls'
 import {
   Box3,
+  MathUtils,
   Matrix4,
   PerspectiveCamera,
   Quaternion,
@@ -55,6 +56,22 @@ export default class Camera {
     this.controls.minDistance = 1.3
     this.controls.maxDistance = 10
     this.controls.truckSpeed = 0
+
+    this.controls.addEventListener('controlstart', () => {
+      this.controls.removeEventListener('rest', onRest)
+      this.userDragging = true
+      this.disableAutoRotate = true
+    })
+
+    this.controls.addEventListener('controlend', () =>
+      this.controls.active ? this.controls.addEventListener('rest', onRest) : onRest(),
+    )
+
+    const onRest = () => {
+      this.controls.removeEventListener('rest', onRest)
+      this.userDragging = false
+      this.disableAutoRotate = false
+    }
   }
 
   resize() {
@@ -66,6 +83,10 @@ export default class Camera {
 
   update() {
     this.controls.update(this.time.delta)
+
+    if (this.autoRotate && !this.disableAutoRotate) {
+      this.controls.azimuthAngle += 20 * this.time.delta * 0.3 * MathUtils.DEG2RAD
+    }
   }
 
   distanceTo(position) {
@@ -78,6 +99,10 @@ export default class Camera {
     this.controls.zoomTo(1, true)
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
     this.controls.enabled = true
+  }
+
+  setAutoRotate(value) {
+    this.autoRotate = value
   }
 
   setDebug(debug) {

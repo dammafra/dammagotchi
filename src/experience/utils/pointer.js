@@ -3,6 +3,13 @@ import { Raycaster, Vector2 } from 'three'
 import { DragControls } from 'three/addons/controls/DragControls.js'
 
 export default class Pointer {
+  #enabled = false
+
+  set enabled(value) {
+    this.#enabled = value
+    this.drag.enabled = value
+  }
+
   constructor() {
     this.experience = Experience.instance
     this.canvas = this.experience.canvas
@@ -13,6 +20,7 @@ export default class Pointer {
     this.clickableObjects = new Map()
     this.draggableObjects = new Map()
     this.currentIntersect = null
+    this.#enabled = true
 
     // Setup
     this.x = 0
@@ -45,7 +53,7 @@ export default class Pointer {
     this.updateRaycaster()
 
     const callback = this.clickableObjects.get(this.currentIntersect)
-    if (callback && callback.start) {
+    if (this.#enabled && callback && callback.start) {
       callback.start()
       this.camera.controls.enabled = false
     }
@@ -53,7 +61,7 @@ export default class Pointer {
 
   mouseup = () => {
     const callback = this.clickableObjects.get(this.currentIntersect)
-    if (callback && callback.end) {
+    if (this.#enabled && callback && callback.end) {
       callback.end()
       this.camera.controls.enabled = true
     }

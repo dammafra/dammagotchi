@@ -10,7 +10,10 @@ export default class ColorPicker {
   constructor() {
     this.experience = Experience.instance
     this.camera = this.experience.camera
+    this.pointer = this.experience.pointer
+    this.sizes = this.experience.sizes
 
+    this.visible = false
     this.toggleButton = document.getElementById('colors')
     this.randomizeButton = document.getElementById('randomize')
     this.element = document.getElementById('picker')
@@ -70,16 +73,21 @@ export default class ColorPicker {
   }
 
   toggle = async () => {
-    const visible = !this.element.classList.toggle('hidden')
-    await this.camera.intro(0.5)
-    if (visible) {
-      this.camera.controls.dollyTo(5, true)
-      this.camera.controls.truck(0, 0.5, true)
-    }
-  }
+    this.visible = !this.element.classList.toggle('hidden')
 
-  hide() {
-    this.element.classList.add('hidden')
+    this.pointer.enabled = !this.visible
+    this.camera.intro(0.5)
+
+    if (this.visible) {
+      this.sizes.aspectRatio < 1 && this.camera.controls.dollyTo(5, true)
+      this.sizes.aspectRatio < 1
+        ? await this.camera.controls.setFocalOffset(0, 0.7, 0, true)
+        : await this.camera.controls.setFocalOffset(-0.8, 0, 0, true)
+      this.camera.setAutoRotate(true)
+    } else {
+      this.camera.controls.setFocalOffset(0, 0, 0, true)
+      this.camera.setAutoRotate(false)
+    }
   }
 
   saveState = () => {
