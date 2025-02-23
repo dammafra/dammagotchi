@@ -7,7 +7,7 @@ export default class Pointer {
 
   set enabled(value) {
     this.#enabled = value
-    this.drag.enabled = value
+    if (this.drag) this.drag.enabled = value
   }
 
   constructor() {

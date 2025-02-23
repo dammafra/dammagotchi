@@ -55,7 +55,7 @@
 
 /* styles */
 * {
-  @apply select-none;
+  @apply select-none touch-manipulation;
 }
 
 html,
@@ -188,8 +188,16 @@ button.fab {
   @apply !z-30;
 }
 
+#html2canvas:has(.debug) > div.debug {
+  @apply bg-white;
+}
+
 #html2canvas:has(.debug) > div:not(.debug) {
   @apply hidden;
+}
+
+body:has(.debug) canvas.webgl {
+  @apply !hidden;
 }
 
 /* shepherd customization  */

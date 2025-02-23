@@ -1,3 +1,4 @@
+import { createDoubleTapPreventer } from '@utils/double-tap-preventer'
 import Experience from './experience/experience'
 
 Experience.init(document.querySelector('canvas.webgl'))
@@ -42,3 +43,5 @@ const hasFullScreen = () =>
 if (!hasFullScreen()) {
   fullScreenButton.remove()
 }
+
+document.body.addEventListener('touchstart', createDoubleTapPreventer(500), { passive: false })

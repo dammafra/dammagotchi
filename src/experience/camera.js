@@ -56,6 +56,7 @@ export default class Camera {
     this.controls.minDistance = 1.3
     this.controls.maxDistance = 10
     this.controls.truckSpeed = 0
+    this.controls.restThreshold = 0.25
 
     this.controls.addEventListener('controlstart', () => {
       this.controls.removeEventListener('rest', onRest)
