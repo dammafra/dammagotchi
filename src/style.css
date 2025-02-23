@@ -69,6 +69,31 @@ body {
   background-color: var(--color-primary);
 }
 
+.webgl {
+  @apply fixed top-0 left-0 outline-none;
+}
+
+main footer {
+  @apply fixed bottom-0 w-full p-2.5 z-10;
+  @apply flex justify-between items-center;
+  @apply text-white font-mono text-right text-xs sm:text-sm drop-shadow shadow-black;
+  background-color: var(--color-primary);
+}
+
+.fullscreen main footer {
+  @apply pb-10;
+}
+
+button {
+  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer drop-shadow shadow-black px-4 py-2;
+  color: var(--color-primary);
+}
+
+button.fab {
+  @apply rounded-full size-10 text-xl p-0;
+}
+
+/* loading */
 .loading {
   @apply fixed top-0 w-full h-full z-20;
   @apply flex flex-col gap-8 justify-center items-center;
@@ -103,6 +128,7 @@ body {
   @apply opacity-0;
 }
 
+/* credits */
 .credits {
   @apply fixed bottom-0 w-full h-0 z-20 overflow-hidden;
   @apply transition-[height] duration-700;
@@ -123,29 +149,7 @@ body {
   @apply opacity-100;
 }
 
-.webgl {
-  @apply fixed top-0 left-0 outline-none;
-}
-
-main footer {
-  @apply fixed bottom-0 w-full p-2.5 z-10;
-  @apply flex justify-between items-center;
-  @apply text-white font-mono text-right text-xs sm:text-sm drop-shadow shadow-black;
-  background-color: var(--color-primary);
-}
-
-.fullscreen main footer {
-  @apply pb-10;
-}
-
-button {
-  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer drop-shadow shadow-black px-4 py-2;
-  color: var(--color-primary);
-}
-button.fab {
-  @apply rounded-full size-10 text-xl p-0;
-}
-
+/* tutorial */
 .tutorial-overlay {
   @apply fixed inset-0 justify-center items-center z-30;
 }
@@ -154,6 +158,7 @@ button.fab {
   @apply bg-transparent rounded-full size-[10000px] aspect-square border-black/60 border-[1000px] transition-all duration-1500;
 }
 
+/* reset */
 #countdown {
   @apply fixed z-10 -rotate-90 -scale-y-100;
 }
@@ -162,12 +167,21 @@ button.fab {
   @apply stroke-[20] fill-none;
 }
 
+/* menu */
 #html2canvas {
   @apply fixed -z-20 left-0 bottom-0 size-[256px];
 }
 
 #html2canvas > * {
   @apply w-full h-full;
+}
+
+#html2canvas:has(.debug) {
+  @apply !z-30;
+}
+
+#html2canvas:has(.debug) > div:not(.debug) {
+  @apply hidden;
 }
 
 /* shepherd customization  */

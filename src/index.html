@@ -122,6 +122,11 @@
         <div class="tutorial-spotlight"></div>
       </div>
 
+      <svg id="countdown" width="150" height="150" class="hidden">
+        <circle class="stroke-red-500" cx="75" cy="75" r="60"></circle>
+        <circle id="progress" class="stroke-white" cx="75" cy="75" r="60"></circle>
+      </svg>
+
       <canvas class="webgl"></canvas>
 
       <footer class="app-footer relative">
@@ -161,11 +166,6 @@
       </footer>
     </main>
 
-    <svg id="countdown" width="150" height="150" class="hidden">
-      <circle class="stroke-red-500" cx="75" cy="75" r="60"></circle>
-      <circle id="progress" class="stroke-white" cx="75" cy="75" r="60"></circle>
-    </svg>
-
     <div id="html2canvas">
       <div id="battery-tab" class="flex">
         <div class="bg-white flex-1"></div>
@@ -183,6 +183,7 @@
           </svg>
         </div>
       </div>
+
       <div id="menu-feed" class="font-tama text-4xl py-16 px-px">
         <div class="flex gap-2 items-center">
           <img src="/sprites/ui/arrow.png" class="arrow size-10" />
