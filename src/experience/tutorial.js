@@ -17,6 +17,8 @@ export default class Tutorial {
 
     this.setTutorialButton()
 
+    window.controls = this.camera.controls
+
     this.tour = new Shepherd.Tour({
       useModalOverlay: true,
       defaultStepOptions: {
@@ -159,13 +161,26 @@ export default class Tutorial {
       })
     }
 
-    this.tour.on('complete', this.end)
+    this.tour.on('complete', async () => {
+      if (this.lastTransition) {
+        await this.lastTransition
+      }
+      this.end()
+    })
+
     this.tour.on('cancel', () =>
       !this.device.tab.pulled && this.tour.currentStep.id !== 'tab'
         ? this.tour.show('tab')
         : this.tour.complete(),
     )
-    this.tour.on('show', this.animateCamera)
+
+    this.tour.on('show', async step => {
+      if (this.lastTransition) {
+        await this.lastTransition
+      }
+
+      this.lastTransition = this.animateCamera(step)
+    })
   }
 
   toggleOverlay() {
@@ -196,9 +211,7 @@ export default class Tutorial {
     this.hideSpotlight()
     setTimeout(() => this.toggleOverlay(), 1000)
 
-    await this.camera.intro()
-    this.camera.controls.moveTo(0, 0, 0, true)
-    this.camera.controls.stop()
+    this.camera.intro()
 
     localStorage.setItem('tutorial-completed', 'true')
   }
@@ -234,13 +247,14 @@ export default class Tutorial {
         break
       case 'button-c':
         this.setSpotlight('sm')
+        this.camera.controls.zoomTo(1, true)
         this.camera.controls.fitToBox(this.device.buttonSlots.at(2).mesh, true)
         break
 
       case 'screen':
-        this.setSpotlight('lg')
-        this.camera.controls.fitToBox(this.screen.mesh, true)
-        this.sizes.aspectRatio < 1 && this.camera.controls.moveTo(0, -0.2, 0.5, true)
+        this.setSpotlight(this.sizes.aspectRatio < 1 ? 'md' : 'lg')
+        this.camera.controls.zoomTo(this.sizes.aspectRatio < 1 ? 0.6 : 1, true)
+        this.camera.controls.fitToBox(this.screen.mesh, true, { cover: true })
         break
 
       case 'screen-top':

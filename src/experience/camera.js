@@ -75,6 +75,7 @@ export default class Camera {
   async intro(speed = 1.5) {
     this.controls.enabled = false
     this.controls.smoothTime = speed
+    this.controls.zoomTo(1, true)
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
     this.controls.enabled = true
   }
