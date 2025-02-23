@@ -103,8 +103,16 @@ export default class Pointer {
     this.drag?.dispose()
     this.drag = new DragControls(objects, this.camera.instance, this.canvas)
 
-    this.drag.addEventListener('dragstart', () => (this.camera.controls.enabled = false))
-    this.drag.addEventListener('dragend', () => (this.camera.controls.enabled = true))
+    this.drag.addEventListener('hoveron', () => this.canvas.classList.add('grab'))
+    this.drag.addEventListener('hoveroff', () => this.canvas.classList.remove('grab'))
+    this.drag.addEventListener('dragstart', () => {
+      this.camera.controls.enabled = false
+      this.canvas.classList.add('grabbing')
+    })
+    this.drag.addEventListener('dragend', () => {
+      this.camera.controls.enabled = true
+      this.canvas.classList.remove('grabbing')
+    })
     this.drag.addEventListener('drag', e => {
       const callback = this.draggableObjects.get(e.object)
       callback && callback()

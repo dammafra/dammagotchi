@@ -73,6 +73,14 @@ body {
   @apply fixed top-0 left-0 outline-none;
 }
 
+.webgl.grab {
+  @apply !cursor-grab;
+}
+
+.webgl.grabbing {
+  @apply !cursor-grabbing;
+}
+
 main footer {
   @apply fixed bottom-0 w-full p-2.5 z-10;
   @apply flex justify-between items-center;
