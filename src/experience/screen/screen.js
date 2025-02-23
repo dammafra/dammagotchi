@@ -133,9 +133,7 @@ export default class Screen {
     this.renderer.instance.render(this.scene, this.screenCamera.instance)
     this.renderer.instance.setRenderTarget(null)
 
-    if (!this.debug) {
-      this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 2.5
-    }
+    this.glass.visible = this.mainCamera.distanceTo(this.glass.position) > 2.5
 
     if (!this.flicker) return
 

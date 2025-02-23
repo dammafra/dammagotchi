@@ -82,10 +82,11 @@ export default class Life {
     }
 
     this.pet.addEventListener('ready', () => this.ready(evolving))
+    this.loading = false
   }
 
   ready = evolving => {
-    this.previousPet && this.previousPet.dispose()
+    this.previousPet && this.previousPet.dispose && this.previousPet.dispose()
 
     if (evolving && this.pet.evolveIn) {
       this.pet.evolveIn()
@@ -98,12 +99,6 @@ export default class Life {
 
   startStage = () => {
     this.pet.idle()
-
-    if (this.loading) {
-      this.loading = false
-    } else {
-      this.stageStart = this.age
-    }
 
     if (this.stage !== 'death') {
       const stageDuration = lifeConfig.stages[this.stage]
@@ -131,6 +126,7 @@ export default class Life {
     const stages = Object.keys(lifeConfig.stages)
     const index = stages.findIndex(s => s == this.stage)
     this.stage = stages.at(index + 1)
+    this.stageStart = this.age
 
     this.setPet(true)
   }
@@ -190,7 +186,7 @@ export default class Life {
     }
   }
 
-  reset() {
+  reset = () => {
     this.started = false
     this.age = 0
     this.stageStart = 0
@@ -214,5 +210,6 @@ export default class Life {
       multiline: true,
       rows: 5,
     })
+    this.debug.addButton({ title: 'reset' }).on('click', this.reset)
   }
 }
