@@ -158,11 +158,10 @@ export default class Screen {
     this.debug = debug.gui.addFolder({ title: Screen.debugName, expanded: false })
 
     const helper = new GridHelper(10, 10)
+    helper.visible = false
     helper.position.z = this.center.z - 0.001
     helper.rotation.x = Math.PI * 0.5
     this.scene.add(helper)
-
-    this.glass.visible = false
 
     this.debug.addBinding(helper, 'visible', { label: 'helper' })
 

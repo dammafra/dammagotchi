@@ -91,8 +91,12 @@ export default class Device extends EventDispatcher {
       height: 0.3,
       radius: 0.25,
       position: { x: 0.85, y: -0.2, z: 0 },
-      visible: true,
-      onPull: () => this.dispatchEvent({ type: 'tab' }),
+      onPull: () => {
+        this.tab.dispose()
+        this.tab = null
+        localStorage.setItem('tab-pulled', 'true')
+        this.dispatchEvent({ type: 'tab' })
+      },
     },
   }
 
@@ -128,9 +132,13 @@ export default class Device extends EventDispatcher {
     this.pointer.onClick(this.mesh)
 
     this.buttons = this.config.buttons.map(config => new Button(config))
-    this.tab = new Tab(this.config.tab)
 
-    this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
+    this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh))
+
+    if (!JSON.parse(localStorage.getItem('tab-pulled'))) {
+      this.tab = new Tab(this.config.tab)
+      this.scene.add(this.tab.mesh)
+    }
   }
 
   dispose() {
@@ -138,7 +146,7 @@ export default class Device extends EventDispatcher {
     this.frames.forEach(f => f.dispose())
     this.notch.dispose()
     this.buttonSlots.forEach(bs => bs.dispose())
-    this.tab.dispose()
+    this.tab?.dispose()
 
     this.scene.remove(this.mesh, ...this.buttons.map(b => b.mesh), this.tab.mesh)
   }
@@ -195,7 +203,6 @@ export default class Device extends EventDispatcher {
     tabFolder.addBinding(this.config.tab, 'width', { min: 0, max: 2, step: 0.01 })
     tabFolder.addBinding(this.config.tab, 'height', { min: 0, max: 2, step: 0.01 })
     tabFolder.addBinding(this.config.tab, 'position', { min: -2, max: 2, step: 0.01 })
-    tabFolder.addBinding(this.config.tab, 'visible')
 
     this.debug.on('change', () => {
       this.dispose()
@@ -204,6 +211,6 @@ export default class Device extends EventDispatcher {
   }
 
   update() {
-    this.tab.update()
+    if (this.tab) this.tab.update()
   }
 }

@@ -24,22 +24,25 @@ export default class Life {
   constructor() {
     this.experience = Experience.instance
 
-    // TODO: load saved state
-    this.started = false
-    this.age = 0
-    this.stageStart = 0
+    const state = this.loadState()
+    this.started = state.started
+    this.age = state.age
+    this.stageStart = state.stageStart
+    this.stage = state.stage
+    this.model = state.model
+
+    // TODO: is it really needed?
     this.pause = true
     this.scheduled = new Map()
 
     this.group = new Group()
     this.experience.screen.scene.add(this.group)
 
-    this.stage = 'egg'
-    this.model = ''
+    if (this.started) this.start()
   }
 
   start() {
-    if (this.started) return
+    if (this.started && !this.loading) return
 
     Food.init()
     Misc.init()
@@ -58,12 +61,12 @@ export default class Life {
         break
 
       case 'babies':
-        this.model = this.getRandomModel()
+        this.setModel()
         this.pet = new Baby(this.model)
         break
 
       case 'seniors':
-        this.model = this.getRandomModel()
+        this.setModel()
         this.pet = new Senior(this.model)
         break
 
@@ -73,7 +76,7 @@ export default class Life {
         break
 
       default:
-        this.model = this.getRandomModel()
+        this.setModel()
         this.pet = new Pet(this.stage, this.model)
         break
     }
@@ -87,7 +90,7 @@ export default class Life {
     if (evolving && this.pet.evolveIn) {
       this.pet.evolveIn()
       const transitionDuration = lifeConfig.transitions[this.stage].in
-      this.schedule(this.startStage, transitionDuration, `start ${this.stage} stage`)
+      this.schedule(this.startStage, this.age + transitionDuration, `start ${this.stage} stage`)
     } else {
       this.startStage()
     }
@@ -96,9 +99,16 @@ export default class Life {
   startStage = () => {
     this.pet.idle()
 
-    this.stageStart = this.age
-    const stageDuration = lifeConfig.stages[this.stage]
-    if (stageDuration > 0) this.schedule(this.evolveOut, stageDuration, 'evolve out')
+    if (this.loading) {
+      this.loading = false
+    } else {
+      this.stageStart = this.age
+    }
+
+    if (this.stage !== 'death') {
+      const stageDuration = lifeConfig.stages[this.stage]
+      this.schedule(this.evolveOut, this.stageStart + stageDuration, 'evolve out')
+    }
 
     this.experience.screen.setFlicker(false)
   }
@@ -111,7 +121,7 @@ export default class Life {
     if (this.pet.evolveOut) {
       this.pet.evolveOut()
       const transitionDuration = lifeConfig.transitions[this.stage].out
-      this.schedule(this.evolveIn, transitionDuration, 'evolve in')
+      this.schedule(this.evolveIn, this.age + transitionDuration, 'evolve in')
     } else {
       this.evolveIn()
     }
@@ -129,10 +139,11 @@ export default class Life {
     if (!this.pause && this.stage !== 'death') this.age++
     this.checkScheduled()
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
+    this.saveState()
   }
 
-  schedule(action, offset, label) {
-    this.scheduled.set(this.age + offset, { label, action })
+  schedule(action, age, label) {
+    this.scheduled.set(age, { label, action })
   }
 
   checkScheduled() {
@@ -144,9 +155,49 @@ export default class Life {
     }
   }
 
-  getRandomModel() {
+  setModel() {
+    if (this.loading) return
+
     const keys = Object.keys(spritesConfig.pets[this.stage])
-    return keys[Math.floor(Math.random() * keys.length)]
+    const randomModel = keys[Math.floor(Math.random() * keys.length)]
+    this.model = randomModel
+  }
+
+  saveState() {
+    const state = {
+      started: this.started,
+      age: this.age,
+      stageStart: this.stageStart,
+      stage: this.stage,
+      model: this.model,
+    }
+    localStorage.setItem('life', JSON.stringify(state))
+  }
+
+  loadState() {
+    const state = localStorage.getItem('life')
+    if (state) {
+      this.loading = true
+      return JSON.parse(state)
+    } else {
+      return {
+        started: false,
+        age: 0,
+        stageStart: 0,
+        stage: 'egg',
+        model: '',
+      }
+    }
+  }
+
+  reset() {
+    this.started = false
+    this.age = 0
+    this.stageStart = 0
+    this.stage = 'egg'
+    this.model = ''
+    this.scheduled.clear()
+    this.start()
   }
 
   setDebug(debug) {

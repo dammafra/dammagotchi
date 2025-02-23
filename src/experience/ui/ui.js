@@ -123,7 +123,10 @@ export default class UI {
     if (!this.life.started) return
 
     this.camera.controls.enabled = false
-    this.countdown = new Countdown(3)
+    this.countdown = new Countdown(3, () => {
+      this.camera.intro()
+      this.life.reset()
+    })
   }
 
   onResetRelease = () => {

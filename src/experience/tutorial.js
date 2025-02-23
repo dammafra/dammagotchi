@@ -59,7 +59,7 @@ export default class Tutorial {
           {
             text: '😎 Yes,<br/>I’m a pro!',
             secondary: true,
-            action: () => (!this.device.tab.pulled ? this.tour.show('tab') : this.tour.complete()),
+            action: () => (this.device.tab ? this.tour.show('tab') : this.tour.complete()),
           },
           nextButton('🤔 No,<br/>teach me'),
         ],
@@ -152,7 +152,7 @@ export default class Tutorial {
       },
     ])
 
-    if (!this.device.tab.pulled) {
+    if (this.device.tab) {
       this.tour.addStep({
         id: 'tab',
         title: "It's all set!",
@@ -169,7 +169,7 @@ export default class Tutorial {
     })
 
     this.tour.on('cancel', () =>
-      !this.device.tab.pulled && this.tour.currentStep.id !== 'tab'
+      this.device.tab && this.tour.currentStep.id !== 'tab'
         ? this.tour.show('tab')
         : this.tour.complete(),
     )

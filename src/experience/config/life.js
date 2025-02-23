@@ -1,6 +1,6 @@
 export default {
   transitions: {
-    egg: { in: 6, out: 6 },
+    egg: { out: 6 },
     babies: { in: 4, out: 4 },
     children: { in: 4, out: 4 },
     teenagers: { in: 4, out: 4 },
@@ -8,12 +8,12 @@ export default {
     seniors: { in: 4, out: 14 },
   },
   stages: {
-    egg: 10,
+    egg: 15,
     babies: 100,
     children: 100,
     teenagers: 100,
     adults: 100,
     seniors: 100,
-    death: -1,
+    death: 0,
   },
 }

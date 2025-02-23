@@ -43,13 +43,20 @@ export default class Pointer {
     this.y = -((event.clientY / this.sizes.height) * 2 - 1)
 
     this.updateRaycaster()
+
     const callback = this.clickableObjects.get(this.currentIntersect)
-    callback && callback.start && callback.start()
+    if (callback && callback.start) {
+      callback.start()
+      this.camera.controls.enabled = false
+    }
   }
 
   mouseup = () => {
     const callback = this.clickableObjects.get(this.currentIntersect)
-    callback && callback.end && callback.end()
+    if (callback && callback.end) {
+      callback.end()
+      this.camera.controls.enabled = true
+    }
   }
 
   updateRaycaster() {
@@ -66,6 +73,7 @@ export default class Pointer {
 
   cancelClick(object) {
     this.clickableObjects.delete(object)
+    this.camera.controls.enabled = true
   }
 
   onDrag(object, callback) {

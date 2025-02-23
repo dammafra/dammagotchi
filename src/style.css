@@ -130,7 +130,7 @@ body {
 main footer {
   @apply fixed bottom-0 w-full p-2.5 z-10;
   @apply flex justify-between items-center;
-  @apply text-white font-mono text-right text-sm drop-shadow shadow-black;
+  @apply text-white font-mono text-right text-xs sm:text-sm drop-shadow shadow-black;
   background-color: var(--color-primary);
 }
 

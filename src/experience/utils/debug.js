@@ -25,14 +25,14 @@ export default class Debug {
     if (!this.preserveChanges) return
 
     const state = this.gui.exportState()
-    localStorage.setItem('last_gui_state', JSON.stringify(state))
+    localStorage.setItem('debug', JSON.stringify(state))
   }
 
   loadState = () => {
-    const state = localStorage.getItem('last_gui_state')
+    const state = localStorage.getItem('debug')
     if (state) {
       this.gui.importState(JSON.parse(state))
-      localStorage.removeItem('last_gui_state')
+      localStorage.removeItem('debug')
     }
   }
 }

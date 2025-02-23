@@ -5,7 +5,7 @@ import { ADDITION, Brush } from 'three-bvh-csg'
 import Device from './device'
 
 export default class Tab {
-  constructor({ width, height, radius, position, visible, onPull }) {
+  constructor({ width, height, radius, position, onPull }) {
     this.experience = Experience.instance
     this.resources = this.experience.resources
     this.scene = this.experience.scene
@@ -16,11 +16,9 @@ export default class Tab {
     this.height = height
     this.radius = radius
     this.position = position
-    this.visible = visible
     this.onPull = onPull
 
     this.pulling = false
-    this.pulled = false
 
     this.setGeometry()
     this.setMaterial()
@@ -54,7 +52,6 @@ export default class Tab {
     this.plane.updateMatrixWorld()
 
     this.mesh = Device.evaluator.evaluate(this.circle, this.plane, ADDITION)
-    this.mesh.visible = this.visible
     this.mesh.position.copy(this.position)
     this.mesh.castShadow = false
 
@@ -80,16 +77,11 @@ export default class Tab {
   }
 
   update() {
-    if (!this.pulling || this.pulled) return
+    if (!this.pulling) return
 
     this.mesh.position.x += this.time.elapsed * 0.005
     this.mesh.material.forEach(m => (m.opacity -= this.time.elapsed * 0.003))
-    if (this.mesh.material.at(0).opacity < 0) {
-      this.pulled = true
-      this.dispose()
-
-      this.onPull()
-    }
+    if (this.mesh.material.at(0).opacity < 0) this.onPull()
   }
 
   dispose() {
