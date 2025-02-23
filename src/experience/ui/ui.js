@@ -28,6 +28,8 @@ export default class UI {
     this.device.addEventListener('release-reset-button', this.onResetRelease)
     this.device.addEventListener('tab', this.onTab)
 
+    this.life.addEventListener('evolve-out', this.reset)
+
     window.addEventListener('keydown', e => {
       switch (e.key) {
         case ' ':
@@ -139,7 +141,6 @@ export default class UI {
     this.resetTimeout = setTimeout(this.reset, 10000)
   }
 
-  // TODO:* improve reset on evolution
   reset = () => {
     this.icons.reset()
     this.selectedMenu?.hide()

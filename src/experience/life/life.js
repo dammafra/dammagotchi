@@ -1,7 +1,7 @@
 import lifeConfig from '@config/life'
 import spritesConfig from '@config/sprites'
 import Experience from '@experience'
-import { Group } from 'three'
+import { EventDispatcher, Group } from 'three'
 import Food from './food'
 import Misc from './misc'
 import Baby from './pet/baby'
@@ -10,7 +10,7 @@ import Egg from './pet/egg'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
 
-export default class Life {
+export default class Life extends EventDispatcher {
   static debugName = '📊 life'
 
   get scheduledFormatted() {
@@ -22,7 +22,10 @@ export default class Life {
   }
 
   constructor() {
+    super()
+
     this.experience = Experience.instance
+    this.scene = this.experience.screen.scene
 
     const state = this.loadState()
     this.started = state.started
@@ -31,12 +34,11 @@ export default class Life {
     this.stage = state.stage
     this.model = state.model
 
-    // TODO: is it really needed?
     this.pause = true
     this.scheduled = new Map()
 
     this.group = new Group()
-    this.experience.screen.scene.add(this.group)
+    this.scene.add(this.group)
 
     if (this.started) this.start()
   }
@@ -110,8 +112,7 @@ export default class Life {
 
   evolveOut = () => {
     this.experience.screen.setFlicker(this.stage !== 'egg' && this.stage !== 'seniors')
-    // TODO:* improve
-    this.experience.ui.reset()
+    this.dispatchEvent({ type: 'evolve-out' })
 
     if (this.pet.evolveOut) {
       this.pet.evolveOut()
@@ -194,6 +195,15 @@ export default class Life {
     this.model = ''
     this.scheduled.clear()
     this.start()
+    this.dispatchEvent({ type: 'evolve-out' })
+  }
+
+  show() {
+    this.group.visible = true
+  }
+
+  hide() {
+    this.group.visible = false
   }
 
   setDebug(debug) {

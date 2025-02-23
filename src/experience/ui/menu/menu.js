@@ -48,18 +48,14 @@ export default class Menu {
     this.visible = true
     this.mesh.visible = true
 
-    // TODO: improve
-    this.life.group.visible = false
-    this.life.pause = true
+    this.life.hide()
   }
 
   hide() {
     this.visible = false
     this.mesh.visible = false
 
-    // TODO: improve
-    this.life.group.visible = true
-    this.life.pause = false
+    this.life.show()
 
     this.reset()
     this.refreshMenu()

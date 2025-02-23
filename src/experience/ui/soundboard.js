@@ -75,6 +75,8 @@ export class Soundboard {
   toggleMuted = () => {
     this.muted = !this.muted
 
+    if (!this.muted) this.play('button')
+
     this.button.firstElementChild.classList.toggle('fa-volume-high')
     this.button.firstElementChild.classList.toggle('fa-volume-xmark')
   }
