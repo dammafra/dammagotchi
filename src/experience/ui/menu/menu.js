@@ -16,7 +16,12 @@ export default class Menu {
       this.setMaterial()
       this.setMesh()
 
-      this.element.classList.contains('debug') && this.show()
+      this.debug = this.element.classList.contains('debug')
+      if (this.debug) {
+        this.show()
+        this.life.pause = true
+        this.life.pet.canInteract = true
+      }
     }
   }
 

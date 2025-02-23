@@ -4,7 +4,7 @@ import { Pane } from 'tweakpane'
 
 export default class Debug {
   constructor() {
-    this.gui = new Pane({ title: 'DEBUG', expanded: false })
+    this.gui = new Pane({ title: 'DEBUG' })
 
     this.gui.element.parentElement.style.width = '350px'
     this.gui.element.parentElement.style.zIndex = 999

@@ -3,6 +3,7 @@ import Countdown from './countdown'
 import Icons from './icons'
 import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
+import MenuMeter from './menu/menu-meter'
 import { Soundboard } from './soundboard'
 
 export default class UI {
@@ -13,10 +14,9 @@ export default class UI {
     this.life = this.experience.life
 
     this.icons = new Icons()
-    this.menuFeed = new MenuFeed()
-    this.menuLight = new MenuLight()
+    this.menus = [new MenuFeed(), new MenuLight(), null, null, null, new MenuMeter(), null]
 
-    this.selectedMenu = null
+    this.selectedMenu = this.menus.find(m => m?.debug)
     this.resetTimeout = null
 
     Soundboard.init()
@@ -79,19 +79,9 @@ export default class UI {
       this.selectedMenu.hide()
       this.selectedMenu = null
     } else {
-      switch (this.icons.selected) {
-        case Icons.FEED:
-          this.selectedMenu = this.menuFeed
-          break
-        case Icons.LIGHT:
-          this.selectedMenu = this.menuLight
-          break
-        case Icons.ATTENTION:
-          break
-        default:
-          this.life.pet?.no()
-          break
-      }
+      if (this.icons.selected === Icons.ATTENTION) return
+
+      this.selectedMenu = this.menus.at(this.icons.selected)
 
       if (this.selectedMenu) {
         if (this.selectedMenu.cycle) {
@@ -100,6 +90,8 @@ export default class UI {
           this.selectedMenu.action()
           this.selectedMenu = null
         }
+      } else {
+        this.life.pet?.no()
       }
     }
 
