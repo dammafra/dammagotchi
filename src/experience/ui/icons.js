@@ -10,13 +10,13 @@ import {
 import { Soundboard } from './soundboard'
 
 export default class Icons {
-  static METER = 0
-  static FEED = 1
-  static DUCK = 2
-  static PLAY = 3
-  static DISCIPLINE = 4
-  static MEDICINE = 5
-  static LIGHT = 6
+  static FEED = 0
+  static LIGHT = 1
+  static PLAY = 2
+  static MEDICINE = 3
+  static DUCK = 4
+  static METER = 5
+  static DISCIPLINE = 6
   static ATTENTION = 7
 
   constructor() {
@@ -37,13 +37,13 @@ export default class Icons {
     const geometry = new PlaneGeometry()
 
     this.meshes = [
-      'meter',
       'feed',
-      'duck',
-      'play',
-      'discipline',
-      'medicine',
       'light',
+      'play',
+      'medicine',
+      'duck',
+      'meter',
+      'discipline',
       'attention',
     ].map((icon, index) => {
       const texture = this.resources.items[icon]
