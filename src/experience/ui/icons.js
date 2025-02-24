@@ -74,10 +74,8 @@ export default class Icons {
   setSelected(selected) {
     this.selected = selected
     this.meshes.forEach((icon, index) => {
-      icon.material.opacity = this.baseOpacity
-      if (this.selected === index && this.selected != Icons.ATTENTION) {
-        icon.material.opacity = 1
-      }
+      if (index === Icons.ATTENTION) return
+      icon.material.opacity = this.selected === index ? 1 : this.baseOpacity
     })
   }
 
@@ -85,16 +83,21 @@ export default class Icons {
     this.setSelected((this.selected + 1) % 8)
   }
 
-  notifyAttention() {
+  notifyAttention = () => {
+    if (this.notified) return
+
+    this.notified = true
     Soundboard.instance.play('attention')
     this.meshes.at(Icons.ATTENTION).material.opacity = 1
   }
 
-  resolveAttention() {
+  resolveAttention = () => {
+    this.notified = false
     this.meshes.at(Icons.ATTENTION).material.opacity = this.baseOpacity
   }
 
-  reset() {
+  reset(resolveAttention) {
     this.setSelected(Icons.ATTENTION)
+    if (resolveAttention) this.resolveAttention()
   }
 }

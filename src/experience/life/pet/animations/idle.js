@@ -15,6 +15,9 @@ export default {
     idle2.mesh.visible = false
 
     this.updateSeconds = () => {
+      // TODO: improve
+      this.stats.checkNeeds()
+
       idle1.mesh.visible = Random.boolean()
 
       const directionX = Random.oneOf(+this.screen.unit, -this.screen.unit)

@@ -53,6 +53,8 @@ export default class Menu {
   }
 
   show() {
+    this.refreshMenu()
+
     this.visible = true
     this.mesh.visible = true
 
@@ -78,7 +80,7 @@ export default class Menu {
   reset() {}
 
   /**
-   * @return `this` to keep open after action; use `this.hide()` and return `false` otherwise
+   * @return `this` to keep open after action; use `this.hide()` and return `undefined` otherwise
    */
   action() {}
 }

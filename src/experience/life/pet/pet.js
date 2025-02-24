@@ -9,7 +9,11 @@ import no from './animations/no'
 
 export default class Pet extends EventDispatcher {
   get tick() {
-    return this.experience.life.tick
+    return this.experience.life.scheduler.tick
+  }
+
+  get stats() {
+    return this.experience.life.stats
   }
 
   constructor(stage, model) {

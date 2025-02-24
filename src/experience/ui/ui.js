@@ -27,8 +27,7 @@ export default class UI {
     this.device.addEventListener('press-reset-button', this.onResetPress)
     this.device.addEventListener('release-reset-button', this.onResetRelease)
     this.device.addEventListener('tab', this.onTab)
-
-    this.life.addEventListener('evolve-out', this.reset)
+    this.life.addEventListener('evolve-out', this.onEvolveOut)
 
     window.addEventListener('keydown', e => {
       switch (e.key) {
@@ -52,6 +51,8 @@ export default class UI {
   ready() {
     this.icons.ready()
     this.icons.setSelected(this.menus.indexOf(this.selectedMenu))
+    this.life.stats.addEventListener('notify', this.icons.notifyAttention)
+    this.life.stats.addEventListener('resolve', this.icons.resolveAttention)
   }
 
   onTab = () => {
@@ -117,10 +118,7 @@ export default class UI {
     if (!this.life.started) return
 
     this.camera.controls.enabled = false
-    this.countdown = new Countdown(3, () => {
-      this.camera.intro()
-      this.life.reset()
-    })
+    this.countdown = new Countdown(3, this.onReset)
   }
 
   onResetRelease = () => {
@@ -128,14 +126,28 @@ export default class UI {
     this.countdown?.reset()
   }
 
+  onReset = () => {
+    this.camera.intro()
+    this.life.reset()
+    this.reset(true)
+  }
+
+  onEvolveOut = () => {
+    this.reset(false)
+  }
+
   scheduleReset() {
     this.resetTimeout && clearTimeout(this.resetTimeout)
     this.resetTimeout = setTimeout(this.reset, 10000)
   }
 
-  reset = () => {
-    this.icons.reset()
+  reset = resetAttention => {
+    this.icons.reset(resetAttention)
     this.selectedMenu?.hide()
     this.selectedMenu = null
+  }
+
+  setDebug(debug) {
+    debug.gui.addButton({ title: 'reset' }).on('click', this.onReset)
   }
 }
