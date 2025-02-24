@@ -49,4 +49,9 @@ export default class MenuMeter extends Menu {
 
     this.refreshMenu()
   }
+
+  action() {
+    this.cycle()
+    return this
+  }
 }

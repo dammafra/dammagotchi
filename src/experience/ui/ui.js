@@ -80,8 +80,7 @@ export default class UI {
     if (this.icons.selected === Icons.ATTENTION) return
 
     if (this.selectedMenu) {
-      this.selectedMenu.action()
-      this.selectedMenu = null
+      this.selectedMenu = this.selectedMenu.action()
     } else {
       this.selectedMenu = this.menus.at(this.icons.selected)
       if (this.selectedMenu) {

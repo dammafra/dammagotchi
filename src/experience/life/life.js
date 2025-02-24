@@ -30,7 +30,7 @@ export default class Life extends EventDispatcher {
 
     const state = this.loadState()
     this.started = state.started
-    this.age = state.age
+    this.tick = state.tick
     this.stageStart = state.stageStart
     this.stage = state.stage
     this.model = state.model
@@ -95,7 +95,7 @@ export default class Life extends EventDispatcher {
     if (evolving && this.pet.evolveIn) {
       this.pet.evolveIn()
       const transitionDuration = lifeConfig.transitions[this.stage].in
-      this.schedule(this.startStage, this.age + transitionDuration, `start ${this.stage} stage`)
+      this.schedule(this.startStage, this.tick + transitionDuration, `start ${this.stage} stage`)
     } else {
       this.startStage()
     }
@@ -119,7 +119,7 @@ export default class Life extends EventDispatcher {
     if (this.pet.evolveOut) {
       this.pet.evolveOut()
       const transitionDuration = lifeConfig.transitions[this.stage].out
-      this.schedule(this.evolveIn, this.age + transitionDuration, 'evolve in')
+      this.schedule(this.evolveIn, this.tick + transitionDuration, 'evolve in')
     } else {
       this.evolveIn()
     }
@@ -129,25 +129,25 @@ export default class Life extends EventDispatcher {
     const stages = Object.keys(lifeConfig.stages)
     const index = stages.findIndex(s => s == this.stage)
     this.stage = stages.at(index + 1)
-    this.stageStart = this.age
+    this.stageStart = this.tick
 
     this.setPet(true)
   }
 
   updateSeconds() {
-    if (!this.pause && this.stage !== 'death') this.age++
+    if (!this.pause && this.stage !== 'death') this.tick++
     this.checkScheduled()
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
     this.saveState()
   }
 
-  schedule(action, age, label) {
-    this.scheduled.set(age, { label, action })
+  schedule(action, tick, label) {
+    this.scheduled.set(tick, { label, action })
   }
 
   checkScheduled() {
     for (const key of this.scheduled.keys()) {
-      if (this.age >= key) {
+      if (this.tick >= key) {
         this.scheduled.get(key).action()
         this.scheduled.delete(key)
       }
@@ -165,7 +165,7 @@ export default class Life extends EventDispatcher {
   saveState() {
     const state = {
       started: this.started,
-      age: this.age,
+      tick: this.tick,
       stageStart: this.stageStart,
       stage: this.stage,
       model: this.model,
@@ -181,7 +181,7 @@ export default class Life extends EventDispatcher {
     } else {
       return {
         started: false,
-        age: 0,
+        tick: 0,
         stageStart: 0,
         stage: 'egg',
         model: '',
@@ -191,7 +191,7 @@ export default class Life extends EventDispatcher {
 
   reset = () => {
     this.started = false
-    this.age = 0
+    this.tick = 0
     this.stageStart = 0
     this.stage = 'egg'
     this.model = ''
@@ -215,7 +215,7 @@ export default class Life extends EventDispatcher {
     this.debug.addBinding(this, 'stage', { readonly: true })
     this.debug.addBinding(this, 'stageStart', { readonly: true })
     this.debug.addBinding(this, 'model', { readonly: true })
-    this.debug.addBinding(this, 'age', { readonly: true })
+    this.debug.addBinding(this, 'tick', { readonly: true })
     this.debug.addBinding(this, 'scheduledFormatted', {
       label: 'schedule',
       readonly: true,

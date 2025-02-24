@@ -41,12 +41,12 @@ export default {
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
     eyesClosed.spawn()
 
-    const startedAt = this.age
+    const startedAt = this.tick
 
     Soundboard.instance.play('death')
 
     this.updateSeconds = () => {
-      if (this.age > startedAt + 3) {
+      if (this.tick > startedAt + 3) {
         eyesClosed.mesh.position.y += this.screen.unit * 4
       }
     }

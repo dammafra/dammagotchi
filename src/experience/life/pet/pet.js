@@ -8,8 +8,8 @@ import idle from './animations/idle'
 import no from './animations/no'
 
 export default class Pet extends EventDispatcher {
-  get age() {
-    return this.experience.life.age
+  get tick() {
+    return this.experience.life.tick
   }
 
   constructor(stage, model) {

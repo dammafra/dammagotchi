@@ -5,26 +5,26 @@ export default {
     const no = this.sprites.get('no').at(0)
     no.spawn()
 
-    const startedAt = this.age
+    const startedAt = this.tick
 
     this.updateSeconds = () => {
-      if (this.age === startedAt + 1) {
+      if (this.tick === startedAt + 1) {
         no.mesh.rotation.y += Math.PI
       }
 
-      if (this.age === startedAt + 2) {
+      if (this.tick === startedAt + 2) {
         no.mesh.rotation.y += Math.PI
       }
 
-      if (this.age === startedAt + 3) {
+      if (this.tick === startedAt + 3) {
         no.mesh.rotation.y += Math.PI
       }
 
-      if (this.age === startedAt + 4) {
+      if (this.tick === startedAt + 4) {
         no.mesh.rotation.y += Math.PI
       }
 
-      if (this.age === startedAt + 5) {
+      if (this.tick === startedAt + 5) {
         this.idle()
       }
     }

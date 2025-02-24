@@ -31,16 +31,16 @@ export default {
     food2.mesh.visible = false
     food3.mesh.visible = false
 
-    const startedAt = this.age
+    const startedAt = this.tick
 
     this.updateSeconds = () => {
-      if (this.age === startedAt + 1) {
+      if (this.tick === startedAt + 1) {
         food1.mesh.position.y = this.screen.center.y
         idle1.mesh.visible = false
         eat2.mesh.visible = true
       }
 
-      if (this.age === startedAt + 2) {
+      if (this.tick === startedAt + 2) {
         food1.mesh.visible = false
         food2.mesh.visible = true
 
@@ -48,12 +48,12 @@ export default {
         eat1.mesh.visible = true
       }
 
-      if (this.age === startedAt + 3) {
+      if (this.tick === startedAt + 3) {
         eat1.mesh.visible = false
         eat2.mesh.visible = true
       }
 
-      if (this.age === startedAt + 4) {
+      if (this.tick === startedAt + 4) {
         food2.mesh.visible = false
         food3.mesh.visible = true
 
@@ -61,19 +61,19 @@ export default {
         eat1.mesh.visible = true
       }
 
-      if (this.age === startedAt + 5) {
+      if (this.tick === startedAt + 5) {
         eat1.mesh.visible = false
         eat2.mesh.visible = true
       }
 
-      if (this.age === startedAt + 6) {
+      if (this.tick === startedAt + 6) {
         food3.mesh.visible = false
 
         eat2.mesh.visible = false
         eat1.mesh.visible = true
       }
 
-      if (this.age === startedAt + 7) {
+      if (this.tick === startedAt + 7) {
         this.idle()
       }
     }

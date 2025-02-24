@@ -74,6 +74,11 @@ export default class Menu {
   }
 
   cycle() {}
+
   reset() {}
+
+  /**
+   * @return `this` to keep open after action; use `this.hide()` and return `false` otherwise
+   */
   action() {}
 }
