@@ -76,7 +76,6 @@ export default class Icons {
     this.meshes.forEach((icon, index) => {
       icon.material.opacity = this.baseOpacity
       if (this.selected === index && this.selected != Icons.ATTENTION) {
-        Soundboard.instance.play('button')
         icon.material.opacity = 1
       }
     })

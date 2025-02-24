@@ -9,6 +9,7 @@ import Death from './pet/death'
 import Egg from './pet/egg'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
+import Stats from './stats'
 
 export default class Life extends EventDispatcher {
   static debugName = '📊 life'
@@ -36,6 +37,7 @@ export default class Life extends EventDispatcher {
 
     this.pause = true
     this.scheduled = new Map()
+    this.stats = new Stats()
 
     this.group = new Group()
     this.scene.add(this.group)

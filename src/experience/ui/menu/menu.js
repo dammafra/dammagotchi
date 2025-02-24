@@ -10,6 +10,7 @@ export default class Menu {
     this.scene = this.screen.scene
 
     this.element = element
+    this.hasOptions = false
 
     if (this.element) {
       this.setGeometry()

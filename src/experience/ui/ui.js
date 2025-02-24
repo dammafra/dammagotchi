@@ -51,6 +51,7 @@ export default class UI {
 
   ready() {
     this.icons.ready()
+    this.icons.setSelected(this.menus.indexOf(this.selectedMenu))
   }
 
   onTab = () => {
@@ -68,23 +69,23 @@ export default class UI {
       this.icons.cycle()
     }
 
+    if (this.icons.selected !== Icons.ATTENTION) {
+      Soundboard.instance.play('button')
+    }
     this.scheduleReset()
   }
 
   onB = () => {
     if (!this.life.pet?.canInteract) return
+    if (this.icons.selected === Icons.ATTENTION) return
 
     if (this.selectedMenu) {
       this.selectedMenu.action()
-      this.selectedMenu.hide()
       this.selectedMenu = null
     } else {
-      if (this.icons.selected === Icons.ATTENTION) return
-
       this.selectedMenu = this.menus.at(this.icons.selected)
-
       if (this.selectedMenu) {
-        if (this.selectedMenu.cycle) {
+        if (this.selectedMenu.hasOptions) {
           this.selectedMenu.show()
         } else {
           this.selectedMenu.action()

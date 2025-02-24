@@ -1,10 +1,11 @@
 import Food from '@life/food'
-import { Soundboard } from '@ui/soundboard'
 import Menu from './menu'
 
 export default class MenuFeed extends Menu {
   constructor() {
     super(document.getElementById('menu-feed'))
+
+    this.hasOptions = true
 
     const arrows = Array.from(this.element.getElementsByClassName('arrow'))
     this.mealArrow = arrows.at(0)
@@ -20,7 +21,6 @@ export default class MenuFeed extends Menu {
     this.foodType = this.foodType === Food.MEAL ? Food.SNACK : Food.MEAL
 
     this.refreshMenu()
-    Soundboard.instance.play('button')
   }
 
   reset() {
@@ -31,5 +31,6 @@ export default class MenuFeed extends Menu {
 
   action() {
     this.life.pet.eat(this.foodType)
+    this.hide()
   }
 }

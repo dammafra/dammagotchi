@@ -177,7 +177,7 @@ button.fab {
 
 /* menu */
 #html2canvas {
-  @apply fixed -z-20 left-0 bottom-0 size-[256px];
+  @apply fixed -z-20 left-0 size-[256px];
 }
 
 #html2canvas > * {
