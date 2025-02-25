@@ -2,7 +2,8 @@ import Frame from '@device/frame'
 import Shell from '@device/shell'
 import Experience from '@experience'
 import iro from '@jaames/iro'
-import { areColorsNear, randomColor } from '@utils/colors'
+import { areColorsNear } from '@utils/colors'
+import Random from '@utils/random'
 import { Color } from 'three'
 import Button from './button'
 
@@ -19,7 +20,8 @@ export default class ColorPicker {
     this.element = document.getElementById('picker')
 
     this.toggleButton.onclick = this.toggle
-    this.randomizeButton.onclick = () => this.colorPicker.setColors([randomColor(), randomColor()])
+    this.randomizeButton.onclick = () =>
+      this.colorPicker.setColors([Random.color(), Random.color()])
 
     this.colorPicker = new iro.ColorPicker('#picker', {
       width: 200,
@@ -100,7 +102,7 @@ export default class ColorPicker {
     let colors = JSON.parse(state)
 
     if (!colors) {
-      colors = [randomColor(), randomColor()]
+      colors = [Random.color(), Random.color()]
       localStorage.setItem('colors', JSON.stringify(colors))
     }
 

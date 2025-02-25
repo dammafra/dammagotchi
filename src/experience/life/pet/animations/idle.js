@@ -9,10 +9,7 @@ export default {
 
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
-
-    if (this.life.stats.mess > 1) {
-      idle1.mesh.position.x = -1
-    }
+    if (this.life.stats.mess > 1) idle1.mesh.position.x = -1
 
     const idle2 = this.sprites.get('idle').at(1)
     idle2.spawn()
@@ -23,6 +20,7 @@ export default {
     this.updateSeconds = () => {
       // TODO: improve
       this.life.checkNeeds()
+      if (this.life.stats.mess < 6) Random.runOneIn(() => this.mess(), 200)
 
       idle1.mesh.visible = Random.boolean()
 

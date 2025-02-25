@@ -29,9 +29,3 @@ export function areColorsNear(color1, color2, threshold = 25) {
   const distance = colorDistance(color1, color2)
   return distance < threshold
 }
-
-export function randomColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, '0')}`
-}

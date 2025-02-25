@@ -1,6 +1,7 @@
 import lifeConfig from '@config/life'
 import spritesConfig from '@config/sprites'
 import Experience from '@experience'
+import Random from '@utils/random'
 import { EventDispatcher, Group } from 'three'
 import Food from './food'
 import Misc from './misc'
@@ -146,7 +147,7 @@ export default class Life extends EventDispatcher {
     if (this.loading) return
 
     const keys = Object.keys(spritesConfig.pets[this.stage])
-    const randomModel = keys[Math.floor(Math.random() * keys.length)]
+    const randomModel = Random.fromArray(keys)
     this.model = randomModel
   }
 
@@ -199,10 +200,8 @@ export default class Life extends EventDispatcher {
   }
 
   addMess() {
-    if (this.stats.mess < 6) {
-      this.mess.push(new Mess(this.stats.mess))
-      this.stats.mess++
-    }
+    this.mess.push(new Mess(this.stats.mess))
+    this.stats.mess++
   }
 
   collideMess(sprite, position) {

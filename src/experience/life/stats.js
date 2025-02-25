@@ -1,4 +1,5 @@
 import Experience from '@experience'
+import Random from '@utils/random'
 import { EventDispatcher } from 'camera-controls'
 
 export default class Stats extends EventDispatcher {
@@ -21,20 +22,10 @@ export default class Stats extends EventDispatcher {
   }
 
   updateSeconds() {
-    this.hungryDecay()
-    this.happyDecay()
+    Random.runOneIn(() => this.hungry && this.hungry--, 200)
+    Random.runOneIn(() => this.happy && this.happy--, 200)
 
     this.saveState()
-  }
-
-  hungryDecay() {
-    // probability of 1/200 ticks
-    Math.random() < 0.005 && this.hungry && this.hungry--
-  }
-
-  happyDecay() {
-    // probability of 1/200 ticks
-    Math.random() < 0.005 && this.happy && this.happy--
   }
 
   saveState() {

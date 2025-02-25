@@ -6,4 +6,18 @@ export default class Random {
   static boolean() {
     return Math.random() - 0.5 > 0
   }
+
+  static fromArray(array) {
+    return array[Math.floor(Math.random() * array.length)]
+  }
+
+  static color() {
+    return `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, '0')}`
+  }
+
+  static runOneIn(callback, chance) {
+    Math.random() < 1 / chance && callback && callback()
+  }
 }
