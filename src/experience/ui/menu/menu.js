@@ -52,8 +52,8 @@ export default class Menu {
     this.material.needsUpdate = true
   }
 
-  show() {
-    this.refreshMenu()
+  async show() {
+    await this.refreshMenu()
 
     this.visible = true
     this.mesh.visible = true
