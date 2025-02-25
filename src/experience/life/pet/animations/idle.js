@@ -1,3 +1,4 @@
+import lifeConfig from '@config/life'
 import { Soundboard } from '@ui/soundboard'
 import Random from '@utils/random'
 
@@ -9,7 +10,9 @@ export default {
 
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
-    if (this.life.stats.mess > 1) idle1.mesh.position.x = -1
+    if (this.stats.mess > 1) {
+      idle1.mesh.position.x = -1
+    }
 
     const idle2 = this.sprites.get('idle').at(1)
     idle2.spawn()
@@ -18,10 +21,13 @@ export default {
     this.life.showMess()
 
     this.updateSeconds = () => {
-      // TODO: improve
+      // stats
       this.life.checkNeeds()
-      if (this.life.stats.mess < 6) Random.runOneIn(() => this.mess(), 200)
+      if (this.stats.mess < 6) {
+        Random.runOneIn(() => this.mess(), lifeConfig.stats.messGenerationRate)
+      }
 
+      // animation
       idle1.mesh.visible = Random.boolean()
 
       const directionX = Random.oneOf(+this.screen.unit, -this.screen.unit)

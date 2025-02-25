@@ -1,4 +1,9 @@
 export default {
+  stats: {
+    hungryDecayRate: 200,
+    happyDecayRate: 200,
+    messGenerationRate: 100,
+  },
   transitions: {
     egg: { out: 6 },
     babies: { in: 4, out: 4 },

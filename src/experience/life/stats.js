@@ -1,3 +1,4 @@
+import lifeConfig from '@config/life'
 import Experience from '@experience'
 import Random from '@utils/random'
 import { EventDispatcher } from 'camera-controls'
@@ -22,8 +23,8 @@ export default class Stats extends EventDispatcher {
   }
 
   updateSeconds() {
-    Random.runOneIn(() => this.hungry && this.hungry--, 200)
-    Random.runOneIn(() => this.happy && this.happy--, 200)
+    Random.runOneIn(() => this.hungry && this.hungry--, lifeConfig.stats.hungryDecayRate)
+    Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
 
     this.saveState()
   }
