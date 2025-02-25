@@ -133,11 +133,11 @@ export default class Life extends EventDispatcher {
   }
 
   updateSeconds() {
-    if (!this.pause && this.stage !== 'death') {
-      this.scheduler.updateSeconds()
-      this.stats.updateSeconds()
-      this.saveState()
-    }
+    if (this.pause || this.stage === 'death') return
+
+    this.scheduler.updateSeconds()
+    this.stats.updateSeconds()
+    this.saveState()
 
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
     this.mess.forEach(m => m.updateSeconds())
