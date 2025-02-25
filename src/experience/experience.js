@@ -97,6 +97,7 @@ export default class Experience {
     this.loading.update()
     this.camera.update()
     this.renderer.update()
+    this.pointer.update()
     this.screen.update()
     this.device.update()
   }

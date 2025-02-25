@@ -81,6 +81,10 @@ body {
   @apply !cursor-grabbing;
 }
 
+.webgl.pointer {
+  @apply !cursor-pointer;
+}
+
 main footer {
   @apply fixed bottom-0 w-full p-2.5 z-10;
   @apply flex justify-between items-center;

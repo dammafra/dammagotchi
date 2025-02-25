@@ -31,9 +31,18 @@ export default class Pointer {
       window.addEventListener('touchstart', this.touchstart)
       window.addEventListener('touchend', this.mouseup)
     } else {
+      window.addEventListener('mousemove', this.setMouse)
       window.addEventListener('mousedown', this.mousedown)
       window.addEventListener('mouseup', this.mouseup)
     }
+  }
+
+  setMouse = event => {
+    this.clientX = event.clientX
+    this.clientY = event.clientY
+
+    this.x = (event.clientX / this.sizes.width) * 2 - 1
+    this.y = -((event.clientY / this.sizes.height) * 2 - 1)
   }
 
   touchstart = event => {
@@ -44,13 +53,8 @@ export default class Pointer {
   mousedown = event => {
     if (event.target !== this.canvas) return
 
-    this.clientX = event.clientX
-    this.clientY = event.clientY
-
-    this.x = (event.clientX / this.sizes.width) * 2 - 1
-    this.y = -((event.clientY / this.sizes.height) * 2 - 1)
-
-    this.updateRaycaster()
+    this.setMouse(event)
+    this.update()
 
     const callback = this.clickableObjects.get(this.currentIntersect)
     if (this.#enabled && callback && callback.start) {
@@ -67,12 +71,18 @@ export default class Pointer {
     }
   }
 
-  updateRaycaster() {
+  update() {
     this.raycaster.setFromCamera(new Vector2(this.x, this.y), this.camera.instance)
 
     const test = Array.from(this.clickableObjects.keys())
     const intersects = this.raycaster.intersectObjects(test)
     this.currentIntersect = intersects.length ? intersects[0].object : null
+
+    if (this.currentIntersect && this.clickableObjects.get(this.currentIntersect)) {
+      this.canvas.classList.add('pointer')
+    } else {
+      this.canvas.classList.remove('pointer')
+    }
   }
 
   onClick(object, callback) {
