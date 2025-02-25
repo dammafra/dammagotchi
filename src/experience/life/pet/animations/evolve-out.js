@@ -9,8 +9,6 @@ export default {
 
     Soundboard.instance.play('evolution')
 
-    this.life.hideMess()
-
     this.updateSeconds = null
 
     this.dispose = () => {

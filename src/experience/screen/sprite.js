@@ -6,6 +6,7 @@ import Pixel from './pixel'
 export default class Sprite {
   constructor(matrix) {
     this.experience = Experience.instance
+    this.life = this.experience.life
 
     this.screen = this.experience.screen
     this.group = this.experience.life.group
@@ -48,6 +49,16 @@ export default class Sprite {
 
   clone() {
     return new Sprite(this.matrix)
+  }
+
+  boundsAt(position) {
+    const leftBound = position.clone()
+    leftBound.x += -this.screen.unit * (this.width / 2)
+
+    const rightBound = position.clone()
+    rightBound.x += this.screen.unit * (this.width / 2)
+
+    return { leftBound, rightBound }
   }
 
   dispose() {

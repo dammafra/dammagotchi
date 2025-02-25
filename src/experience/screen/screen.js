@@ -2,6 +2,7 @@ import Experience from '@experience'
 import lcdFragmentShader from '@shaders/lcd/fragment.glsl'
 import lcdVertexShader from '@shaders/lcd/vertex.glsl'
 import {
+  CircleGeometry,
   Color,
   GridHelper,
   Mesh,
@@ -153,25 +154,32 @@ export default class Screen {
   }
 
   contains(sprite, position) {
-    const leftBound = position.clone()
-    leftBound.x += -this.unit * (sprite.width / 2)
-
-    const rightBound = position.clone()
-    rightBound.x += this.unit * (sprite.width / 2)
-
+    const { leftBound, rightBound } = sprite.boundsAt(position)
     return this.screenCamera.canView(leftBound) && this.screenCamera.canView(rightBound)
   }
 
   setDebug(debug) {
     this.debug = debug.gui.addFolder({ title: Screen.debugName, expanded: false })
 
-    const helper = new GridHelper(10, 10)
+    const helper = new GridHelper()
     helper.visible = false
     helper.position.z = this.center.z - 0.001
     helper.rotation.x = Math.PI * 0.5
     this.scene.add(helper)
 
-    this.debug.addBinding(helper, 'visible', { label: 'helper' })
+    const coordHelper = new Mesh(
+      new CircleGeometry(this.unit),
+      new MeshBasicMaterial({ color: 'red' }),
+    )
+    coordHelper.visible = helper.visible
+    coordHelper.position.z = this.center.z - 0.001
+    this.scene.add(coordHelper)
+
+    this.debug
+      .addBinding(helper, 'visible', { label: 'helper' })
+      .on('change', () => (coordHelper.visible = helper.visible))
+    this.debug.addBinding(coordHelper.position, 'x', { label: 'coord X', min:  -2.3, max: 2.3,  step: this.unit}) //prettier-ignore
+    this.debug.addBinding(coordHelper.position, 'y', { label: 'coord Y', min:  -0.8, max: 3.7,  step: this.unit}) //prettier-ignore
 
     this.debug
       ?.addBinding(this.mesh.scale, 'x', { min: -1, max: 1, step: 0.001, label: 'scale' })

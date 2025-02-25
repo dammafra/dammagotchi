@@ -199,10 +199,17 @@ export default class Life extends EventDispatcher {
   }
 
   addMess() {
-    if (this.stats.mess < 4) {
+    if (this.stats.mess < 6) {
       this.mess.push(new Mess(this.stats.mess))
       this.stats.mess++
     }
+  }
+
+  collideMess(sprite, position) {
+    if (!this.stats.mess) return false
+
+    const { rightBound } = sprite.boundsAt(position)
+    return this.stats.mess === 1 ? rightBound.x > 1 : rightBound.x > 0
   }
 
   disposeMess() {

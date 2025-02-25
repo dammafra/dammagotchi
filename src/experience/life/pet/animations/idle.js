@@ -10,6 +10,10 @@ export default {
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
 
+    if (this.life.stats.mess > 1) {
+      idle1.mesh.position.x = -1
+    }
+
     const idle2 = this.sprites.get('idle').at(1)
     idle2.spawn()
     idle2.mesh.visible = false
@@ -27,7 +31,7 @@ export default {
       const position = idle1.mesh.position.clone()
       position.x += directionX
 
-      if (this.screen.contains(idle1, position)) {
+      if (this.screen.contains(idle1, position) && !this.life.collideMess(idle1, position)) {
         idle1.mesh.position.copy(position)
         idle1.mesh.rotation.y = directionX > 0 ? Math.PI : 0
       }
@@ -41,6 +45,8 @@ export default {
 
       idle1.dispose()
       idle2.dispose()
+
+      this.life.hideMess()
     }
   },
 

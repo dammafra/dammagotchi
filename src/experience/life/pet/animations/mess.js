@@ -17,8 +17,6 @@ export default {
     effort2.mesh.position.set(1.5, 0.5)
     effort2.mesh.rotation.y = Math.PI
 
-    this.life.hideMess()
-
     const startedAt = this.tick
 
     this.updateSeconds = () => {
@@ -30,7 +28,6 @@ export default {
         return
       }
 
-      this.life.addMess()
       this.idle()
     }
 
@@ -40,6 +37,9 @@ export default {
       eyesClosed.dispose()
       effort1.dispose()
       effort2.dispose()
+
+      this.life.addMess()
+      this.life.hideMess()
     }
   },
 }
