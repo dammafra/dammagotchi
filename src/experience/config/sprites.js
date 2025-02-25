@@ -1,34 +1,44 @@
-const petConfig = [{ name: 'idle', index: 0, split: 2 }]
-
-const babyConfig = petConfig.concat([
+const babyConfig = [
+  { name: 'idle', index: 0, split: 2 },
   { name: 'hatching', index: 13 },
   { name: 'eat', index: 12, split: 2 },
   { name: 'no', index: 14 },
-])
+  { name: 'eyes-closed', index: 8 },
+]
 
-const childConfig = petConfig.concat([
+const childConfig = [
+  { name: 'idle', index: 0, split: 2 },
   { name: 'eat', index: 12, split: 2 },
   { name: 'no', index: 14 },
-])
+  { name: 'eyes-closed', index: 8 },
+]
 
-const teenagerBaseConfig = petConfig.concat([
+const teenagerBaseConfig = [
+  { name: 'idle', index: 0, split: 2 },
+
   { name: 'eat', index: 12, split: 2 },
   { name: 'no', index: 14 },
-])
+  { name: 'eyes-closed', index: 8 },
+]
 const teenagerConfig1 = teenagerBaseConfig
 const teenagerConfig2 = teenagerBaseConfig
 
-const adultBaseConfig = petConfig.concat({ name: 'eat', index: 26, split: 2 })
+const adultBaseConfig = [
+  { name: 'idle', index: 0, split: 2 },
+  { name: 'eat', index: 26, split: 2 },
+  { name: 'eyes-closed', index: 18 },
+]
 const adultConfig1 = adultBaseConfig.concat([{ name: 'no', index: 29 }])
 const adultConfig2 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
 const adultConfig3 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
 const adultConfig4 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
 
-const seniorConfig = petConfig.concat([
+const seniorConfig = [
+  { name: 'idle', index: 0, split: 2 },
   { name: 'eyes-closed', index: 18 },
   { name: 'eat', index: 25, split: 2 },
   { name: 'no', index: 28 },
-])
+]
 
 export default {
   pets: {
@@ -102,11 +112,12 @@ export default {
   items: [],
   misc: [
     { name: 'toilets', index: 0, split: 3 },
-    { name: 'poop', index: 1, split: 2 },
+    { name: 'mess', index: 1, split: 2 },
     { name: 'happy', index: 2 },
     { name: 'illnesses', index: 3, split: 3 },
     { name: 'sleep', index: 4, split: 3 },
     { name: 'angry', index: 6, split: 3 },
+    { name: 'effort', index: 8 },
   ],
   food: [
     { name: 'meal.babies', index: 66 },

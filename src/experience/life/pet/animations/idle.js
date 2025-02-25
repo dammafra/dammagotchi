@@ -14,9 +14,11 @@ export default {
     idle2.spawn()
     idle2.mesh.visible = false
 
+    this.life.showMess()
+
     this.updateSeconds = () => {
       // TODO: improve
-      this.stats.checkNeeds()
+      this.life.checkNeeds()
 
       idle1.mesh.visible = Random.boolean()
 

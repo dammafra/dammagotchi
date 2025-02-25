@@ -10,16 +10,17 @@ export default class Sprite {
     this.screen = this.experience.screen
     this.group = this.experience.life.group
 
-    this.setMesh(matrix)
+    this.matrix = matrix
+    this.setMesh()
   }
 
-  setMesh(matrix) {
+  setMesh() {
     this.mesh = new Group()
     this.mesh.position.copy(this.screen.center)
 
-    this.width = matrix.at(0).length
+    this.width = this.matrix.at(0).length
 
-    matrix.toReversed().forEach((row, y) => {
+    this.matrix.toReversed().forEach((row, y) => {
       row.forEach((pixel, x) => {
         if (!pixel) return
         const centeredX = x - this.width / 2
@@ -43,6 +44,10 @@ export default class Sprite {
     this.mesh.visible = sprite.mesh.visible
     this.mesh.rotation.copy(sprite.mesh.rotation)
     this.mesh.position.copy(sprite.mesh.position)
+  }
+
+  clone() {
+    return new Sprite(this.matrix)
   }
 
   dispose() {

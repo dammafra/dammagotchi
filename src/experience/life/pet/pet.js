@@ -5,15 +5,16 @@ import eat from './animations/eat'
 import evolveIn from './animations/evolve-in'
 import evolveOut from './animations/evolve-out'
 import idle from './animations/idle'
+import mess from './animations/mess'
 import no from './animations/no'
 
 export default class Pet extends EventDispatcher {
-  get tick() {
-    return this.experience.life.scheduler.tick
+  get life() {
+    return this.experience.life
   }
 
-  get stats() {
-    return this.experience.life.stats
+  get tick() {
+    return this.experience.life.scheduler.tick
   }
 
   constructor(stage, model) {
@@ -36,5 +37,6 @@ export default class Pet extends EventDispatcher {
     this.idle = idle.default
     this.no = no.default
     this.eat = eat.default
+    this.mess = mess.default
   }
 }

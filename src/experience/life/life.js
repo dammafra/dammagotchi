@@ -7,6 +7,7 @@ import Misc from './misc'
 import Baby from './pet/baby'
 import Death from './pet/death'
 import Egg from './pet/egg'
+import Mess from './pet/mess'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
 import Scheduler from './scheduler'
@@ -31,6 +32,8 @@ export default class Life extends EventDispatcher {
     this.scheduler = new Scheduler()
     this.stats = new Stats(this, this.scheduler)
 
+    this.mess = []
+
     this.group = new Group()
     this.scene.add(this.group)
 
@@ -41,9 +44,11 @@ export default class Life extends EventDispatcher {
     if (this.started && !this.loading) return
 
     Food.init()
-    Misc.init()
+    Misc.init().sprites.addEventListener('ready', this.initMess)
+
     this.started = true
     this.pause = false
+
     this.setPet()
   }
 
@@ -134,6 +139,7 @@ export default class Life extends EventDispatcher {
     }
 
     if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
+    this.mess.forEach(m => m.updateSeconds())
   }
 
   setModel() {
@@ -144,12 +150,26 @@ export default class Life extends EventDispatcher {
     this.model = randomModel
   }
 
+  checkNeeds() {
+    if (!this.stats.hungry) {
+      this.dispatchEvent({ type: 'notify' })
+      return
+    }
+
+    if (!this.stats.happy) {
+      this.dispatchEvent({ type: 'notify' })
+      return
+    }
+
+    this.dispatchEvent({ type: 'resolve' })
+  }
+
   feedMeal() {
     if (this.stats.hungry < 4) {
       this.stats.hungry++
       this.stats.weight++
       this.pet.eat(Food.MEAL)
-      this.stats.checkNeeds()
+      this.checkNeeds()
     } else {
       this.pet.no()
     }
@@ -161,7 +181,34 @@ export default class Life extends EventDispatcher {
     }
     this.stats.weight += 2
     this.pet.eat(Food.SNACK)
-    this.stats.checkNeeds()
+    this.checkNeeds()
+  }
+
+  initMess = () => {
+    this.mess = Array(this.stats.mess)
+      .fill(true)
+      .map((_, index) => new Mess(index))
+  }
+
+  showMess() {
+    this.mess.forEach(m => m.show())
+  }
+
+  hideMess() {
+    this.mess.forEach(m => m.hide())
+  }
+
+  addMess() {
+    if (this.stats.mess < 4) {
+      this.mess.push(new Mess(this.stats.mess))
+      this.stats.mess++
+    }
+  }
+
+  disposeMess() {
+    this.mess.forEach(m => m.dispose())
+    this.mess = []
+    this.stats.mess = 0
   }
 
   saveState() {
@@ -195,11 +242,13 @@ export default class Life extends EventDispatcher {
     this.stage = 'egg'
     this.model = ''
 
+    this.disposeMess()
+
     this.scheduler.reset()
     this.stats.reset()
 
     this.start()
-    this.dispatchEvent({ type: 'evolve-out' })
+    this.dispatchEvent({ type: 'reset' })
   }
 
   show() {
@@ -220,5 +269,8 @@ export default class Life extends EventDispatcher {
 
     this.stats.setDebug(this.debug)
     this.scheduler.setDebug(this.debug)
+
+    this.debug.addButton({ title: '👉 mess' }).on('click', () => this.pet.mess())
+    this.debug.addButton({ title: 'reset' }).on('click', this.reset)
   }
 }

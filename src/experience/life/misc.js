@@ -19,6 +19,6 @@ export default class Misc {
   }
 
   get(sprite) {
-    return Misc.sprites.get(sprite)
+    return this.sprites.get(sprite)
   }
 }

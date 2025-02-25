@@ -9,6 +9,8 @@ export default {
 
     Soundboard.instance.play('evolution')
 
+    this.life.hideMess()
+
     this.updateSeconds = null
 
     this.dispose = () => {
@@ -44,6 +46,8 @@ export default {
     const startedAt = this.tick
 
     Soundboard.instance.play('death')
+
+    this.life.disposeMess()
 
     this.updateSeconds = () => {
       if (this.tick > startedAt + 3) {

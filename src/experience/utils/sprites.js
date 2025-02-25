@@ -5,7 +5,7 @@ import { EventDispatcher } from 'three'
 import { areColorsNear, rgbToHex } from './colors'
 
 export default class Sprites extends EventDispatcher {
-  /** @type {Map<string, Sprites} */
+  /** @type {Map<string, Sprites>} */
   static instances = new Map()
   static delimiter = '#A616D3'
 

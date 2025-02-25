@@ -17,6 +17,7 @@ export default class Stats extends EventDispatcher {
     this.discipline = state.discipline
     this.hungry = state.hungry
     this.happy = state.happy
+    this.mess = state.mess
   }
 
   updateSeconds() {
@@ -36,20 +37,6 @@ export default class Stats extends EventDispatcher {
     Math.random() < 0.005 && this.happy && this.happy--
   }
 
-  checkNeeds() {
-    if (!this.hungry) {
-      this.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    if (!this.happy) {
-      this.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    this.dispatchEvent({ type: 'resolve' })
-  }
-
   saveState() {
     const state = {
       age: this.age,
@@ -57,6 +44,7 @@ export default class Stats extends EventDispatcher {
       discipline: this.discipline,
       hungry: this.hungry,
       happy: this.happy,
+      mess: this.mess,
     }
     localStorage.setItem('stats', JSON.stringify(state))
   }
@@ -72,6 +60,7 @@ export default class Stats extends EventDispatcher {
         discipline: 0,
         hungry: 0,
         happy: 0,
+        mess: 0,
       }
     }
   }
@@ -82,6 +71,7 @@ export default class Stats extends EventDispatcher {
     this.discipline = 0
     this.hungry = 0
     this.happy = 0
+    this.mess = 0
   }
 
   setDebug(debug) {
@@ -93,5 +83,6 @@ export default class Stats extends EventDispatcher {
     debug.addBinding(this, 'discipline', { readonly: true, label: '😇 discipline' })
     debug.addBinding(this, 'hungry', { readonly: true, label: '🍔 hungry' })
     debug.addBinding(this, 'happy', { readonly: true, label: '🍬 happy' })
+    debug.addBinding(this, 'mess', { readonly: true, label: '💩 mess' })
   }
 }
