@@ -5,6 +5,7 @@ export default {
     this.dispose && this.dispose()
 
     this.canInteract = true
+    this.isMessing = true
 
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
     eyesClosed.spawn()
@@ -31,6 +32,7 @@ export default {
       }
 
       this.idle()
+      this.isMessing = false
     }
 
     this.dispose = () => {

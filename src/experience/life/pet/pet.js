@@ -10,6 +10,7 @@ import happy from './animations/happy'
 import idle from './animations/idle'
 import mess from './animations/mess'
 import no from './animations/no'
+import toilet from './animations/toilet'
 
 export default class Pet extends EventDispatcher {
   get life() {
@@ -33,6 +34,7 @@ export default class Pet extends EventDispatcher {
     this.stage = stage
     this.model = model
     this.canInteract = false
+    this.isMessing = false
 
     const sprite = this.model ? `pets.${this.stage}.${this.model}` : `pets.${this.stage}`
     this.sprites = Sprites.for(sprite)
@@ -46,6 +48,7 @@ export default class Pet extends EventDispatcher {
     this.eat = eat.default
     this.mess = mess.default
     this.flush = flush.default
+    this.toilet = toilet.default
 
     this.happy = happy.default
     this.no = no.default

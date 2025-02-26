@@ -6,6 +6,6 @@ export default class MenuDuck extends Menu {
   }
 
   action() {
-    this.life.pet.flush()
+    this.life.pet.isMessing ? this.life.pet.toilet() : this.life.pet.flush()
   }
 }
