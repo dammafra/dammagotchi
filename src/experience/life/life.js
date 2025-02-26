@@ -3,6 +3,7 @@ import spritesConfig from '@config/sprites'
 import Experience from '@experience'
 import Random from '@utils/random'
 import { EventDispatcher, Group } from 'three'
+import { Pane } from 'tweakpane'
 import Food from './food'
 import Misc from './misc'
 import Baby from './pet/baby'
@@ -61,7 +62,7 @@ export default class Life extends EventDispatcher {
     this.stage = 'death'
     this.stageStart = this.tick
 
-    this.setPet(true)
+    this.setPet()
   }
 
   evolve() {
@@ -70,10 +71,10 @@ export default class Life extends EventDispatcher {
     this.stage = stages.at(index + 1)
     this.stageStart = this.tick
 
-    this.setPet(true)
+    this.setPet()
   }
 
-  setPet(evolving) {
+  setPet() {
     this.previousPet = this.pet
 
     switch (this.stage) {
@@ -103,13 +104,14 @@ export default class Life extends EventDispatcher {
         break
     }
 
-    this.pet.addEventListener('ready', () => this.ready(evolving))
+    this.pet.addEventListener('ready', this.ready)
     this.loading = false
   }
 
-  ready = evolving => {
+  ready = () => {
     this.previousPet && this.previousPet.dispose && this.previousPet.dispose()
-    evolving && this.pet.evolveIn ? this.pet.evolveIn() : this.pet.idle()
+    this.evolving && this.pet.evolveIn ? this.pet.evolveIn() : this.pet.idle()
+    this.evolving = false
   }
 
   updateSeconds() {
@@ -121,7 +123,10 @@ export default class Life extends EventDispatcher {
 
     if (this.pause) return
 
-    this.tick === this.stageEnd && this.pet.evolveOut()
+    if (this.tick >= this.stageEnd && !this.evolving) {
+      this.pet.evolveOut()
+      this.evolving = true
+    }
 
     this.tick++
     this.stats.updateSeconds()
@@ -266,12 +271,15 @@ export default class Life extends EventDispatcher {
     this.debug.addBinding(this, 'model', { readonly: true })
 
     this.stats.setDebug(this.debug)
-
-    this.debug.addButton({ title: '🍔 eat meal' }).on('click', () => this.pet.eat && this.feedMeal()) //prettier-ignore
-    this.debug.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.feedSnack()) //prettier-ignore
-    this.debug.addButton({ title: '💩 mess' }).on('click', () => this.pet.mess && this.pet.mess())
-    this.debug.addButton({ title: '🚫 no' }).on('click', () => this.pet.no && this.pet.no())
-    this.debug.addButton({ title: '💀 kill' }).on('click', () => this.pet.death && this.pet.death())
     this.debug.addButton({ title: 'reset' }).on('click', this.reset)
+
+    const pane = new Pane({ title: 'ACTIONS' })
+    pane.element.parentElement.style.right = '366px'
+    pane.addButton({ title: '🍔 eat meal' }).on('click', () => this.pet.eat && this.feedMeal())
+    pane.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.feedSnack())
+    pane.addButton({ title: '💩 mess' }).on('click', () => this.pet.mess && this.pet.mess())
+    pane.addButton({ title: '🚿 flush' }).on('click', () => this.pet.flush && this.pet.flush())
+    pane.addButton({ title: '🚫 no' }).on('click', () => this.pet.no && this.pet.no())
+    pane.addButton({ title: '💀 kill' }).on('click', () => this.pet.death && this.pet.death())
   }
 }

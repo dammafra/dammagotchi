@@ -116,5 +116,6 @@ export default class Camera {
 
     this.controls.enabled = true
     this.controls.setLookAt(0, 0, 3, 0, 0, 0)
+    this.controls.setFocalOffset(0.5, 0, 0)
   }
 }
