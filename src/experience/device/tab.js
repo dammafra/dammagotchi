@@ -62,6 +62,7 @@ export default class Tab {
     const canvas = await getCanvasFrom(document.querySelector('#battery-tab'))
     const texture = new CanvasTexture(canvas)
 
+    this.circleMaterial.map?.dispose()
     this.circleMaterial.map = texture
     this.circleMaterial.needsUpdate = true
   }

@@ -11,8 +11,6 @@ export default class MenuMeter extends Menu {
     this.hungryMeter = this.hungrySection.querySelector('.meter')
     this.happySection = sections.at(1)
     this.happyMeter = this.happySection.querySelector('.meter')
-
-    this.setMeters()
   }
 
   show() {
@@ -20,10 +18,21 @@ export default class MenuMeter extends Menu {
     super.show()
   }
 
+  cycle() {
+    this.hungrySection.classList.toggle('hidden')
+    this.happySection.classList.toggle('hidden')
+
+    this.refreshMenu()
+  }
+
+  action() {
+    this.cycle()
+    return this
+  }
+
   setMeters() {
     this.setMeter(this.hungryMeter, this.life.stats.hungry)
     this.setMeter(this.happyMeter, this.life.stats.happy)
-    this.refreshMenu()
   }
 
   setMeter(meter, value) {
@@ -38,20 +47,8 @@ export default class MenuMeter extends Menu {
 
   icon(type) {
     const icon = document.createElement('img')
-    icon.src = `/sprites/ui/meter-${type}.png`
+    icon.src = `/sprites/ui/meter-${type}.webp`
     icon.style.width = icon.style.height = '48px'
     return icon
-  }
-
-  cycle() {
-    this.hungrySection.classList.toggle('hidden')
-    this.happySection.classList.toggle('hidden')
-
-    this.refreshMenu()
-  }
-
-  action() {
-    this.cycle()
-    return this
   }
 }

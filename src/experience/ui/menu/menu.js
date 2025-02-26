@@ -41,13 +41,13 @@ export default class Menu {
     this.mesh.visible = false
 
     this.scene.add(this.mesh)
-    this.refreshMenu()
   }
 
   async refreshMenu() {
     const canvas = await getCanvasFrom(this.element)
     const texture = new CanvasTexture(canvas)
 
+    this.material.map?.dispose()
     this.material.map = texture
     this.material.needsUpdate = true
   }
@@ -72,7 +72,6 @@ export default class Menu {
     this.previouslyBlank && this.screen.turnOff()
 
     this.reset()
-    this.refreshMenu()
   }
 
   cycle() {}
