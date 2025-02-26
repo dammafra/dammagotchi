@@ -102,6 +102,7 @@ export default class Experience {
     this.pointer.update()
     this.screen.update()
     this.device.update()
+    this.life.update()
   }
 
   updateSeconds = () => {

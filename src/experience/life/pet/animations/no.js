@@ -7,6 +7,8 @@ export default {
 
     const startedAt = this.tick
 
+    this.update = null
+
     this.updateSeconds = () => {
       if (this.tick === startedAt + 1) {
         no.mesh.rotation.y += Math.PI

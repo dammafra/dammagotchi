@@ -55,6 +55,7 @@ export default class Screen {
 
     const zeroCoordinate = this.unit / 2
     this.center = new Vector3(zeroCoordinate, zeroCoordinate, zeroCoordinate - this.size / 4)
+    this.bounds = { xMin: -2.3, xMax: 2.3, yMin: -0.8, yMax: 3.7 }
   }
 
   setGeometry() {
@@ -172,14 +173,14 @@ export default class Screen {
       new MeshBasicMaterial({ color: 'red' }),
     )
     coordHelper.visible = helper.visible
-    coordHelper.position.z = this.center.z - 0.001
+    coordHelper.position.z = this.center.z - 0.002
     this.scene.add(coordHelper)
 
     this.debug
       .addBinding(helper, 'visible', { label: 'helper' })
       .on('change', () => (coordHelper.visible = helper.visible))
-    this.debug.addBinding(coordHelper.position, 'x', { label: 'coord X', min:  -2.3, max: 2.3,  step: this.unit}) //prettier-ignore
-    this.debug.addBinding(coordHelper.position, 'y', { label: 'coord Y', min:  -0.8, max: 3.7,  step: this.unit}) //prettier-ignore
+    this.debug.addBinding(coordHelper.position, 'x', { label: 'coord X', min: this.bounds.xMin, max: this.bounds.xMax,  step: this.unit}) //prettier-ignore
+    this.debug.addBinding(coordHelper.position, 'y', { label: 'coord Y', min: this.bounds.yMin, max: this.bounds.yMax,  step: this.unit}) //prettier-ignore
 
     this.debug
       ?.addBinding(this.mesh.scale, 'x', { min: -1, max: 1, step: 0.001, label: 'scale' })

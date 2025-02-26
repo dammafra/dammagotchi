@@ -20,6 +20,8 @@ export default {
 
     this.life.showMess()
 
+    this.update = null
+
     this.updateSeconds = () => {
       // stats
       this.life.checkNeeds()
@@ -42,6 +44,9 @@ export default {
 
       idle2.copy(idle1)
       idle2.mesh.visible = !idle1.mesh.visible
+
+      // mess update
+      this.life.mess.forEach(m => m.updateSeconds())
     }
 
     this.dispose = () => {
@@ -66,6 +71,8 @@ export default {
 
     Soundboard.instance.play('happy')
 
+    this.update = null
+
     this.updateSeconds = () => {
       normal.mesh.visible = !normal.mesh.visible
       squeezed.mesh.visible = !squeezed.mesh.visible
@@ -85,6 +92,8 @@ export default {
 
     const startPositionY = 0.8
     death.mesh.position.y = startPositionY
+
+    this.update = null
 
     this.updateSeconds = () => {
       death.mesh.position.y +=

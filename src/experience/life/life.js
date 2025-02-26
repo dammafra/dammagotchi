@@ -114,6 +114,10 @@ export default class Life extends EventDispatcher {
     this.evolving = false
   }
 
+  update() {
+    this.pet && this.pet.update && this.pet.update()
+  }
+
   updateSeconds() {
     if (this.stage === 'death') {
       this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
@@ -133,7 +137,6 @@ export default class Life extends EventDispatcher {
     this.saveState()
 
     this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
-    this.mess.forEach(m => m.updateSeconds())
   }
 
   setModel() {

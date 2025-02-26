@@ -181,7 +181,7 @@ button.fab {
 
 /* menu */
 #html2canvas {
-  @apply fixed -z-20 left-0 size-[256px];
+  @apply fixed -z-20 -left-full size-[256px];
 }
 
 #html2canvas > * {
@@ -189,7 +189,7 @@ button.fab {
 }
 
 #html2canvas:has(.debug) {
-  @apply !z-30 bg-white;
+  @apply !z-30 !left-0 bg-white;
 }
 
 #html2canvas:has(.debug) > div:not(.debug) {

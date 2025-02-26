@@ -19,6 +19,8 @@ export default {
 
     const startedAt = this.tick
 
+    this.update = null
+
     this.updateSeconds = () => {
       if (this.tick < startedAt + 20) {
         const direction = this.tick % 2 ? -1 : 1

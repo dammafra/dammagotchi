@@ -1,6 +1,7 @@
 import Experience from '@experience'
 import Countdown from './countdown'
 import Icons from './icons'
+import MenuDuck from './menu/menu-duck'
 import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
 import MenuMeter from './menu/menu-meter'
@@ -14,7 +15,15 @@ export default class UI {
     this.life = this.experience.life
 
     this.icons = new Icons()
-    this.menus = [new MenuFeed(), new MenuLight(), null, null, null, new MenuMeter(), null]
+    this.menus = [
+      new MenuFeed(),
+      new MenuLight(),
+      null,
+      null,
+      new MenuDuck(),
+      new MenuMeter(),
+      null,
+    ]
 
     this.selectedMenu = this.menus.find(m => m?.debug)
     this.resetTimeout = null

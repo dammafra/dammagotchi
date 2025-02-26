@@ -12,6 +12,8 @@ export default {
     const startedAt = this.tick
     const transitionDuration = lifeConfig.transitions.evolution
 
+    this.update = null
+
     this.updateSeconds = () => {
       if (this.tick === startedAt + transitionDuration) {
         this.idle()
@@ -32,6 +34,8 @@ export default {
 
     const startedAt = this.tick
     const transitionDuration = lifeConfig.transitions.evolution
+
+    this.update = null
 
     this.updateSeconds = () => {
       if (this.tick === startedAt + transitionDuration) {

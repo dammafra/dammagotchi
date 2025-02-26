@@ -15,6 +15,8 @@ export default {
     const startedAt = this.tick
     const transitionDuration = lifeConfig.transitions.death
 
+    this.update = null
+
     this.updateSeconds = () => {
       if (this.tick === startedAt + transitionDuration) {
         this.life.end()

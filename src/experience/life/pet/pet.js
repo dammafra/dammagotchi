@@ -5,6 +5,7 @@ import death from './animations/death'
 import eat from './animations/eat'
 import evolveIn from './animations/evolve-in'
 import evolveOut from './animations/evolve-out'
+import flush from './animations/flush'
 import idle from './animations/idle'
 import mess from './animations/mess'
 import no from './animations/no'
@@ -43,6 +44,7 @@ export default class Pet extends EventDispatcher {
 
     this.eat = eat.default
     this.mess = mess.default
+    this.flush = flush.default
 
     this.no = no.default
     this.death = death.default

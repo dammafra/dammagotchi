@@ -12,6 +12,7 @@ export default class Egg extends Pet {
 
     this.eat = null
     this.mess = null
+    this.flush = null
 
     this.no = null
     this.death = null
