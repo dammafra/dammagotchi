@@ -1,3 +1,4 @@
+import Sprites from '@utils/sprites'
 import { Scene } from 'three'
 import Camera from './camera'
 import sourcesConfig from './config/resources'
@@ -63,6 +64,7 @@ export default class Experience {
 
       import('./utils/debug.js').then(({ default: Debug }) => {
         this.debug = new Debug()
+        Sprites.setDebug(this.debug)
 
         for (const [key, value] of Object.entries(this)) {
           value.setDebug && value.setDebug(this.debug)

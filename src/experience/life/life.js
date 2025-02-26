@@ -276,7 +276,9 @@ export default class Life extends EventDispatcher {
     this.stats.setDebug(this.debug)
     this.scheduler.setDebug(this.debug)
 
-    this.debug.addButton({ title: '👉 mess' }).on('click', () => this.pet.mess())
+    this.debug
+      .addButton({ title: '👉 mess' })
+      .on('click', () => !['egg', 'death'].includes(this.stage) && this.pet.mess())
     this.debug.addButton({ title: 'reset' }).on('click', this.reset)
   }
 }

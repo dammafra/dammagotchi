@@ -111,7 +111,7 @@ export default {
   food: [],
   items: [],
   misc: [
-    { name: 'toilets', index: 0, split: 3 },
+    { name: 'toilet', index: 0, split: 3 },
     { name: 'mess', index: 1, split: 2 },
     { name: 'happy', index: 2 },
     { name: 'illnesses', index: 3, split: 3 },

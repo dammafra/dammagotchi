@@ -9,8 +9,8 @@ export default {
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
     eyesClosed.spawn()
 
-    const effort1 = Misc.instance.get('effort').at(0)
-    const effort2 = effort1.clone()
+    const effort1 = Misc.instance.getEffort()
+    const effort2 = Misc.instance.getEffort()
     effort1.spawn()
     effort2.spawn()
     effort1.mesh.position.set(-1.5, 0.5)

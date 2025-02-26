@@ -14,10 +14,7 @@ export default class Mess {
     this.experience = Experience.instance
     this.screen = this.experience.screen
 
-    this.sprite = Misc.instance
-      .get('mess')
-      .at(['babies', 'children'].includes(this.pet.stage) ? 0 : 1)
-      .clone()
+    this.sprite = Misc.instance.getMess(this.pet.stage)
 
     this.sprite.spawn()
     this.sprite.mesh.rotation.y = Math.PI * (this.tick % 2)

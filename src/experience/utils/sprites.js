@@ -1,5 +1,4 @@
 import spritesConfig from '@config/sprites'
-import Experience from '@experience'
 import Sprite from '@screen/sprite'
 import { EventDispatcher } from 'three'
 import { areColorsNear, rgbToHex } from './colors'
@@ -8,6 +7,7 @@ export default class Sprites extends EventDispatcher {
   /** @type {Map<string, Sprites>} */
   static instances = new Map()
   static delimiter = '#A616D3'
+  static print = false
 
   static for(sprite) {
     if (Sprites.instances.has(sprite)) {
@@ -22,8 +22,6 @@ export default class Sprites extends EventDispatcher {
     super()
 
     Sprites.instances.set(sprite, this)
-
-    this.experience = Experience.instance
 
     this.loaded = new Map()
     this.img = new Image()
@@ -159,7 +157,7 @@ export default class Sprites extends EventDispatcher {
 
       subMatrix = this.reduce(subMatrix)
 
-      if (this.experience.debug) {
+      if (Sprites.print) {
         this.print(subMatrix)
       }
 
@@ -209,5 +207,9 @@ export default class Sprites extends EventDispatcher {
 
     const count = matrix.reduce((count, row) => count + row.filter(Boolean).length, 0)
     console.log(`Will be rendered using ${count} meshes`)
+  }
+
+  static setDebug(debug) {
+    debug.gui.addBinding(Sprites, 'print', { label: 'print sprites' })
   }
 }

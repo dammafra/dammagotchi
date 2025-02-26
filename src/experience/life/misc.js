@@ -21,4 +21,27 @@ export default class Misc {
   get(sprite) {
     return this.sprites.get(sprite)
   }
+
+  getEffort() {
+    return this.sprites.get('effort').at(0).clone()
+  }
+
+  getMess(stage) {
+    return this.sprites
+      .get('mess')
+      .at(['babies', 'children'].includes(stage) ? 0 : 1)
+      .clone()
+  }
+
+  getToilet(stage) {
+    return this.sprites.get('toilet').at(['babies', 'children'].includes(stage) ? 0 : 1)
+  }
+
+  getToilet(stage) {
+    return this.sprites.get('toilet').at(['babies', 'children'].includes(stage) ? 0 : 1)
+  }
+
+  getFlush() {
+    return this.sprites.get('toilet').at(2)
+  }
 }
