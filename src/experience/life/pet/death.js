@@ -13,6 +13,7 @@ export default class Death extends Pet {
     this.mess = null
     this.flush = null
 
+    this.happy = null
     this.no = null
     this.death = null
   }

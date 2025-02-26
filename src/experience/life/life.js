@@ -282,6 +282,7 @@ export default class Life extends EventDispatcher {
     pane.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.feedSnack())
     pane.addButton({ title: '💩 mess' }).on('click', () => this.pet.mess && this.pet.mess())
     pane.addButton({ title: '🚿 flush' }).on('click', () => this.pet.flush && this.pet.flush())
+    pane.addButton({ title: '☀️ happy' }).on('click', () => this.pet.happy && this.pet.happy())
     pane.addButton({ title: '🚫 no' }).on('click', () => this.pet.no && this.pet.no())
     pane.addButton({ title: '💀 kill' }).on('click', () => this.pet.death && this.pet.death())
   }

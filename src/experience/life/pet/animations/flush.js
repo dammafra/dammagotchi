@@ -17,11 +17,11 @@ export default {
 
     this.life.showMess()
 
-    const endPositionX = -(this.screen.bounds.xMax - this.screen.bounds.xMin) - flush.width * this.screen.unit //prettier-ignore
+    const endPositionX = -(this.screen.bounds.xMax - this.screen.bounds.xMin) - flush.width * this.screen.unit - 1 //prettier-ignore
 
     this.update = () => {
       if (this.life.group.position.x <= endPositionX) {
-        this.idle()
+        this.stats.mess ? this.happy() : this.idle()
         return
       }
 

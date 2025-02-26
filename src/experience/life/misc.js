@@ -22,6 +22,10 @@ export default class Misc {
     return this.sprites.get(sprite)
   }
 
+  getHappy() {
+    return this.sprites.get('happy').at(0)
+  }
+
   getEffort() {
     return this.sprites.get('effort').at(0).clone()
   }
