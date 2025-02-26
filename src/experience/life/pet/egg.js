@@ -9,5 +9,11 @@ export default class Egg extends Pet {
     this.evolveIn = null
     this.evolveOut = evolveOut.egg
     this.idle = idle.egg
+
+    this.eat = null
+    this.mess = null
+
+    this.no = null
+    this.death = null
   }
 }

@@ -5,12 +5,9 @@ export default {
     messGenerationRate: 100,
   },
   transitions: {
-    egg: { out: 6 },
-    babies: { in: 4, out: 4 },
-    children: { in: 4, out: 4 },
-    teenagers: { in: 4, out: 4 },
-    adults: { in: 4, out: 4 },
-    seniors: { in: 4, out: 14 },
+    hatching: 6,
+    evolution: 4,
+    death: 14,
   },
   stages: {
     egg: 15,

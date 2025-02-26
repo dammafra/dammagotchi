@@ -1,6 +1,7 @@
 import Experience from '@experience'
 import Sprites from '@utils/sprites'
 import { EventDispatcher } from 'three'
+import death from './animations/death'
 import eat from './animations/eat'
 import evolveIn from './animations/evolve-in'
 import evolveOut from './animations/evolve-out'
@@ -39,8 +40,11 @@ export default class Pet extends EventDispatcher {
     this.evolveIn = evolveIn.default
     this.evolveOut = evolveOut.default
     this.idle = idle.default
-    this.no = no.default
+
     this.eat = eat.default
     this.mess = mess.default
+
+    this.no = no.default
+    this.death = death.default
   }
 }

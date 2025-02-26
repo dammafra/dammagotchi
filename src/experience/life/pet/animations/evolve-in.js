@@ -7,18 +7,20 @@ export default {
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
 
+    this.screen.setFlicker(true)
+
     const startedAt = this.tick
-    const transitionDuration = lifeConfig.transitions[this.stage].in
+    const transitionDuration = lifeConfig.transitions.evolution
 
     this.updateSeconds = () => {
       if (this.tick === startedAt + transitionDuration) {
         this.idle()
-        this.screen.setFlicker(false)
       }
     }
 
     this.dispose = () => {
       idle1.dispose()
+      this.screen.setFlicker(false)
     }
   },
 
@@ -29,7 +31,7 @@ export default {
     hatching.spawn()
 
     const startedAt = this.tick
-    const transitionDuration = lifeConfig.transitions[this.stage].in
+    const transitionDuration = lifeConfig.transitions.evolution
 
     this.updateSeconds = () => {
       if (this.tick === startedAt + transitionDuration) {

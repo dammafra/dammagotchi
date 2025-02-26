@@ -57,6 +57,22 @@ export default class Life extends EventDispatcher {
     this.setPet()
   }
 
+  end() {
+    this.stage = 'death'
+    this.stageStart = this.tick
+
+    this.setPet(true)
+  }
+
+  evolve() {
+    const stages = Object.keys(lifeConfig.stages)
+    const index = stages.findIndex(s => s == this.stage)
+    this.stage = stages.at(index + 1)
+    this.stageStart = this.tick
+
+    this.setPet(true)
+  }
+
   setPet(evolving) {
     this.previousPet = this.pet
 
@@ -96,18 +112,10 @@ export default class Life extends EventDispatcher {
     evolving && this.pet.evolveIn ? this.pet.evolveIn() : this.pet.idle()
   }
 
-  evolve() {
-    const stages = Object.keys(lifeConfig.stages)
-    const index = stages.findIndex(s => s == this.stage)
-    this.stage = stages.at(index + 1)
-    this.stageStart = this.tick
-
-    this.setPet(true)
-  }
-
   updateSeconds() {
     if (this.stage === 'death') {
-      this.pet.updateSeconds()
+      this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
+      this.saveState()
       return
     }
 
@@ -119,7 +127,7 @@ export default class Life extends EventDispatcher {
     this.stats.updateSeconds()
     this.saveState()
 
-    if (this.pet && this.pet.updateSeconds) this.pet.updateSeconds()
+    this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
     this.mess.forEach(m => m.updateSeconds())
   }
 
@@ -259,9 +267,11 @@ export default class Life extends EventDispatcher {
 
     this.stats.setDebug(this.debug)
 
-    this.debug
-      .addButton({ title: '👉 mess' })
-      .on('click', () => !['egg', 'death'].includes(this.stage) && this.pet.mess())
+    this.debug.addButton({ title: '🍔 eat meal' }).on('click', () => this.pet.eat && this.feedMeal()) //prettier-ignore
+    this.debug.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.feedSnack()) //prettier-ignore
+    this.debug.addButton({ title: '💩 mess' }).on('click', () => this.pet.mess && this.pet.mess())
+    this.debug.addButton({ title: '🚫 no' }).on('click', () => this.pet.no && this.pet.no())
+    this.debug.addButton({ title: '💀 kill' }).on('click', () => this.pet.death && this.pet.death())
     this.debug.addButton({ title: 'reset' }).on('click', this.reset)
   }
 }
