@@ -1,3 +1,4 @@
+import lifeConfig from '@config/life'
 import { Soundboard } from '@ui/soundboard'
 
 export default {
@@ -8,8 +9,17 @@ export default {
     idle1.spawn()
 
     Soundboard.instance.play('evolution')
+    this.screen.setFlicker(true)
+    this.life.dispatchEvent({ type: 'evolve-out' })
 
-    this.updateSeconds = null
+    const startedAt = this.tick
+    const transitionDuration = lifeConfig.transitions[this.stage].out
+
+    this.updateSeconds = () => {
+      if (this.tick === startedAt + transitionDuration) {
+        this.life.evolve()
+      }
+    }
 
     this.dispose = () => {
       idle1.dispose()
@@ -21,11 +31,19 @@ export default {
 
     const hatching = this.sprites.get('egg').at(0)
     hatching.spawn()
-    hatching.mesh.visible = true
 
     Soundboard.instance.play('hatching')
+    this.life.dispatchEvent({ type: 'evolve-out' })
+
+    const startedAt = this.tick
+    const transitionDuration = lifeConfig.transitions[this.stage].out
 
     this.updateSeconds = () => {
+      if (this.tick === startedAt + transitionDuration) {
+        this.life.evolve()
+        return
+      }
+
       hatching.mesh.position.x +=
         hatching.mesh.position.x < 0 ? this.screen.unit : -this.screen.unit
     }
@@ -41,13 +59,19 @@ export default {
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
     eyesClosed.spawn()
 
-    const startedAt = this.tick
-
     Soundboard.instance.play('death')
-
     this.life.disposeMess()
+    this.life.dispatchEvent({ type: 'evolve-out' })
+
+    const startedAt = this.tick
+    const transitionDuration = lifeConfig.transitions[this.stage].out
 
     this.updateSeconds = () => {
+      if (this.tick === startedAt + transitionDuration) {
+        this.life.evolve()
+        return
+      }
+
       if (this.tick > startedAt + 3) {
         eyesClosed.mesh.position.y += this.screen.unit * 4
       }

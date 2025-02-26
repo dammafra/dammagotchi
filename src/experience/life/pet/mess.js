@@ -3,7 +3,7 @@ import Misc from '@life/misc'
 
 export default class Mess {
   get tick() {
-    return this.experience.life.scheduler.tick
+    return this.experience.life.tick
   }
 
   get pet() {

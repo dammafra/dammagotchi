@@ -6,12 +6,11 @@ import { EventDispatcher } from 'camera-controls'
 export default class Stats extends EventDispatcher {
   static debugName = '📊 stats'
 
-  constructor(life, scheduler) {
+  constructor(life) {
     super()
 
     this.experience = Experience.instance
     this.life = life
-    this.scheduler = scheduler
 
     const state = this.loadState()
     this.age = state.age

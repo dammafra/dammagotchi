@@ -11,11 +11,15 @@ import Egg from './pet/egg'
 import Mess from './pet/mess'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
-import Scheduler from './scheduler'
 import Stats from './stats'
 
 export default class Life extends EventDispatcher {
   static debugName = '📊 life'
+
+  get stageEnd() {
+    const stageDuration = lifeConfig.stages[this.stage]
+    return this.stageStart + stageDuration
+  }
 
   constructor() {
     super()
@@ -30,8 +34,8 @@ export default class Life extends EventDispatcher {
     this.model = state.model
 
     this.pause = true
-    this.scheduler = new Scheduler()
-    this.stats = new Stats(this, this.scheduler)
+    this.tick = state.tick
+    this.stats = new Stats(this)
 
     this.mess = []
 
@@ -89,53 +93,29 @@ export default class Life extends EventDispatcher {
 
   ready = evolving => {
     this.previousPet && this.previousPet.dispose && this.previousPet.dispose()
-
-    if (evolving && this.pet.evolveIn) {
-      this.pet.evolveIn()
-      const transitionDuration = lifeConfig.transitions[this.stage].in
-      this.scheduler.scheduleIn(transitionDuration, this.startStage, `start ${this.stage} stage`)
-    } else {
-      this.startStage()
-    }
+    evolving && this.pet.evolveIn ? this.pet.evolveIn() : this.pet.idle()
   }
 
-  startStage = () => {
-    this.pet.idle()
-
-    if (this.stage !== 'death') {
-      const stageDuration = lifeConfig.stages[this.stage]
-      this.scheduler.scheduleAt(this.stageStart + stageDuration, this.evolveOut, 'evolve out')
-    }
-
-    this.experience.screen.setFlicker(false)
-  }
-
-  evolveOut = () => {
-    this.experience.screen.setFlicker(this.stage !== 'egg' && this.stage !== 'seniors')
-    this.dispatchEvent({ type: 'evolve-out' })
-
-    if (this.pet.evolveOut) {
-      this.pet.evolveOut()
-      const transitionDuration = lifeConfig.transitions[this.stage].out
-      this.scheduler.scheduleIn(transitionDuration, this.evolveIn, 'evolve in')
-    } else {
-      this.evolveIn()
-    }
-  }
-
-  evolveIn = () => {
+  evolve() {
     const stages = Object.keys(lifeConfig.stages)
     const index = stages.findIndex(s => s == this.stage)
     this.stage = stages.at(index + 1)
-    this.stageStart = this.scheduler.tick
+    this.stageStart = this.tick
 
     this.setPet(true)
   }
 
   updateSeconds() {
-    if (this.pause || this.stage === 'death') return
+    if (this.stage === 'death') {
+      this.pet.updateSeconds()
+      return
+    }
 
-    this.scheduler.updateSeconds()
+    if (this.pause) return
+
+    this.tick === this.stageEnd && this.pet.evolveOut()
+
+    this.tick++
     this.stats.updateSeconds()
     this.saveState()
 
@@ -220,6 +200,7 @@ export default class Life extends EventDispatcher {
   saveState() {
     const state = {
       started: this.started,
+      tick: this.tick,
       stageStart: this.stageStart,
       stage: this.stage,
       model: this.model,
@@ -235,6 +216,7 @@ export default class Life extends EventDispatcher {
     } else {
       return {
         started: false,
+        tick: 0,
         stageStart: 0,
         stage: 'egg',
         model: '',
@@ -244,13 +226,13 @@ export default class Life extends EventDispatcher {
 
   reset = () => {
     this.started = false
+    this.tick = 0
     this.stageStart = 0
     this.stage = 'egg'
     this.model = ''
 
     this.disposeMess()
 
-    this.scheduler.reset()
     this.stats.reset()
 
     this.start()
@@ -269,12 +251,13 @@ export default class Life extends EventDispatcher {
     this.debug = debug.gui.addFolder({ title: Life.debugName })
 
     this.debug.addBinding(this, 'pause')
+    this.debug.addBinding(this, 'tick', { readonly: true })
     this.debug.addBinding(this, 'stageStart', { readonly: true })
+    this.debug.addBinding(this, 'stageEnd', { readonly: true })
     this.debug.addBinding(this, 'stage', { readonly: true })
     this.debug.addBinding(this, 'model', { readonly: true })
 
     this.stats.setDebug(this.debug)
-    this.scheduler.setDebug(this.debug)
 
     this.debug
       .addButton({ title: '👉 mess' })

@@ -18,7 +18,7 @@ export default class Pet extends EventDispatcher {
   }
 
   get tick() {
-    return this.experience.life.scheduler.tick
+    return this.experience.life.tick
   }
 
   constructor(stage, model) {

@@ -1,3 +1,5 @@
+import lifeConfig from '@config/life'
+
 export default {
   default() {
     this.dispose && this.dispose()
@@ -5,7 +7,15 @@ export default {
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
 
-    this.updateSeconds = null
+    const startedAt = this.tick
+    const transitionDuration = lifeConfig.transitions[this.stage].in
+
+    this.updateSeconds = () => {
+      if (this.tick === startedAt + transitionDuration) {
+        this.idle()
+        this.screen.setFlicker(false)
+      }
+    }
 
     this.dispose = () => {
       idle1.dispose()
@@ -18,7 +28,14 @@ export default {
     const hatching = this.sprites.get('hatching').at(0)
     hatching.spawn()
 
-    this.updateSeconds = null
+    const startedAt = this.tick
+    const transitionDuration = lifeConfig.transitions[this.stage].in
+
+    this.updateSeconds = () => {
+      if (this.tick === startedAt + transitionDuration) {
+        this.idle()
+      }
+    }
 
     this.dispose = () => {
       hatching.dispose()
