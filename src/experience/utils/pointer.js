@@ -58,16 +58,17 @@ export default class Pointer {
 
     const callback = this.clickableObjects.get(this.currentIntersect)
     if (this.#enabled && callback && callback.start) {
-      callback.start()
+      this.currentClicked = this.currentIntersect
       this.camera.controls.enabled = false
+      callback.start()
     }
   }
 
   mouseup = () => {
-    const callback = this.clickableObjects.get(this.currentIntersect)
+    const callback = this.clickableObjects.get(this.currentClicked)
     if (this.#enabled && callback && callback.end) {
-      callback.end()
       this.camera.controls.enabled = true
+      callback.end()
     }
   }
 
