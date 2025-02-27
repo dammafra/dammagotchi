@@ -36,6 +36,7 @@ export default {
       flush.dispose()
       this.life.disposeMess()
       this.life.group.position.x = 0
+      this.life.sickness.hide()
     }
   },
 }
