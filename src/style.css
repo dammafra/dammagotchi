@@ -3,12 +3,12 @@
 /* tailwind config */
 @import 'tailwindcss';
 
-@font-face {
-  font-family: 'Kablammo';
-  src: url('/fonts/kablammo.ttf') format('truetype');
-  font-weight: normal;
+@utility font-kablammo {
+  font-family: 'Kablammo', serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-variation-settings: 'MORF' 0;
 }
 
 @font-face {

@@ -57,7 +57,7 @@ export default class Experience {
     this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
     this.time.addEventListener('tick-seconds', this.updateSeconds)
-    this.resources.addEventListener('ready', this.readyResources)
+    this.resources.addEventListener('ready', this.ready)
 
     if (window.location.hash === '#debug' || document.querySelector('.debug')) {
       this.debug = true
@@ -80,13 +80,14 @@ export default class Experience {
     this.renderer.resize()
   }
 
-  readyResources = async () => {
+  ready = async () => {
     this.resources.removeEventListener('ready', this.ready)
 
     this.environment.ready()
     this.screen.ready()
     this.ui.ready()
     this.loading.ready()
+    this.resourcesReady = true
 
     if (!this.debug) {
       await this.camera.intro()
@@ -99,6 +100,9 @@ export default class Experience {
     this.loading.update()
     this.camera.update()
     this.renderer.update()
+
+    if (!this.resourcesReady) return
+
     this.pointer.update()
     this.screen.update()
     this.device.update()
@@ -106,6 +110,7 @@ export default class Experience {
   }
 
   updateSeconds = () => {
+    if (!this.resourcesReady) return
     this.life.updateSeconds()
   }
 

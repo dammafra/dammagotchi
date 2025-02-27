@@ -25,7 +25,7 @@ export default {
         return
       }
 
-      this.life.group.position.x -= this.screen.unit * this.time.delta * 30
+      this.life.group.position.x -= this.screen.unit * this.time.delta * 30 * this.time.speedSetting
     }
 
     this.updateSeconds = null

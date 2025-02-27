@@ -8,7 +8,6 @@ export default class Shell {
 
   constructor({ girth, apex, scale }) {
     this.experience = Experience.instance
-    this.resources = this.experience.resources
 
     this.girth = girth
     this.apex = apex

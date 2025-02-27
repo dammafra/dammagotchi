@@ -112,6 +112,7 @@ export default class Life extends EventDispatcher {
     this.previousPet && this.previousPet.dispose && this.previousPet.dispose()
     this.evolving && this.pet.evolveIn ? this.pet.evolveIn() : this.pet.idle()
     this.evolving = false
+    this.petReady = true
   }
 
   update() {
@@ -119,6 +120,8 @@ export default class Life extends EventDispatcher {
   }
 
   updateSeconds() {
+    if (!this.petReady) return
+
     if (this.stage === 'death') {
       this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
       this.saveState()
