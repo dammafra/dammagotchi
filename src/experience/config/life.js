@@ -4,6 +4,7 @@ export default {
     happyDecayRate: 200,
     messGenerationRate: 100,
     sicknessRate: 150,
+    badRate: 200,
   },
   transitions: {
     hatching: 6,

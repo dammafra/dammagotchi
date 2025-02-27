@@ -28,13 +28,14 @@ export class Soundboard {
 
   async loadSounds() {
     const soundFiles = {
-      'time-speed': 'sounds/time-speed.mp3',
-      button: 'sounds/button.mp3',
-      hatching: 'sounds/hatching.mp3',
-      death: 'sounds/death.mp3',
-      happy: 'sounds/happy.mp3',
       attention: 'sounds/attention.mp3',
+      button: 'sounds/button.mp3',
+      death: 'sounds/death.mp3',
+      discipline: 'sounds/discipline.mp3',
       evolution: 'sounds/evolution.mp3',
+      happy: 'sounds/happy.mp3',
+      hatching: 'sounds/hatching.mp3',
+      'time-speed': 'sounds/time-speed.mp3',
     }
 
     const promises = Object.entries(soundFiles).map(async ([key, url]) => {

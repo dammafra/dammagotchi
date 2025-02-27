@@ -20,6 +20,7 @@ export default class Stats extends EventDispatcher {
     this.happy = state.happy
     this.mess = state.mess
     this.sick = state.sick
+    this.bad = state.bad
   }
 
   updateSeconds() {
@@ -29,6 +30,7 @@ export default class Stats extends EventDispatcher {
     Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
     Random.runOneIn(this.addMess, lifeConfig.stats.messGenerationRate)
     Random.runOneIn(this.setSick, lifeConfig.stats.sicknessRate)
+    Random.runOneIn(this.setBad, lifeConfig.stats.badRate)
 
     this.saveState()
     this.checkNeeds()
@@ -50,6 +52,11 @@ export default class Stats extends EventDispatcher {
       return
     }
 
+    if (this.bad) {
+      this.life.dispatchEvent({ type: 'notify' })
+      return
+    }
+
     this.life.dispatchEvent({ type: 'resolve' })
   }
 
@@ -64,6 +71,10 @@ export default class Stats extends EventDispatcher {
     if (!this.sick) this.sick = true
   }
 
+  setBad = () => {
+    if (!this.bad) this.bad = true
+  }
+
   saveState() {
     const state = {
       age: this.age,
@@ -73,6 +84,7 @@ export default class Stats extends EventDispatcher {
       happy: this.happy,
       mess: this.mess,
       sick: this.sick,
+      bad: this.bad,
     }
     localStorage.setItem('stats', JSON.stringify(state))
   }
@@ -90,6 +102,7 @@ export default class Stats extends EventDispatcher {
         happy: 0,
         mess: 0,
         sick: false,
+        bad: false,
       }
     }
   }
@@ -102,6 +115,7 @@ export default class Stats extends EventDispatcher {
     this.happy = 0
     this.mess = 0
     this.sick = false
+    this.bad = false
     this.saveState()
   }
 
@@ -116,5 +130,6 @@ export default class Stats extends EventDispatcher {
     debug.addBinding(this, 'happy', { readonly: true, label: '🍬 happy' })
     debug.addBinding(this, 'mess', { readonly: true, label: '💩 mess' })
     debug.addBinding(this, 'sick', { readonly: true, label: '💉 sick' })
+    debug.addBinding(this, 'bad', { readonly: true, label: '😈 bad' })
   }
 }

@@ -1,6 +1,7 @@
 import Experience from '@experience'
 import Countdown from './countdown'
 import Icons from './icons'
+import MenuDiscipline from './menu/menu-discipline'
 import MenuDuck from './menu/menu-duck'
 import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
@@ -23,7 +24,7 @@ export default class UI {
       new MenuMedicine(),
       new MenuDuck(),
       new MenuMeter(),
-      null,
+      new MenuDiscipline(),
     ]
 
     this.selectedMenu = this.menus.find(m => m?.debug)

@@ -12,7 +12,7 @@ export default {
 
     const flush = Misc.instance.getFlush()
     flush.spawn()
-    flush.mesh.scale.y = 0.95
+    flush.mesh.scale.y = 0.9
     flush.mesh.position.x = this.screen.bounds.xMax + (flush.width * this.screen.unit) / 2
 
     let sickness

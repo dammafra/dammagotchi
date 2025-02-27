@@ -35,7 +35,7 @@ export default class MenuFeed extends Menu {
   }
 
   feedMeal() {
-    if (this.life.stats.hungry < 4) {
+    if (this.life.stats.hungry < 4 && !this.life.stats.bad) {
       this.life.stats.hungry++
       this.life.stats.weight++
       this.life.pet.eat(Food.MEAL)
