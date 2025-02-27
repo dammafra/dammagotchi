@@ -18,12 +18,13 @@ export default class Misc {
     this.sprites = Sprites.for('misc')
   }
 
-  get(sprite) {
-    return this.sprites.get(sprite)
-  }
-
   getHappy() {
     return this.sprites.get('happy').at(0)
+  }
+
+  getUpset() {
+    const [upset1, _, upset2] = this.sprites.get('upset')
+    return [upset1, upset2]
   }
 
   getEffort() {

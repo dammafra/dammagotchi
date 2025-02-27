@@ -11,6 +11,7 @@ import idle from './animations/idle'
 import mess from './animations/mess'
 import no from './animations/no'
 import toilet from './animations/toilet'
+import upset from './animations/upset'
 
 export default class Pet extends EventDispatcher {
   get life() {
@@ -52,6 +53,7 @@ export default class Pet extends EventDispatcher {
     this.toilet = toilet.default
 
     this.happy = happy.default
+    this.upset = upset.default
     this.no = no.default
     this.death = death.default
   }
