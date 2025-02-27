@@ -35,7 +35,7 @@ export default class Life extends EventDispatcher {
     this.stage = state.stage
     this.model = state.model
 
-    this.pause = true
+    this.pause = false
     this.tick = state.tick
     this.stats = new Stats(this)
 
@@ -55,8 +55,6 @@ export default class Life extends EventDispatcher {
     Misc.init().sprites.addEventListener('ready', this.initMisc)
 
     this.started = true
-    this.pause = false
-
     this.setPet()
   }
 
@@ -240,10 +238,12 @@ export default class Life extends EventDispatcher {
 
   show() {
     this.group.visible = true
+    this.pause = false
   }
 
   hide() {
     this.group.visible = false
+    this.pause = true
   }
 
   setDebug(debug) {

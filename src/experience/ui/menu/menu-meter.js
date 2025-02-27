@@ -2,7 +2,7 @@ import Menu from './menu'
 
 export default class MenuMeter extends Menu {
   constructor() {
-    super(document.getElementById('menu-meter'))
+    super(document.getElementById('menu-meter'), false)
 
     this.hasOptions = true
 

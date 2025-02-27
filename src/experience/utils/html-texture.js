@@ -5,11 +5,11 @@ export default class HTMLTexture {
   /** @type {Map<string, CanvasTexture>} */
   static textures = new Map()
 
-  static async from(element) {
+  static async from(element, useCache = true) {
     const hash = HTMLTexture.getHash(element)
 
     const existing = HTMLTexture.textures.get(hash)
-    if (existing) return existing
+    if (useCache && existing) return existing
 
     const texture = await html2canvas(element, {
       ignoreElements: el =>

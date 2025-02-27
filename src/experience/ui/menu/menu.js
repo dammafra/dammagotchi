@@ -3,13 +3,14 @@ import HTMLTexture from '@utils/html-texture'
 import { Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
 
 export default class Menu {
-  constructor(element) {
+  constructor(element, useCache) {
     this.experience = Experience.instance
     this.life = this.experience.life
     this.screen = this.experience.screen
     this.scene = this.screen.scene
 
     this.element = element
+    this.useCache = useCache
     this.hasOptions = false
 
     if (this.element) {
@@ -20,7 +21,6 @@ export default class Menu {
       this.debug = this.element.classList.contains('debug')
       if (this.debug) {
         this.show()
-        this.life.pause = true
         this.life.pet.canInteract = true
       }
     }
@@ -44,7 +44,7 @@ export default class Menu {
   }
 
   async refreshMenu() {
-    const texture = await HTMLTexture.from(this.element)
+    const texture = await HTMLTexture.from(this.element, this.useCache)
 
     this.material.map = texture
     this.material.needsUpdate = true
