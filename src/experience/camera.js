@@ -56,22 +56,6 @@ export default class Camera {
     this.controls.maxDistance = 10
     this.controls.truckSpeed = 0
     this.controls.restThreshold = 0.25
-
-    // this.controls.addEventListener('controlstart', () => {
-    //   this.controls.removeEventListener('rest', onRest)
-    //   this.userDragging = true
-    //   this.disableAutoRotate = true
-    // })
-
-    // this.controls.addEventListener('controlend', () =>
-    //   this.controls.active ? this.controls.addEventListener('rest', onRest) : onRest(),
-    // )
-
-    // const onRest = () => {
-    //   this.controls.removeEventListener('rest', onRest)
-    //   this.userDragging = false
-    //   this.disableAutoRotate = false
-    // }
   }
 
   resize() {
@@ -83,10 +67,6 @@ export default class Camera {
 
   update() {
     this.controls.update(this.time.delta)
-
-    // if (this.autoRotate && !this.disableAutoRotate) {
-    //   this.controls.azimuthAngle += 20 * this.time.delta * 0.3 * MathUtils.DEG2RAD
-    // }
   }
 
   distanceTo(position) {
@@ -100,10 +80,6 @@ export default class Camera {
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
     this.controls.enabled = true
   }
-
-  // setAutoRotate(value) {
-  //   this.autoRotate = value
-  // }
 
   setDebug(debug) {
     this.debug = debug.gui.addFolder({ title: Camera.debugName, expanded: false })

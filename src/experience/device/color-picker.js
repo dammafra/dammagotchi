@@ -81,14 +81,16 @@ export default class ColorPicker {
     this.camera.intro(0.5)
 
     if (this.visible) {
-      this.sizes.aspectRatio < 1 && this.camera.controls.dollyTo(5, true)
-      this.sizes.aspectRatio < 1
-        ? await this.camera.controls.setFocalOffset(0, 0.7, 0, true)
-        : await this.camera.controls.setFocalOffset(-0.8, 0, 0, true)
-      // this.camera.setAutoRotate(true)
+      if (this.sizes.aspectRatio < 1) {
+        this.camera.controls.dollyTo(5, true)
+        this.camera.controls.setFocalOffset(0, 0.7, 0, true)
+        this.camera.controls.rotatePolarTo(Math.PI * 0.4, true)
+      } else {
+        this.camera.controls.setFocalOffset(-0.8, 0, 0, true)
+        this.camera.controls.rotateAzimuthTo(Math.PI * 0.1, true)
+      }
     } else {
       this.camera.controls.setFocalOffset(0, 0, 0, true)
-      // this.camera.setAutoRotate(false)
     }
   }
 
