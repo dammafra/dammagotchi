@@ -1,6 +1,6 @@
 import Experience from '@experience'
-import { getCanvasFrom } from '@utils/canvas'
-import { CanvasTexture, CircleGeometry, DoubleSide, MeshBasicMaterial, PlaneGeometry } from 'three'
+import HTMLTexture from '@utils/html-texture'
+import { CircleGeometry, DoubleSide, MeshBasicMaterial, PlaneGeometry } from 'three'
 import { ADDITION, Brush } from 'three-bvh-csg'
 import Device from './device'
 
@@ -59,10 +59,8 @@ export default class Tab {
   }
 
   async refreshTab() {
-    const canvas = await getCanvasFrom(document.querySelector('#battery-tab'))
-    const texture = new CanvasTexture(canvas)
+    const texture = await HTMLTexture.from(document.querySelector('#battery-tab'))
 
-    this.circleMaterial.map?.dispose()
     this.circleMaterial.map = texture
     this.circleMaterial.needsUpdate = true
   }

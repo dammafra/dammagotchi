@@ -6,7 +6,6 @@ export default {
     this.dispose && this.dispose()
 
     this.life.disposeMess()
-    this.canInteract = false
 
     const sit1 = this.sprites.get('sit').at(0)
     sit1.spawn()

@@ -1,6 +1,6 @@
 import Experience from '@experience'
-import { getCanvasFrom } from '@utils/canvas'
-import { CanvasTexture, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
+import HTMLTexture from '@utils/html-texture'
+import { Mesh, MeshBasicMaterial, PlaneGeometry } from 'three'
 
 export default class Menu {
   constructor(element) {
@@ -44,10 +44,8 @@ export default class Menu {
   }
 
   async refreshMenu() {
-    const canvas = await getCanvasFrom(this.element)
-    const texture = new CanvasTexture(canvas)
+    const texture = await HTMLTexture.from(this.element)
 
-    this.material.map?.dispose()
     this.material.map = texture
     this.material.needsUpdate = true
   }
