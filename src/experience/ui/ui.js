@@ -4,6 +4,7 @@ import Icons from './icons'
 import MenuDuck from './menu/menu-duck'
 import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
+import MenuMedicine from './menu/menu-medicine'
 import MenuMeter from './menu/menu-meter'
 import { Soundboard } from './soundboard'
 
@@ -19,7 +20,7 @@ export default class UI {
       new MenuFeed(),
       new MenuLight(),
       null,
-      null,
+      new MenuMedicine(),
       new MenuDuck(),
       new MenuMeter(),
       null,

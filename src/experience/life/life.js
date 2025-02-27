@@ -120,7 +120,7 @@ export default class Life extends EventDispatcher {
   }
 
   updateSeconds() {
-    if (!this.petReady) return
+    if (!this.petReady || !this.miscReady) return
     if (this.pause) return
 
     if (this.tick >= this.stageEnd && !this.evolving) {
@@ -195,6 +195,8 @@ export default class Life extends EventDispatcher {
   }
 
   initMess = () => {
+    this.miscReady = true
+
     this.mess = Array(this.stats.mess)
       .fill(true)
       .map((_, index) => new Mess(index))
