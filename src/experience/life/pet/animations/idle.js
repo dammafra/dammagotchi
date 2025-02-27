@@ -3,8 +3,6 @@ import Random from '@utils/random'
 
 export default {
   default() {
-    if (this.stats.sick) this.sick()
-
     this.dispose && this.dispose()
 
     this.canInteract = true
@@ -44,8 +42,9 @@ export default {
       idle2.copy(idle1)
       idle2.mesh.visible = !idle1.mesh.visible
 
-      // mess update
+      // misc update
       this.life.mess.forEach(m => m.updateSeconds())
+      this.life.sickness.updateSeconds()
     }
 
     this.dispose = () => {
@@ -93,6 +92,7 @@ export default {
     death.mesh.position.y = startPositionY
 
     this.life.hideMess()
+    this.life.sickness.hide()
 
     this.update = null
 

@@ -12,6 +12,7 @@ import Death from './pet/death'
 import Egg from './pet/egg'
 import Pet from './pet/pet'
 import Senior from './pet/senior'
+import Sickness from './sickness'
 import Stats from './stats'
 
 export default class Life extends EventDispatcher {
@@ -39,6 +40,7 @@ export default class Life extends EventDispatcher {
     this.stats = new Stats(this)
 
     this.mess = []
+    this.sickness = null
 
     this.group = new Group()
     this.scene.add(this.group)
@@ -50,7 +52,7 @@ export default class Life extends EventDispatcher {
     if (this.started && !this.loading) return
 
     Food.init()
-    Misc.init().sprites.addEventListener('ready', this.initMess)
+    Misc.init().sprites.addEventListener('ready', this.initMisc)
 
     this.started = true
     this.pause = false
@@ -154,9 +156,14 @@ export default class Life extends EventDispatcher {
     this.model = randomModel
   }
 
-  initMess = () => {
+  initMisc = () => {
     this.miscReady = true
 
+    this.initMess()
+    this.sickness = new Sickness()
+  }
+
+  initMess() {
     this.mess = Array(this.stats.mess)
       .fill(true)
       .map((_, index) => new Mess(index))

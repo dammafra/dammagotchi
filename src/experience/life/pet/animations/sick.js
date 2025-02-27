@@ -1,5 +1,3 @@
-import Misc from '@life/misc'
-
 export default {
   default() {
     this.dispose && this.dispose()
@@ -16,12 +14,8 @@ export default {
       sad.mesh.position.copy(eyesClosed.mesh.position)
     }
 
-    const sickness = Misc.instance.getSickness(this.stage)
-    sickness.spawn()
-    sickness.mesh.position.set(1.8, 1.6)
-    sickness.mesh.rotation.y = Math.PI * (this.tick % 2)
-
     this.life.showMess()
+    this.life.sickness.show()
 
     const startedAt = this.tick
 
@@ -32,10 +26,10 @@ export default {
       const toggle = Boolean((this.tick - startedAt) % 2)
       eyesClosed.mesh.visible = toggle
       sad.mesh.visible = !toggle
-      sickness.mesh.rotation.y = Math.PI * (this.tick % 2)
 
-      // mess update
+      // misc update
       this.life.mess.forEach(m => m.updateSeconds())
+      this.life.sickness.updateSeconds()
     }
 
     this.dispose = () => {
@@ -43,9 +37,9 @@ export default {
 
       eyesClosed.dispose()
       sad.dispose()
-      sickness.dispose()
 
       this.life.hideMess()
+      this.life.sickness.hide()
     }
   },
 }

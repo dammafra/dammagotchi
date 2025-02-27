@@ -14,10 +14,10 @@ export default {
   stages: {
     egg: 15,
     babies: 100,
-    children: 100,
-    teenagers: 100,
-    adults: 100,
-    seniors: 100,
+    children: 150,
+    teenagers: 200,
+    adults: 250,
+    seniors: 200,
     death: 0,
   },
 }
