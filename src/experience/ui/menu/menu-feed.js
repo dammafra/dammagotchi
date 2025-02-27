@@ -30,7 +30,25 @@ export default class MenuFeed extends Menu {
   }
 
   action() {
-    this.foodType === Food.MEAL ? this.life.feedMeal() : this.life.feedSnack()
+    this.foodType === Food.MEAL ? this.feedMeal() : this.feedSnack()
     this.hide()
+  }
+
+  feedMeal() {
+    if (this.life.stats.hungry < 4) {
+      this.life.stats.hungry++
+      this.life.stats.weight++
+      this.life.pet.eat(Food.MEAL)
+    } else {
+      this.life.pet.no()
+    }
+  }
+
+  feedSnack() {
+    if (this.life.stats.happy < 4) {
+      this.life.stats.happy++
+    }
+    this.life.stats.weight += 2
+    this.life.pet.eat(Food.SNACK)
   }
 }

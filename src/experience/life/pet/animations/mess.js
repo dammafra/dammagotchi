@@ -32,7 +32,6 @@ export default {
       }
 
       this.idle()
-      this.isMessing = false
     }
 
     this.dispose = () => {

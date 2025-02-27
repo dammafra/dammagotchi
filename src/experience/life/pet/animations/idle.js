@@ -3,9 +3,13 @@ import Random from '@utils/random'
 
 export default {
   default() {
+    if (this.stats.sick) this.sick()
+
     this.dispose && this.dispose()
 
     this.canInteract = true
+    this.isMessing = false
+    this.life.evolving = false
 
     const idle1 = this.sprites.get('idle').at(0)
     idle1.spawn()
@@ -23,9 +27,6 @@ export default {
 
     this.updateSeconds = () => {
       if (this.stats.sick) this.sick()
-
-      // stats
-      this.life.checkNeeds()
 
       // animation
       idle1.mesh.visible = Random.boolean()
@@ -90,6 +91,8 @@ export default {
 
     const startPositionY = 0.8
     death.mesh.position.y = startPositionY
+
+    this.life.hideMess()
 
     this.update = null
 

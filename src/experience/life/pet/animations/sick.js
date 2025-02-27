@@ -28,9 +28,6 @@ export default {
     this.update = null
 
     this.updateSeconds = () => {
-      // stats
-      this.life.checkNeeds()
-
       // animation
       const toggle = Boolean((this.tick - startedAt) % 2)
       eyesClosed.mesh.visible = toggle

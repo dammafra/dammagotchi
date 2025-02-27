@@ -1,6 +1,14 @@
 import { createDoubleTapPreventer } from '@utils/double-tap-preventer'
 import Experience from './experience/experience'
 
+const v = '1.0'
+if (v !== localStorage.getItem('version')) {
+  localStorage.removeItem('life')
+  localStorage.removeItem('stats')
+  localStorage.removeItem('tab-pulled')
+}
+localStorage.setItem('version', v)
+
 Experience.init(document.querySelector('canvas.webgl'))
 document.querySelectorAll('.fab').forEach(b => b.addEventListener('focus', e => e.target.blur()))
 

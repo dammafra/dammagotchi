@@ -111,7 +111,6 @@ export default class Life extends EventDispatcher {
   ready = () => {
     this.previousPet && this.previousPet.dispose && this.previousPet.dispose()
     this.evolving && this.pet.evolveIn ? this.pet.evolveIn() : this.pet.idle()
-    this.evolving = false
     this.petReady = true
   }
 
@@ -155,45 +154,6 @@ export default class Life extends EventDispatcher {
     this.model = randomModel
   }
 
-  checkNeeds() {
-    if (!this.stats.hungry) {
-      this.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    if (!this.stats.happy) {
-      this.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    if (this.stats.sick) {
-      this.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    this.dispatchEvent({ type: 'resolve' })
-  }
-
-  feedMeal() {
-    if (this.stats.hungry < 4) {
-      this.stats.hungry++
-      this.stats.weight++
-      this.pet.eat(Food.MEAL)
-      this.checkNeeds()
-    } else {
-      this.pet.no()
-    }
-  }
-
-  feedSnack() {
-    if (this.stats.happy < 4) {
-      this.stats.happy++
-    }
-    this.stats.weight += 2
-    this.pet.eat(Food.SNACK)
-    this.checkNeeds()
-  }
-
   initMess = () => {
     this.miscReady = true
 
@@ -211,8 +171,7 @@ export default class Life extends EventDispatcher {
   }
 
   addMess() {
-    this.mess.push(new Mess(this.stats.mess))
-    this.stats.mess++
+    this.mess.push(new Mess(this.stats.mess - 1))
   }
 
   collideMess(sprite, position) {
@@ -261,6 +220,7 @@ export default class Life extends EventDispatcher {
     this.stageStart = 0
     this.stage = 'egg'
     this.model = ''
+    this.evolving = false
 
     this.disposeMess()
 
@@ -268,6 +228,7 @@ export default class Life extends EventDispatcher {
 
     this.start()
     this.dispatchEvent({ type: 'reset' })
+    this.saveState()
   }
 
   show() {

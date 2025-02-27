@@ -4,6 +4,7 @@ export default {
   default() {
     this.dispose && this.dispose()
 
+    this.life.disposeMess()
     this.canInteract = false
 
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
@@ -24,7 +25,6 @@ export default {
     this.updateSeconds = () => {
       if (this.tick === startedAt + 10) {
         this.happy()
-        this.isMessing = false
         return
       }
 
@@ -35,7 +35,6 @@ export default {
     this.dispose = () => {
       eyesClosed.dispose()
       toilet.dispose()
-      this.life.disposeMess()
     }
   },
 }

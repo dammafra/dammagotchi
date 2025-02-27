@@ -23,15 +23,45 @@ export default class Stats extends EventDispatcher {
   }
 
   updateSeconds() {
+    if (this.life.evolving) return
+
     Random.runOneIn(() => this.hungry && this.hungry--, lifeConfig.stats.hungryDecayRate)
     Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
-    Random.runOneIn(
-      () => this.mess < 4 && this.life.pet.mess(),
-      lifeConfig.stats.messGenerationRate,
-    )
-    Random.runOneIn(() => !this.sick && (this.sick = true), lifeConfig.stats.sicknessRate)
+    Random.runOneIn(this.addMess, lifeConfig.stats.messGenerationRate)
+    Random.runOneIn(this.setSick, lifeConfig.stats.sicknessRate)
 
     this.saveState()
+    this.checkNeeds()
+  }
+
+  checkNeeds() {
+    if (!this.hungry) {
+      this.life.dispatchEvent({ type: 'notify' })
+      return
+    }
+
+    if (!this.happy) {
+      this.life.dispatchEvent({ type: 'notify' })
+      return
+    }
+
+    if (this.sick) {
+      this.life.dispatchEvent({ type: 'notify' })
+      return
+    }
+
+    this.life.dispatchEvent({ type: 'resolve' })
+  }
+
+  addMess = () => {
+    if (this.mess < 4 && !this.life.pet.isMessing) {
+      this.mess++
+      this.life.pet.mess()
+    }
+  }
+
+  setSick = () => {
+    if (!this.sick) this.sick = true
   }
 
   saveState() {
@@ -72,6 +102,7 @@ export default class Stats extends EventDispatcher {
     this.happy = 0
     this.mess = 0
     this.sick = false
+    this.saveState()
   }
 
   setDebug(debug) {
