@@ -16,6 +16,7 @@ export default {
     flush.mesh.position.x = this.screen.bounds.xMax + (flush.width * this.screen.unit) / 2
 
     this.life.showMess()
+    if (this.life.stats.sick) this.life.sickness.show()
 
     const endPositionX = -(this.screen.bounds.xMax - this.screen.bounds.xMin) - flush.width * this.screen.unit - 1 //prettier-ignore
 
