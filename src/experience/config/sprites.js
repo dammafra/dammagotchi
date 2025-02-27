@@ -1,6 +1,7 @@
 const babyConfig = [
   { name: 'idle', index: 0, split: 2 },
   { name: 'happy', index: 2 },
+  { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
   { name: 'upset', index: 10 },
   { name: 'eat', index: 12, split: 2 },
@@ -11,6 +12,7 @@ const babyConfig = [
 const childConfig = [
   { name: 'idle', index: 0, split: 2 },
   { name: 'happy', index: 2 },
+  { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
   { name: 'upset', index: 10 },
   { name: 'eat', index: 12, split: 2 },
@@ -20,6 +22,7 @@ const childConfig = [
 const teenagerBaseConfig = [
   { name: 'idle', index: 0, split: 2 },
   { name: 'happy', index: 2 },
+  { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
   { name: 'upset', index: 10 },
   { name: 'eat', index: 12, split: 2 },
@@ -31,6 +34,7 @@ const teenagerConfig2 = teenagerBaseConfig
 const adultBaseConfig = [
   { name: 'idle', index: 0, split: 2 },
   { name: 'happy', index: 7 },
+  { name: 'sad', index: 14 },
   { name: 'eyes-closed', index: 18 },
   { name: 'upset', index: 22 },
   { name: 'eat', index: 26, split: 2 },
@@ -43,6 +47,7 @@ const adultConfig4 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
 const seniorConfig = [
   { name: 'idle', index: 0, split: 2 },
   { name: 'happy', index: 7 },
+  { name: 'sad', index: 14 },
   { name: 'eyes-closed', index: 18 },
   { name: 'upset', index: 22 },
   { name: 'eat', index: 25, split: 2 },
@@ -123,7 +128,7 @@ export default {
     { name: 'toilet', index: 0, split: 3 },
     { name: 'mess', index: 1, split: 2 },
     { name: 'happy', index: 2 },
-    { name: 'illnesses', index: 3, split: 3 },
+    { name: 'sickness', index: 3, split: 3 },
     { name: 'sleep', index: 4, split: 3 },
     { name: 'upset', index: 6, split: 3 },
     { name: 'effort', index: 8 },

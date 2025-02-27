@@ -19,11 +19,17 @@ export default class Stats extends EventDispatcher {
     this.hungry = state.hungry
     this.happy = state.happy
     this.mess = state.mess
+    this.sick = state.sick
   }
 
   updateSeconds() {
     Random.runOneIn(() => this.hungry && this.hungry--, lifeConfig.stats.hungryDecayRate)
     Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
+    Random.runOneIn(
+      () => this.mess < 4 && this.life.pet.mess(),
+      lifeConfig.stats.messGenerationRate,
+    )
+    Random.runOneIn(() => !this.sick && (this.sick = true), lifeConfig.stats.sicknessRate)
 
     this.saveState()
   }
@@ -36,6 +42,7 @@ export default class Stats extends EventDispatcher {
       hungry: this.hungry,
       happy: this.happy,
       mess: this.mess,
+      sick: this.sick,
     }
     localStorage.setItem('stats', JSON.stringify(state))
   }
@@ -52,6 +59,7 @@ export default class Stats extends EventDispatcher {
         hungry: 0,
         happy: 0,
         mess: 0,
+        sick: false,
       }
     }
   }
@@ -63,6 +71,7 @@ export default class Stats extends EventDispatcher {
     this.hungry = 0
     this.happy = 0
     this.mess = 0
+    this.sick = false
   }
 
   setDebug(debug) {
@@ -75,5 +84,6 @@ export default class Stats extends EventDispatcher {
     debug.addBinding(this, 'hungry', { readonly: true, label: '🍔 hungry' })
     debug.addBinding(this, 'happy', { readonly: true, label: '🍬 happy' })
     debug.addBinding(this, 'mess', { readonly: true, label: '💩 mess' })
+    debug.addBinding(this, 'sick', { readonly: true, label: '💉 sick' })
   }
 }

@@ -5,8 +5,8 @@ export default {
   default() {
     this.dispose && this.dispose()
 
-    const idle1 = this.sprites.get('idle').at(0)
-    idle1.spawn()
+    const idle = this.sprites.get('idle').at(0)
+    idle.spawn()
 
     Soundboard.instance.play('evolution')
     this.screen.setFlicker(true)
@@ -24,7 +24,7 @@ export default {
     }
 
     this.dispose = () => {
-      idle1.dispose()
+      idle.dispose()
       this.screen.setFlicker(false)
     }
   },

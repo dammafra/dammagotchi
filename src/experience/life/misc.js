@@ -49,4 +49,8 @@ export default class Misc {
   getFlush() {
     return this.sprites.get('toilet').at(2)
   }
+
+  getSickness(stage) {
+    return this.sprites.get('sickness').at(['babies', 'children'].includes(stage) ? 0 : 1)
+  }
 }

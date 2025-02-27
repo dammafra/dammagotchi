@@ -1,4 +1,3 @@
-import lifeConfig from '@config/life'
 import { Soundboard } from '@ui/soundboard'
 import Random from '@utils/random'
 
@@ -23,11 +22,10 @@ export default {
     this.update = null
 
     this.updateSeconds = () => {
+      if (this.stats.sick) this.sick()
+
       // stats
       this.life.checkNeeds()
-      if (this.stats.mess < 6) {
-        Random.runOneIn(() => this.mess(), lifeConfig.stats.messGenerationRate)
-      }
 
       // animation
       idle1.mesh.visible = Random.boolean()

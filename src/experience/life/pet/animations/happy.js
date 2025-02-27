@@ -5,9 +5,9 @@ export default {
   default() {
     this.dispose && this.dispose()
 
-    const idle1 = this.sprites.get('idle').at(0)
+    const idle = this.sprites.get('idle').at(0)
     const happy = this.sprites.get('happy').at(0)
-    idle1.spawn()
+    idle.spawn()
     happy.spawn()
     happy.mesh.visible = false
     happy.mesh.position.y = 1
@@ -32,11 +32,11 @@ export default {
       happy.mesh.visible = toggle
       sun.mesh.visible = toggle
       toggle && Soundboard.instance.play('happy')
-      idle1.mesh.visible = !toggle
+      idle.mesh.visible = !toggle
     }
 
     this.dispose = () => {
-      idle1.dispose()
+      idle.dispose()
       happy.dispose()
       sun.dispose()
     }

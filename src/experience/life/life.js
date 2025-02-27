@@ -121,23 +121,28 @@ export default class Life extends EventDispatcher {
 
   updateSeconds() {
     if (!this.petReady) return
-
-    if (this.stage === 'death') {
-      this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
-      this.saveState()
-      return
-    }
-
     if (this.pause) return
 
     if (this.tick >= this.stageEnd && !this.evolving) {
-      this.pet.evolveOut()
+      this.pet.evolveOut && this.pet.evolveOut()
       this.evolving = true
     }
 
-    this.tick++
-    this.stats.updateSeconds()
-    this.saveState()
+    switch (this.stage) {
+      case 'egg':
+        this.tick++
+        this.saveState()
+        break
+      case 'death':
+        this.saveState()
+        this.dispatchEvent({ type: 'resolve' })
+        break
+      default:
+        this.tick++
+        this.stats.updateSeconds()
+        this.saveState()
+        break
+    }
 
     this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
   }
@@ -157,6 +162,11 @@ export default class Life extends EventDispatcher {
     }
 
     if (!this.stats.happy) {
+      this.dispatchEvent({ type: 'notify' })
+      return
+    }
+
+    if (this.stats.sick) {
       this.dispatchEvent({ type: 'notify' })
       return
     }
@@ -286,6 +296,7 @@ export default class Life extends EventDispatcher {
     pane.addButton({ title: '💩 mess' }).on('click', () => this.pet.mess && this.pet.mess())
     pane.addButton({ title: '🚿 flush' }).on('click', () => this.pet.flush && this.pet.flush())
     pane.addButton({ title: '🚽 toilet' }).on('click', () => this.pet.toilet && this.pet.toilet())
+    pane.addButton({ title: '🤒 sick' }).on('click', () => this.pet.sick && this.pet.sick())
     pane.addButton({ title: '☀️ happy' }).on('click', () => this.pet.happy && this.pet.happy())
     pane.addButton({ title: '☁️ upset' }).on('click', () => this.pet.upset && this.pet.upset())
     pane.addButton({ title: '🚫 no' }).on('click', () => this.pet.no && this.pet.no())
