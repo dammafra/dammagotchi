@@ -15,6 +15,9 @@ export default class MenuMeter extends Menu {
 
   show() {
     this.setMeters()
+    this.hungrySection.classList.remove('hidden')
+    this.happySection.classList.add('hidden')
+
     super.show()
   }
 
