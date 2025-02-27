@@ -7,6 +7,7 @@ const babyConfig = [
   { name: 'eat', index: 12, split: 2 },
   { name: 'hatching', index: 13 },
   { name: 'no', index: 14 },
+  { name: 'sit', index: 14 },
 ]
 
 const childConfig = [
@@ -17,6 +18,7 @@ const childConfig = [
   { name: 'upset', index: 10 },
   { name: 'eat', index: 12, split: 2 },
   { name: 'no', index: 14 },
+  { name: 'sit', index: 14 },
 ]
 
 const teenagerBaseConfig = [
@@ -27,6 +29,7 @@ const teenagerBaseConfig = [
   { name: 'upset', index: 10 },
   { name: 'eat', index: 12, split: 2 },
   { name: 'no', index: 14 },
+  { name: 'sit', index: 16, split: 2 },
 ]
 const teenagerConfig1 = teenagerBaseConfig
 const teenagerConfig2 = teenagerBaseConfig
@@ -39,10 +42,22 @@ const adultBaseConfig = [
   { name: 'upset', index: 22 },
   { name: 'eat', index: 26, split: 2 },
 ]
-const adultConfig1 = adultBaseConfig.concat([{ name: 'no', index: 29 }])
-const adultConfig2 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
-const adultConfig3 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
-const adultConfig4 = adultBaseConfig.concat([{ name: 'no', index: 30 }])
+const adultConfig1 = adultBaseConfig.concat([
+  { name: 'no', index: 29 },
+  { name: 'sit', index: 32, split: 2 },
+])
+const adultConfig2 = adultBaseConfig.concat([
+  { name: 'no', index: 30 },
+  { name: 'sit', index: 33, split: 2 },
+])
+const adultConfig3 = adultBaseConfig.concat([
+  { name: 'no', index: 30 },
+  { name: 'sit', index: 33, split: 2 },
+])
+const adultConfig4 = adultBaseConfig.concat([
+  { name: 'no', index: 30 },
+  { name: 'sit', index: 34, split: 2 },
+])
 
 const seniorConfig = [
   { name: 'idle', index: 0, split: 2 },
@@ -52,6 +67,7 @@ const seniorConfig = [
   { name: 'upset', index: 22 },
   { name: 'eat', index: 25, split: 2 },
   { name: 'no', index: 28 },
+  { name: 'sit', index: 31, split: 2 },
 ]
 
 export default {
