@@ -107,21 +107,21 @@ export default class Tutorial {
         id: 'screen-top',
         classes: 'small',
         text: `<ul>
-          <li>❤️ <strong>Meter</strong> - This is where you check how your pet is doing, keep an eye on these stats!</li>
-          <li>🍔 <strong>Feed</strong> -  Feed your pet with meals when it’s hungry or choose a snack for a little treat</li>
-          <li>🧽 <strong>Clean</strong> - If your pet leaves a mess flush it away and don’t let it pile up</li>
+          <li>🍔 <strong>Feed</strong> -  Feed your pet with meals when it’s hungry or choose a snack when it's unhappy</li>
+          <li>💤 <strong>Light</strong> - Turn the light off when it goes to sleep and back on when it wakes up</li>
           <li>🎮 <strong>Play</strong> - Keep your pet entertained for a happy, healthy life!</li>
-          </ul>`,
+          <li>💉 <strong>Medicine</strong> - If your pet gets sick, use this to give it medicine and help it recover</li>
+        </ul>`,
         buttons: [skipButton, backButton, nextButton()],
       },
       {
         id: 'screen-bottom',
         classes: 'small',
         text: `<ul>
-        <li>⚖️ <strong>Discipline</strong> - Sometimes your pet misbehaves, ignoring food or calling for no reason. Teach good behavior!</li>
-        <li>💉 <strong>Medicine</strong> - If your pet gets sick, use this to give it medicine and help it recover</li>
-        <li>💤 <strong>Light</strong> - Turn the light off when it goes to sleep and back on when it wakes up</li>
-        <li>📢 <strong>Attention</strong> - When this icon lights up, your pet needs something</li>
+          <li>🧽 <strong>Clean</strong> - If your pet leaves a mess flush it away and don’t let it pile up</li>
+          <li>❤️ <strong>Meter</strong> - This is where you check how your pet is doing, keep an eye on these stats!</li>
+          <li>⚖️ <strong>Discipline</strong> - Sometimes your pet misbehaves, ignoring food or calling for no reason. Teach good behavior!</li>
+          <li>📢 <strong>Attention</strong> - When this icon lights up, your pet needs something</li>
         </ul>`,
         buttons: [skipButton, backButton, nextButton('Continue')],
       },
