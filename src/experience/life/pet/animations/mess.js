@@ -23,7 +23,7 @@ export default {
     this.update = null
 
     this.updateSeconds = () => {
-      if (this.tick < startedAt + 20) {
+      if (this.tick < startedAt + 10) {
         const direction = this.tick % 2 ? -1 : 1
         eyesClosed.mesh.position.x += this.screen.unit * direction
         effort1.mesh.rotation.y += Math.PI * direction
