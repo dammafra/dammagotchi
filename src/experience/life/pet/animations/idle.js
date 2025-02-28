@@ -91,9 +91,6 @@ export default {
     const startPositionY = 0.8
     death.mesh.position.y = startPositionY
 
-    this.life.hideMess()
-    this.life.sickness.hide()
-
     this.update = null
 
     this.updateSeconds = () => {

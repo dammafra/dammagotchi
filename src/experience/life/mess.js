@@ -17,6 +17,7 @@ export default class Mess {
     this.sprite = Misc.instance.getMess(this.pet.stage)
 
     this.sprite.spawn()
+    this.sprite.mesh.visible = false
     this.sprite.mesh.rotation.y = Math.PI * (this.tick % 2)
     this.sprite.mesh.position.x = index % 2 ? 0.8 : 1.8
     this.sprite.mesh.position.y = index < 2 ? this.screen.center.y : 0.8

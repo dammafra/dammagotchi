@@ -28,6 +28,7 @@ export class Soundboard {
 
   async loadSounds() {
     const soundFiles = {
+      angry: 'sounds/angry.mp3',
       attention: 'sounds/attention.mp3',
       button: 'sounds/button.mp3',
       death: 'sounds/death.mp3',
