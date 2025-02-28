@@ -50,8 +50,18 @@ export default [
     path: 'sprites/ui/play.webp',
   },
   {
+    name: 'arrow',
+    type: 'texture',
+    path: 'sprites/ui/arrow.webp',
+  },
+  {
     name: 'tab',
     type: 'texture',
     path: 'textures/tab.webp',
+  },
+  {
+    name: 'menuFeed',
+    type: 'texture',
+    path: 'textures/menu-feed.webp',
   },
 ]

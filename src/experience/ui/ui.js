@@ -3,32 +3,22 @@ import Countdown from './countdown'
 import Icons from './icons'
 import MenuDiscipline from './menu/menu-discipline'
 import MenuDuck from './menu/menu-duck'
+import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
 import MenuMedicine from './menu/menu-medicine'
 import { Soundboard } from './soundboard'
 
 export default class UI {
   constructor() {
+    Soundboard.init()
+
     this.experience = Experience.instance
     this.camera = this.experience.camera
     this.device = this.experience.device
     this.life = this.experience.life
 
     this.icons = new Icons()
-    this.menus = [
-      null,
-      new MenuLight(),
-      null,
-      new MenuMedicine(),
-      new MenuDuck(),
-      null,
-      new MenuDiscipline(),
-    ]
-
-    this.selectedMenu = this.menus.find(m => m?.debug)
     this.resetTimeout = null
-
-    Soundboard.init()
 
     this.device.addEventListener('press-A-button', this.onA)
     this.device.addEventListener('press-B-button', this.onB)
@@ -60,9 +50,18 @@ export default class UI {
 
   ready() {
     this.icons.ready()
-    this.icons.setSelected(this.menus.indexOf(this.selectedMenu))
     this.life.addEventListener('notify', this.icons.notifyAttention)
     this.life.addEventListener('resolve', this.icons.resolveAttention)
+
+    this.menus = [
+      new MenuFeed(),
+      new MenuLight(),
+      null,
+      new MenuMedicine(),
+      new MenuDuck(),
+      null,
+      new MenuDiscipline(),
+    ]
   }
 
   onTab = () => {
