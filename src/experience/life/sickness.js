@@ -14,27 +14,37 @@ export default class Sickness {
     this.experience = Experience.instance
     this.screen = this.experience.screen
 
-    this.sprite = Misc.instance.getSickness(this.pet.stage)
+    this.smallSprite = Misc.instance.getSickness('babies')
+    this.bigSprite = Misc.instance.getSickness('adults')
 
-    this.sprite.spawn()
-    this.sprite.mesh.visible = false
-    this.sprite.mesh.rotation.y = Math.PI * (this.tick % 2)
-    this.sprite.mesh.position.set(1.8, 1.6)
+    this.smallSprite.spawn()
+    this.smallSprite.mesh.visible = false
+    this.smallSprite.mesh.rotation.y = Math.PI * (this.tick % 2)
+    this.smallSprite.mesh.position.set(1.8, 1.6)
+
+    this.bigSprite.spawn()
+    this.bigSprite.mesh.visible = false
+    this.bigSprite.mesh.rotation.copy(this.smallSprite.mesh.rotation)
+    this.bigSprite.mesh.position.copy(this.smallSprite.mesh.position)
   }
 
   hide() {
-    this.sprite.mesh.visible = false
+    this.smallSprite.mesh.visible = false
+    this.bigSprite.mesh.visible = false
   }
 
   show() {
-    this.sprite.mesh.visible = true
+    this.smallSprite.mesh.visible = ['babies', 'children'].includes(this.pet.stage)
+    this.bigSprite.mesh.visible = !this.smallSprite.mesh.visible
   }
 
   updateSeconds() {
-    this.sprite.mesh.rotation.y = Math.PI * (this.tick % 2)
+    this.smallSprite.mesh.rotation.y = Math.PI * (this.tick % 2)
+    this.bigSprite.mesh.rotation.copy(this.smallSprite.mesh.rotation)
   }
 
   dispose() {
-    this.sprite.dispose()
+    this.smallSprite.dispose()
+    this.bigSprite.dispose()
   }
 }
