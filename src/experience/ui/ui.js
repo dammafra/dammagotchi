@@ -3,10 +3,8 @@ import Countdown from './countdown'
 import Icons from './icons'
 import MenuDiscipline from './menu/menu-discipline'
 import MenuDuck from './menu/menu-duck'
-import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
 import MenuMedicine from './menu/menu-medicine'
-import MenuMeter from './menu/menu-meter'
 import { Soundboard } from './soundboard'
 
 export default class UI {
@@ -18,12 +16,12 @@ export default class UI {
 
     this.icons = new Icons()
     this.menus = [
-      new MenuFeed(),
+      null,
       new MenuLight(),
       null,
       new MenuMedicine(),
       new MenuDuck(),
-      new MenuMeter(),
+      null,
       new MenuDiscipline(),
     ]
 

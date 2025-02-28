@@ -179,23 +179,6 @@ button.fab {
   @apply stroke-[20] fill-none;
 }
 
-/* menu */
-#html2canvas {
-  @apply fixed -z-20 -left-full size-[256px];
-}
-
-#html2canvas > * {
-  @apply w-full h-full;
-}
-
-#html2canvas:has(.debug) {
-  @apply !z-30 !left-0 bg-white;
-}
-
-#html2canvas:has(.debug) > div:not(.debug) {
-  @apply hidden;
-}
-
 /* shepherd customization  */
 .tutorial-step {
   @apply rounded-none;

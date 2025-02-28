@@ -5,7 +5,7 @@ export default class HTMLTexture {
   /** @type {Map<string, CanvasTexture>} */
   static textures = new Map()
 
-  static async from(element, useCache = true) {
+  static async from(element, useCache = true, download = false) {
     const hash = HTMLTexture.getHash(element)
 
     const existing = HTMLTexture.textures.get(hash)
@@ -19,7 +19,18 @@ export default class HTMLTexture {
         !el.closest('#html2canvas') &&
         !el.href?.includes('.css'),
       backgroundColor: null,
-    }).then(canvas => new CanvasTexture(canvas))
+    })
+      .then(canvas => {
+        if (!download) return canvas
+
+        const link = document.createElement('a')
+        link.href = canvas.toDataURL('image/png')
+        link.download = 'screenshot.png'
+        link.click()
+
+        return canvas
+      })
+      .then(canvas => new CanvasTexture(canvas))
 
     HTMLTexture.textures.set(hash, texture)
 
