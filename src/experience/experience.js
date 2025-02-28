@@ -51,8 +51,6 @@ export default class Experience {
     this.life = new Life()
     this.ui = new UI()
 
-    this.tutorial = new Tutorial()
-
     // Events
     this.sizes.addEventListener('resize', this.resize)
     this.time.addEventListener('tick', this.update)
@@ -84,10 +82,13 @@ export default class Experience {
     this.resources.removeEventListener('ready', this.ready)
 
     this.environment.ready()
+    this.device.ready()
     this.screen.ready()
     this.ui.ready()
     this.loading.ready()
     this.resourcesReady = true
+
+    this.tutorial = new Tutorial()
 
     if (!this.debug) {
       await this.camera.intro()

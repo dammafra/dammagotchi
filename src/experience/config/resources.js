@@ -49,4 +49,9 @@ export default [
     type: 'texture',
     path: 'sprites/ui/play.webp',
   },
+  {
+    name: 'tab',
+    type: 'texture',
+    path: 'textures/tab.webp',
+  },
 ]

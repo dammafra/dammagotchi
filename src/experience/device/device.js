@@ -134,7 +134,9 @@ export default class Device extends EventDispatcher {
     this.buttons = this.config.buttons.map(config => new Button(config))
 
     this.scene.add(this.mesh, ...this.buttons.map(b => b.mesh))
+  }
 
+  ready() {
     if (!JSON.parse(localStorage.getItem('tab-pulled'))) {
       this.tab = new Tab(this.config.tab)
       this.scene.add(this.tab.mesh)

@@ -1,5 +1,4 @@
 import Experience from '@experience'
-import HTMLTexture from '@utils/html-texture'
 import { CircleGeometry, DoubleSide, MeshBasicMaterial, PlaneGeometry } from 'three'
 import { ADDITION, Brush } from 'three-bvh-csg'
 import Device from './device'
@@ -36,9 +35,10 @@ export default class Tab {
       side: DoubleSide,
       transparent: true,
     })
+
     this.circleMaterial = new MeshBasicMaterial({
       side: DoubleSide,
-      transparent: true,
+      map: this.resources.items.tab,
     })
   }
 
@@ -46,7 +46,6 @@ export default class Tab {
     this.circle = new Brush(this.circleGeometry, this.circleMaterial)
     this.circle.position.x = this.radius
     this.circle.updateMatrixWorld()
-    this.refreshTab()
 
     this.plane = new Brush(this.planeGeometry, this.planeMaterial)
     this.plane.updateMatrixWorld()
@@ -56,13 +55,6 @@ export default class Tab {
     this.mesh.castShadow = false
 
     this.pointer.onDrag(this.mesh, this.pull)
-  }
-
-  async refreshTab() {
-    const texture = await HTMLTexture.from(document.querySelector('#battery-tab'))
-
-    this.circleMaterial.map = texture
-    this.circleMaterial.needsUpdate = true
   }
 
   pull = () => {
