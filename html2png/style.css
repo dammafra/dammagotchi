@@ -1,0 +1,34 @@
+/* tailwind config */
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'TamaConnect';
+  src: url('/fonts/tamaconnecttype.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@utility font-tama {
+  font-family: 'TamaConnect';
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* styles */
+body {
+  @apply h-screen bg-cyan-800 overflow-hidden;
+}
+body main {
+  @apply p-4 flex flex-wrap content-start gap-8 h-full overflow-auto;
+}
+
+body main > div {
+  @apply size-[256px] relative transition-all bg-white shadow;
+  @apply font-tama text-4xl;
+}
+
+/* tweakpane */
+.tp-btnv_t {
+  @apply !text-left pl-4;
+}
