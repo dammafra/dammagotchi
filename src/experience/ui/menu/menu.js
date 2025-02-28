@@ -55,7 +55,7 @@ export default class Menu {
   show() {
     this.visible = true
     this.mesh.visible = true
-    Menu.arrow.visible = true
+    Menu.arrow.visible = this.hasOptions
 
     this.life.hide()
 

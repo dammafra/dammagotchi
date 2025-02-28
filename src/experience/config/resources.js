@@ -55,6 +55,16 @@ export default [
     path: 'sprites/ui/arrow.webp',
   },
   {
+    name: 'meterEmpty',
+    type: 'texture',
+    path: 'sprites/ui/meter-empty.webp',
+  },
+  {
+    name: 'meterFull',
+    type: 'texture',
+    path: 'sprites/ui/meter-full.webp',
+  },
+  {
     name: 'tab',
     type: 'texture',
     path: 'textures/tab.webp',
@@ -63,5 +73,15 @@ export default [
     name: 'menuFeed',
     type: 'texture',
     path: 'textures/menu-feed.webp',
+  },
+  {
+    name: 'menuMeter1',
+    type: 'texture',
+    path: 'textures/menu-meter-1.webp',
+  },
+  {
+    name: 'menuMeter2',
+    type: 'texture',
+    path: 'textures/menu-meter-2.webp',
   },
 ]
