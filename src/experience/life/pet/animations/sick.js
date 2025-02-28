@@ -2,6 +2,7 @@ export default {
   default() {
     this.dispose && this.dispose()
 
+    this.canEvolve = true
     this.canInteract = true
 
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
@@ -33,6 +34,7 @@ export default {
     }
 
     this.dispose = () => {
+      this.canEvolve = false
       this.canInteract = false
 
       eyesClosed.dispose()

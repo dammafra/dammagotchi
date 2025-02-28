@@ -122,26 +122,14 @@ export default class Life extends EventDispatcher {
     if (!this.petReady || !this.miscReady) return
     if (this.pause) return
 
-    if (this.tick >= this.stageEnd && !this.evolving) {
+    if (this.pet.canEvolve && this.tick >= this.stageEnd) {
       this.pet.evolveOut && this.pet.evolveOut()
       this.evolving = true
     }
 
-    switch (this.stage) {
-      case 'egg':
-        this.tick++
-        this.saveState()
-        break
-      case 'death':
-        this.saveState()
-        this.dispatchEvent({ type: 'resolve' })
-        break
-      default:
-        this.tick++
-        this.stats.updateSeconds()
-        this.saveState()
-        break
-    }
+    this.tick++
+    this.stats.updateSeconds()
+    this.saveState()
 
     this.pet && this.pet.updateSeconds && this.pet.updateSeconds()
   }
@@ -261,8 +249,8 @@ export default class Life extends EventDispatcher {
 
     const pane = new Pane({ title: 'ACTIONS' })
     pane.element.parentElement.style.right = '366px'
-    pane.addButton({ title: '🍔 eat meal' }).on('click', () => this.pet.eat && this.feedMeal())
-    pane.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.feedSnack())
+    pane.addButton({ title: '🍔 eat meal' }).on('click', () => this.pet.eat && this.pet.eat(Food.MEAL)) //prettier-ignore
+    pane.addButton({ title: '🍬 eat snack' }).on('click', () => this.pet.eat && this.pet.eat(Food.SNACK)) //prettier-ignore
     pane.addButton({ title: '💩 mess' }).on('click', () => this.pet.mess && this.pet.mess())
     pane.addButton({ title: '🚿 flush' }).on('click', () => this.pet.flush && this.pet.flush())
     pane.addButton({ title: '🚽 toilet' }).on('click', () => this.pet.toilet && this.pet.toilet())

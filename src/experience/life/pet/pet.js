@@ -36,6 +36,7 @@ export default class Pet extends EventDispatcher {
 
     this.stage = stage
     this.model = model
+    this.canEvolve = false
     this.canInteract = false
     this.isMessing = false
 

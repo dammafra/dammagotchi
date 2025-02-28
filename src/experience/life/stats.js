@@ -24,7 +24,7 @@ export default class Stats extends EventDispatcher {
   }
 
   updateSeconds() {
-    if (this.life.evolving) return
+    if (['egg', 'death'].includes(this.life.stage) || !this.life.pet.canEvolve) return
 
     Random.runOneIn(() => this.hungry && this.hungry--, lifeConfig.stats.hungryDecayRate)
     Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
@@ -37,10 +37,17 @@ export default class Stats extends EventDispatcher {
   }
 
   checkNeeds() {
-    this.life.dispatchEvent({ type: !this.hungry ? 'notify' : 'resolve', need: 'hungry' })
-    this.life.dispatchEvent({ type: !this.happy ? 'notify' : 'resolve', need: 'happy' })
-    this.life.dispatchEvent({ type: this.sick ? 'notify' : 'resolve', need: 'sick' })
-    this.life.dispatchEvent({ type: this.bad ? 'notify' : 'resolve', need: 'bad' })
+    !this.hungry && this.life.dispatchEvent({ type: 'notify', need: 'hungry' })
+    !this.happy && this.life.dispatchEvent({ type: 'notify', need: 'happy' })
+    this.sick && this.life.dispatchEvent({ type: 'notify', need: 'sick' })
+    this.bad && this.life.dispatchEvent({ type: 'notify', need: 'bad' })
+  }
+
+  resolveNeeds() {
+    this.hungry && this.life.dispatchEvent({ type: 'resolve', need: 'hungry' })
+    this.happy && this.life.dispatchEvent({ type: 'resolve', need: 'happy' })
+    !this.sick && this.life.dispatchEvent({ type: 'resolve', need: 'sick' })
+    !this.bad && this.life.dispatchEvent({ type: 'resolve', need: 'bad' })
   }
 
   addMess = () => {

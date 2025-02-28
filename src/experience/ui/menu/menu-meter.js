@@ -64,6 +64,9 @@ export default class MenuMeter extends Menu {
 
   show() {
     this.meterType = 'hungry'
+    this.material.map = this.resources.items.menuMeter1
+    this.material.needsUpdate = true
+
     this.updateMeters()
 
     super.show()

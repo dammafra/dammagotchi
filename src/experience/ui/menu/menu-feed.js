@@ -27,6 +27,7 @@ export default class MenuFeed extends Menu {
 
   action() {
     this.foodType === Food.MEAL ? this.feedMeal() : this.feedSnack()
+    this.life.stats.resolveNeeds()
     this.hide()
   }
 

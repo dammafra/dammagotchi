@@ -5,6 +5,7 @@ export default {
   default() {
     this.dispose && this.dispose()
 
+    this.canEvolve = true
     this.canInteract = true
     this.isMessing = false
     this.life.evolving = false
@@ -48,6 +49,7 @@ export default {
     }
 
     this.dispose = () => {
+      this.canEvolve = false
       this.canInteract = false
 
       idle1.dispose()
@@ -59,6 +61,8 @@ export default {
 
   egg() {
     this.dispose && this.dispose()
+
+    this.canEvolve = true
 
     const normal = this.sprites.get('egg').at(0)
     normal.spawn()
@@ -77,6 +81,8 @@ export default {
     }
 
     this.dispose = () => {
+      this.canEvolve = false
+
       normal.dispose()
       squeezed.dispose()
     }
@@ -90,6 +96,8 @@ export default {
 
     const startPositionY = 0.8
     death.mesh.position.y = startPositionY
+
+    this.life.dispatchEvent({ type: 'resolve' })
 
     this.update = null
 
