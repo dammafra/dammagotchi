@@ -34,6 +34,7 @@ export class Soundboard {
       death: 'sounds/death.mp3',
       discipline: 'sounds/discipline.mp3',
       evolution: 'sounds/evolution.mp3',
+      'game-start': 'sounds/game-start.mp3',
       happy: 'sounds/happy.mp3',
       hatching: 'sounds/hatching.mp3',
       'time-speed': 'sounds/time-speed.mp3',

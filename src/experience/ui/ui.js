@@ -7,6 +7,7 @@ import MenuFeed from './menu/menu-feed'
 import MenuLight from './menu/menu-light'
 import MenuMedicine from './menu/menu-medicine'
 import MenuMeter from './menu/menu-meter'
+import MenuPlay from './menu/menu-play'
 import { Soundboard } from './soundboard'
 
 export default class UI {
@@ -57,7 +58,7 @@ export default class UI {
     this.menus = [
       new MenuFeed(),
       new MenuLight(),
-      null,
+      new MenuPlay(),
       new MenuMedicine(),
       new MenuDuck(),
       new MenuMeter(),
