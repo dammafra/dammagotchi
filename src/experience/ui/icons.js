@@ -27,6 +27,8 @@ export default class Icons {
 
     this.selected = Icons.ATTENTION
     this.baseOpacity = 0.3
+
+    this.notified = new Set()
   }
 
   ready() {
@@ -83,17 +85,24 @@ export default class Icons {
     this.setSelected((this.selected + 1) % 8)
   }
 
-  notifyAttention = () => {
-    if (this.notified) return
+  notifyAttention = event => {
+    if (this.notified.has(event.need)) return
 
-    this.notified = true
-    Soundboard.instance.play('attention')
+    this.notified.add(event.need)
     this.meshes.at(Icons.ATTENTION).material.opacity = 1
+    Soundboard.instance.play('attention')
   }
 
-  resolveAttention = () => {
-    this.notified = false
-    this.meshes.at(Icons.ATTENTION).material.opacity = this.baseOpacity
+  resolveAttention = event => {
+    if (event && event.need) {
+      this.notified.delete(event.need)
+    } else {
+      this.notified.clear()
+    }
+
+    if (!this.notified.size) {
+      this.meshes.at(Icons.ATTENTION).material.opacity = this.baseOpacity
+    }
   }
 
   reset(resolveAttention) {

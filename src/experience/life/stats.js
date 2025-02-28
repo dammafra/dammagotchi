@@ -37,27 +37,10 @@ export default class Stats extends EventDispatcher {
   }
 
   checkNeeds() {
-    if (!this.hungry) {
-      this.life.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    if (!this.happy) {
-      this.life.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    if (this.sick) {
-      this.life.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    if (this.bad) {
-      this.life.dispatchEvent({ type: 'notify' })
-      return
-    }
-
-    this.life.dispatchEvent({ type: 'resolve' })
+    this.life.dispatchEvent({ type: !this.hungry ? 'notify' : 'resolve', need: 'hungry' })
+    this.life.dispatchEvent({ type: !this.happy ? 'notify' : 'resolve', need: 'happy' })
+    this.life.dispatchEvent({ type: this.sick ? 'notify' : 'resolve', need: 'sick' })
+    this.life.dispatchEvent({ type: this.bad ? 'notify' : 'resolve', need: 'bad' })
   }
 
   addMess = () => {
