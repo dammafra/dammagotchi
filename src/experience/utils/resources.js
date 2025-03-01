@@ -1,4 +1,4 @@
-import { CubeTextureLoader, EventDispatcher, TextureLoader } from 'three'
+import { CubeTextureLoader, EventDispatcher, SRGBColorSpace, TextureLoader } from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 export default class Resources extends EventDispatcher {
@@ -37,7 +37,10 @@ export default class Resources extends EventDispatcher {
           break
 
         case 'texture':
-          this.loaders.textureLoader.load(source.path, file => this.sourceLoaded(source, file))
+          this.loaders.textureLoader.load(source.path, file => {
+            file.colorSpace = SRGBColorSpace
+            this.sourceLoaded(source, file)
+          })
           break
 
         case 'cubeTexture':

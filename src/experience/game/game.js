@@ -102,7 +102,7 @@ export default class Game {
   setScoreMesh() {
     this.scoreMesh = new Mesh(
       new PlaneGeometry(),
-      new MeshBasicMaterial({ transparent: true, map: this.resources.items.score0 }),
+      new MeshBasicMaterial({ transparent: true, map: this.resources.items.score0, opacity: 10 }),
     )
     this.scoreMesh.visible = false
     this.scoreMesh.position.x = this.screen.bounds.xMax - 0.5

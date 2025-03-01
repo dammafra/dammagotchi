@@ -8,10 +8,10 @@ import {
   Mesh,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
+  NoColorSpace,
   PlaneGeometry,
   Scene,
   ShaderMaterial,
-  SRGBColorSpace,
   Uniform,
   Vector3,
   WebGLRenderTarget,
@@ -112,7 +112,7 @@ export default class Screen {
 
   setEnvironmentMap() {
     const environmentMap = this.resources.items.screenBackground
-    environmentMap.colorSpace = SRGBColorSpace
+    environmentMap.colorSpace = NoColorSpace
 
     this.scene.background = environmentMap
 

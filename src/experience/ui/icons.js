@@ -1,12 +1,5 @@
 import Experience from '@experience'
-import {
-  DoubleSide,
-  Mesh,
-  MeshBasicMaterial,
-  NearestFilter,
-  PlaneGeometry,
-  SRGBColorSpace,
-} from 'three'
+import { DoubleSide, Mesh, MeshBasicMaterial, NearestFilter, PlaneGeometry } from 'three'
 import { Soundboard } from './soundboard'
 
 export default class Icons {
@@ -49,7 +42,6 @@ export default class Icons {
       'attention',
     ].map((icon, index) => {
       const texture = this.resources.items[icon]
-      texture.colorSpace = SRGBColorSpace
       texture.minFilter = NearestFilter
       texture.magFilter = NearestFilter
 
