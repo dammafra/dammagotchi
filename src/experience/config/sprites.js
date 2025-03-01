@@ -1,5 +1,6 @@
 const babyConfig = [
   { name: 'idle', index: 0, split: 2 },
+  { name: 'run', index: 1, split: 3 },
   { name: 'happy', index: 2 },
   { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
@@ -12,6 +13,7 @@ const babyConfig = [
 
 const childConfig = [
   { name: 'idle', index: 0, split: 2 },
+  { name: 'run', index: 1, split: 3 },
   { name: 'happy', index: 2 },
   { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
@@ -23,6 +25,7 @@ const childConfig = [
 
 const teenagerBaseConfig = [
   { name: 'idle', index: 0, split: 2 },
+  { name: 'run', index: 1, split: 3 },
   { name: 'happy', index: 2 },
   { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
@@ -45,18 +48,22 @@ const adultBaseConfig = [
 const adultConfig1 = adultBaseConfig.concat([
   { name: 'no', index: 29 },
   { name: 'sit', index: 32, split: 2 },
+  { name: 'run', index: 35, split: 3 },
 ])
 const adultConfig2 = adultBaseConfig.concat([
   { name: 'no', index: 30 },
   { name: 'sit', index: 33, split: 2 },
+  { name: 'run', index: 36, split: 3 },
 ])
 const adultConfig3 = adultBaseConfig.concat([
   { name: 'no', index: 30 },
   { name: 'sit', index: 33, split: 2 },
+  { name: 'run', index: 36, split: 3 },
 ])
 const adultConfig4 = adultBaseConfig.concat([
   { name: 'no', index: 30 },
   { name: 'sit', index: 34, split: 2 },
+  { name: 'run', index: 37, split: 3 },
 ])
 
 const seniorConfig = [
@@ -68,6 +75,7 @@ const seniorConfig = [
   { name: 'eat', index: 25, split: 2 },
   { name: 'no', index: 28 },
   { name: 'sit', index: 31, split: 2 },
+  { name: 'run', index: 34, split: 3 },
 ]
 
 export default {
@@ -148,6 +156,8 @@ export default {
     { name: 'sleep', index: 4, split: 3 },
     { name: 'upset', index: 6, split: 3 },
     { name: 'effort', index: 8 },
+    { name: 'obstacle', index: 10 },
+    { name: 'game', index: 12, split: 2 },
   ],
   food: [
     { name: 'meal.babies', index: 66 },

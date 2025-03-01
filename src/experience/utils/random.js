@@ -20,4 +20,9 @@ export default class Random {
   static runOneIn(callback, chance) {
     Math.random() < 1 / chance && callback && callback()
   }
+
+  static number(min, max, precision = 2) {
+    const factor = Math.pow(10, precision)
+    return Math.round((Math.random() * (max - min) + min) * factor) / factor
+  }
 }

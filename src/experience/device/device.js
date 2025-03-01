@@ -109,6 +109,24 @@ export default class Device extends EventDispatcher {
 
     this.setMesh()
     this.colorPicker = new ColorPicker()
+
+    window.addEventListener('keydown', e => {
+      switch (e.key) {
+        case ' ':
+          this.dispatchEvent({ type: 'press-A-button' })
+          break
+        case 'ArrowUp':
+        case 'ArrowDown':
+          if (this.selectedMenu) this.dispatchEvent({ type: 'press-A-button' })
+          break
+        case 'Enter':
+          this.dispatchEvent({ type: 'press-B-button' })
+          break
+        case 'Escape':
+          this.dispatchEvent({ type: 'press-C-button' })
+          break
+      }
+    })
   }
 
   setMesh() {

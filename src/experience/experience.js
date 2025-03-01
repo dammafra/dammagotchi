@@ -1,19 +1,20 @@
+import sourcesConfig from '@config/resources'
+import Device from '@device/device'
+import Game from '@game/game'
+import Life from '@life/life'
+import Screen from '@screen/screen'
+import UI from '@ui/ui'
+import Pointer from '@utils/pointer'
+import Resources from '@utils/resources'
+import Sizes from '@utils/sizes'
 import Sprites from '@utils/sprites'
+import Time from '@utils/time'
 import { Scene } from 'three'
 import Camera from './camera'
-import sourcesConfig from './config/resources'
-import Device from './device/device'
-import Environment from './environment.js'
-import Life from './life/life'
+import Environment from './environment'
 import Loading from './loading'
 import Renderer from './renderer'
-import Screen from './screen/screen.js'
-import Tutorial from './tutorial.js'
-import UI from './ui/ui.js'
-import Pointer from './utils/pointer'
-import Resources from './utils/resources'
-import Sizes from './utils/sizes'
-import Time from './utils/time'
+import Tutorial from './tutorial'
 
 export default class Experience {
   /** @type {Experience} */
@@ -60,7 +61,7 @@ export default class Experience {
     if (window.location.hash === '#debug' || document.querySelector('.debug')) {
       this.debug = true
 
-      import('./utils/debug.js').then(({ default: Debug }) => {
+      import('@utils/debug.js').then(({ default: Debug }) => {
         this.debug = new Debug()
         Sprites.setDebug(this.debug)
 
@@ -88,7 +89,7 @@ export default class Experience {
     this.loading.ready()
     this.resourcesReady = true
 
-    this.tutorial = new Tutorial()
+    this.setTutorial()
 
     if (!this.debug) {
       await this.camera.intro()
@@ -108,14 +109,26 @@ export default class Experience {
     this.screen.update()
     this.device.update()
     this.life.update()
+    if (this.game) this.game.update()
   }
 
   updateSeconds = () => {
     if (!this.resourcesReady) return
     this.life.updateSeconds()
+    if (this.game) this.game.updateSeconds()
   }
 
-  resetTutorial() {
+  setTutorial() {
     this.tutorial = new Tutorial()
+  }
+
+  startGame() {
+    if (this.game) return
+    this.game = new Game()
+  }
+
+  endGame() {
+    this.game.dispose()
+    this.game = null
   }
 }

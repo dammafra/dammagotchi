@@ -1,7 +1,8 @@
 import Misc from '@life/misc'
+import { Soundboard } from '@ui/soundboard'
 
 export default {
-  default() {
+  default(muted) {
     this.dispose && this.dispose()
 
     const eyesClosed = this.sprites.get('eyes-closed').at(0)
@@ -18,6 +19,8 @@ export default {
     cloud1.mesh.scale.setScalar(0.5)
     cloud2.mesh.position.copy(cloud1.mesh.position)
     cloud2.mesh.scale.copy(cloud1.mesh.scale)
+
+    if (!muted) Soundboard.instance.play('angry')
 
     const startedAt = this.tick
 

@@ -8,7 +8,7 @@ export default class MenuDiscipline extends Menu {
 
   action() {
     this.life.stats.bad = false
-    this.life.pet.upset()
+    this.life.pet.upset(true)
     this.life.stats.resolveNeeds()
     Soundboard.instance.play('discipline')
   }

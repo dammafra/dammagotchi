@@ -25,6 +25,7 @@ export default {
       '@config': path.resolve(__dirname, 'src/experience/config'),
       '@device': path.resolve(__dirname, 'src/experience/device'),
       '@experience': path.resolve(__dirname, 'src/experience/experience.js'),
+      '@game': path.resolve(__dirname, 'src/experience/game'),
       '@life': path.resolve(__dirname, 'src/experience/life'),
       '@screen': path.resolve(__dirname, 'src/experience/screen'),
       '@shaders': path.resolve(__dirname, 'src/shaders'),

@@ -25,7 +25,7 @@ body main {
 
 body main > div {
   @apply size-[256px] relative transition-all bg-white shadow;
-  @apply font-tama text-4xl;
+  @apply font-tama;
 }
 
 /* tweakpane */

@@ -84,4 +84,59 @@ export default [
     type: 'texture',
     path: 'textures/menu-meter-2.webp',
   },
+  {
+    name: 'score0',
+    type: 'texture',
+    path: 'textures/scores/score-0.webp',
+  },
+  {
+    name: 'score1',
+    type: 'texture',
+    path: 'textures/scores/score-1.webp',
+  },
+  {
+    name: 'score2',
+    type: 'texture',
+    path: 'textures/scores/score-2.webp',
+  },
+  {
+    name: 'score3',
+    type: 'texture',
+    path: 'textures/scores/score-3.webp',
+  },
+  {
+    name: 'score4',
+    type: 'texture',
+    path: 'textures/scores/score-4.webp',
+  },
+  {
+    name: 'score5',
+    type: 'texture',
+    path: 'textures/scores/score-5.webp',
+  },
+  {
+    name: 'score6',
+    type: 'texture',
+    path: 'textures/scores/score-6.webp',
+  },
+  {
+    name: 'score7',
+    type: 'texture',
+    path: 'textures/scores/score-7.webp',
+  },
+  {
+    name: 'score8',
+    type: 'texture',
+    path: 'textures/scores/score-8.webp',
+  },
+  {
+    name: 'score9',
+    type: 'texture',
+    path: 'textures/scores/score-9.webp',
+  },
+  {
+    name: 'score10',
+    type: 'texture',
+    path: 'textures/scores/score-10.webp',
+  },
 ]

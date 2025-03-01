@@ -4,6 +4,7 @@
       "@config/*": ["./src/experience/config/*"],
       "@device/*": ["./src/experience/device/*"],
       "@experience": ["./src/experience/experience.js"],
+      "@game/*": ["./src/experience/game/*"],
       "@life/*": ["./src/experience/life/*"],
       "@screen/*": ["./src/experience/screen/*"],
       "@shaders/*": ["./src/shaders/*"],

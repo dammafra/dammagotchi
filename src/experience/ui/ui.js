@@ -22,32 +22,25 @@ export default class UI {
     this.icons = new Icons()
     this.resetTimeout = null
 
-    this.device.addEventListener('press-A-button', this.onA)
-    this.device.addEventListener('press-B-button', this.onB)
-    this.device.addEventListener('press-C-button', this.onC)
+    this.enableButtons()
+
     this.device.addEventListener('press-reset-button', this.onResetPress)
     this.device.addEventListener('release-reset-button', this.onResetRelease)
     this.device.addEventListener('tab', this.onTab)
     this.life.addEventListener('evolve-out', this.onEvolveOut)
     this.life.addEventListener('reset', this.onReset)
+  }
 
-    window.addEventListener('keydown', e => {
-      switch (e.key) {
-        case ' ':
-          this.onA()
-          break
-        case 'ArrowUp':
-        case 'ArrowDown':
-          if (this.selectedMenu) this.onA()
-          break
-        case 'Enter':
-          this.onB()
-          break
-        case 'Escape':
-          this.onC()
-          break
-      }
-    })
+  enableButtons() {
+    this.device.addEventListener('press-A-button', this.onA)
+    this.device.addEventListener('press-B-button', this.onB)
+    this.device.addEventListener('press-C-button', this.onC)
+  }
+
+  disableButtons() {
+    this.device.removeEventListener('press-A-button', this.onA)
+    this.device.removeEventListener('press-B-button', this.onB)
+    this.device.removeEventListener('press-C-button', this.onC)
   }
 
   ready() {
@@ -69,7 +62,7 @@ export default class UI {
   onTab = () => {
     this.life.start()
     this.camera.intro()
-    this.experience.resetTutorial()
+    this.experience.setTutorial()
   }
 
   onA = () => {
@@ -112,7 +105,12 @@ export default class UI {
   }
 
   onC = () => {
-    if (!this.life.pet?.canInteract) return
+    if (!this.life.pet?.canInteract) {
+      if (this.life.evolving) return
+
+      this.life.pet?.idle()
+      return
+    }
 
     if (this.selectedMenu) {
       this.selectedMenu.hide()

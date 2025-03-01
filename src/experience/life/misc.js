@@ -53,4 +53,10 @@ export default class Misc {
   getSickness(stage) {
     return this.sprites.get('sickness').at(['babies', 'children'].includes(stage) ? 0 : 1)
   }
+
+  getGame() {
+    const [ready, go] = this.sprites.get('game')
+    const obstacle = this.sprites.get('obstacle').at(0)
+    return [ready, go, obstacle]
+  }
 }
