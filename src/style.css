@@ -75,7 +75,7 @@
 }
 
 a {
-  @apply inline-block;
+  @apply inline-block underline;
 }
 
 a,
@@ -119,12 +119,16 @@ main footer {
   background-color: var(--color-primary);
 }
 
+.fab-group {
+  @apply absolute z-10 -top-2 -translate-y-full flex flex-col gap-2;
+}
+
 .fullscreen main footer {
   @apply pb-10;
 }
 
 button {
-  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer drop-shadow shadow-black px-4 py-2;
+  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer shadow px-4 py-2 rounded-md;
   color: var(--color-primary);
 }
 
@@ -176,8 +180,8 @@ button.fab {
 
 .credits .content {
   @apply opacity-0 transition-opacity;
-  @apply flex flex-col items-center justify-center gap-8 w-full h-full px-4;
-  @apply text-white font-mono drop-shadow shadow-black text-center;
+  @apply flex flex-col items-center justify-center gap-4 w-full h-full px-4;
+  @apply text-white font-mono drop-shadow shadow-black;
 }
 
 .credits.open {
@@ -186,6 +190,26 @@ button.fab {
 
 .credits.open .content {
   @apply opacity-100;
+}
+
+.credits .content > div {
+  @apply flex gap-2 items-center text-right;
+}
+
+.credits .content > div:nth-child(even) {
+  @apply flex-row-reverse text-left;
+}
+
+.credits .content > div > span {
+  @apply text-sm;
+}
+
+.credits .content > div > span > span {
+  @apply text-xs whitespace-nowrap;
+}
+
+.credits .content img {
+  @apply size-14;
 }
 
 /* tutorial */
