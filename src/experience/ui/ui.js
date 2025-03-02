@@ -83,6 +83,7 @@ export default class UI {
   onB = () => {
     if (!this.life.pet?.canInteract) return
     if (this.icons.selected === Icons.ATTENTION) return
+    if (this.life.stats.sleep && ![Icons.LIGHT, Icons.METER].includes(this.icons.selected)) return
 
     if (this.selectedMenu) {
       this.selectedMenu = this.selectedMenu.action()

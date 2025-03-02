@@ -5,7 +5,7 @@ export default {
     this.dispose && this.dispose()
 
     this.canInteract = true
-    this.isSleeping = true
+    this.stats.sleep = true
 
     const [bed1, bed2] = this.sprites.get('bed')
     bed1.spawn()
@@ -36,7 +36,7 @@ export default {
     }
 
     this.dispose = () => {
-      this.isSleeping = false
+      this.stats.sleep = false
       this.screen.turnOn()
 
       sleep1.dispose()

@@ -26,6 +26,7 @@ export default {
 
     this.updateSeconds = () => {
       if (this.stats.sick) this.sick()
+      if (this.stats.sleep) this.sleep()
 
       // animation
       idle1.mesh.visible = Random.boolean()

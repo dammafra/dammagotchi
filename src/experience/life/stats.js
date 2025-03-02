@@ -21,19 +21,20 @@ export default class Stats extends EventDispatcher {
     this.mess = state.mess
     this.sick = state.sick
     this.bad = state.bad
+    this.sleep = state.sleep
   }
 
   updateSeconds() {
-    if (['egg', 'death'].includes(this.life.stage) || !this.life.pet.canEvolve) return
-
-    Random.runOneIn(() => this.hungry && this.hungry--, lifeConfig.stats.hungryDecayRate)
-    Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
-    Random.runOneIn(this.addMess, lifeConfig.stats.messGenerationRate)
-    Random.runOneIn(this.setSick, lifeConfig.stats.sicknessRate)
-    Random.runOneIn(this.setBad, lifeConfig.stats.badRate)
+    if (!['egg', 'death'].includes(this.life.stage) && this.life.pet.canEvolve) {
+      Random.runOneIn(() => this.hungry && this.hungry--, lifeConfig.stats.hungryDecayRate)
+      Random.runOneIn(() => this.happy && this.happy--, lifeConfig.stats.happyDecayRate)
+      Random.runOneIn(this.addMess, lifeConfig.stats.messGenerationRate)
+      Random.runOneIn(this.setSick, lifeConfig.stats.sicknessRate)
+      Random.runOneIn(this.setBad, lifeConfig.stats.badRate)
+      this.checkNeeds()
+    }
 
     this.saveState()
-    this.checkNeeds()
   }
 
   checkNeeds() {
@@ -75,6 +76,7 @@ export default class Stats extends EventDispatcher {
       mess: this.mess,
       sick: this.sick,
       bad: this.bad,
+      sleep: this.sleep,
     }
     localStorage.setItem('stats', JSON.stringify(state))
   }
@@ -93,6 +95,7 @@ export default class Stats extends EventDispatcher {
         mess: 0,
         sick: false,
         bad: false,
+        sleep: false,
       }
     }
   }
@@ -106,6 +109,7 @@ export default class Stats extends EventDispatcher {
     this.mess = 0
     this.sick = false
     this.bad = false
+    this.sleep = false
     this.saveState()
   }
 
@@ -121,5 +125,6 @@ export default class Stats extends EventDispatcher {
     debug.addBinding(this, 'mess', { readonly: true, label: '💩 mess' })
     debug.addBinding(this, 'sick', { readonly: true, label: '💉 sick' })
     debug.addBinding(this, 'bad', { readonly: true, label: '😈 bad' })
+    debug.addBinding(this, 'sleep', { readonly: true, label: '💤 sleep' })
   }
 }

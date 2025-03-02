@@ -40,7 +40,6 @@ export default class Pet extends EventDispatcher {
     this.canEvolve = false
     this.canInteract = false
     this.isMessing = false
-    this.isSleeping = false
 
     const sprite = this.model ? `pets.${this.stage}.${this.model}` : `pets.${this.stage}`
     this.sprites = Sprites.for(sprite)

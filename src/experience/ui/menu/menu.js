@@ -58,8 +58,6 @@ export default class Menu {
     Menu.arrow.visible = this.hasOptions
 
     this.life.hide()
-
-    this.previouslyBlank = this.screen.isBlank
     this.screen.turnOn()
   }
 
@@ -69,7 +67,7 @@ export default class Menu {
     Menu.arrow.visible = false
 
     this.life.show()
-    this.previouslyBlank && this.screen.turnOff()
+    this.life.stats.sleep && this.screen.turnOff()
 
     this.reset()
   }
