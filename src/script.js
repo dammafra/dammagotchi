@@ -13,8 +13,8 @@ document.querySelectorAll('.fab').forEach(b => b.addEventListener('focus', e => 
 
 const isMobile = () => /Mobi|Android|iPhone|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent)
 
-const fullScreenButton = document.getElementById('fullscreen')
-fullScreenButton.addEventListener('click', () => {
+const fullscreenButton = document.getElementById('fullscreen')
+fullscreenButton.addEventListener('click', () => {
   const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
 
   if (!fullscreenElement) {
@@ -32,8 +32,20 @@ fullScreenButton.addEventListener('click', () => {
   }
 
   if (isMobile()) document.body.classList.toggle('fullscreen')
-  fullScreenButton.firstElementChild.classList.toggle('fa-compress')
-  fullScreenButton.firstElementChild.classList.toggle('fa-expand')
+  fullscreenButton.firstElementChild.classList.toggle('fa-compress')
+  fullscreenButton.firstElementChild.classList.toggle('fa-expand')
+})
+
+document.addEventListener('fullscreenchange', () => {
+  const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+
+  if (fullscreenElement) {
+    fullscreenButton.firstElementChild.classList.add('fa-compress')
+    fullscreenButton.firstElementChild.classList.remove('fa-expand')
+  } else {
+    fullscreenButton.firstElementChild.classList.remove('fa-compress')
+    fullscreenButton.firstElementChild.classList.add('fa-expand')
+  }
 })
 
 const isStandalone = () =>
@@ -41,14 +53,14 @@ const isStandalone = () =>
 
 if (isStandalone()) {
   if (isMobile()) document.body.classList.add('fullscreen')
-  fullScreenButton.remove()
+  fullscreenButton.remove()
 }
 
 const hasFullScreen = () =>
   document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen
 
 if (!hasFullScreen()) {
-  fullScreenButton.remove()
+  fullscreenButton.remove()
 }
 
 document.body.addEventListener('touchstart', createDoubleTapPreventer(500), { passive: false })

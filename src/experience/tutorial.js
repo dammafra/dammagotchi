@@ -35,8 +35,6 @@ export default class Tutorial {
             const header = currentStepElement?.querySelector('.shepherd-header')
             if (header) {
               const progress = document.createElement('span')
-              progress.style.position = 'absolute'
-              progress.style.fontSize = '12px'
               progress.innerText = `${this.tour.steps.indexOf(currentStep) + 1}/${this.tour.steps.length}`
               header.append(progress)
             }
@@ -80,19 +78,19 @@ export default class Tutorial {
       },
       {
         id: 'button-a',
-        title: 'A Button [spacebar]',
+        title: `A Button${this.pointer.isTouchDevice ? '' : '<img src="images/keys/tab.png"/>'}`,
         text: '➡️ Press it to move between menu icons and options',
         buttons: [skipButton, backButton, nextButton('Got it!')],
       },
       {
         id: 'button-b',
-        title: 'B Button [enter]',
+        title: `B Button${this.pointer.isTouchDevice ? '' : '<div><img src="images/keys/spacebar.png"/><img class="ml-2" src="images/keys/return.png"/></div>'}`,
         text: '🚀 Press it to confirm selections, interact with your pet, and make things happen!',
         buttons: [skipButton, backButton, nextButton('Understood!')],
       },
       {
         id: 'button-c',
-        title: 'C Button [esc]',
+        title: `C Button${this.pointer.isTouchDevice ? '' : '<img src="images/keys/backspace.png"/>'}`,
         text: '❌ Press it to go back, cancel selection, or close menus',
         buttons: [skipButton, backButton, nextButton('Okay!')],
       },
@@ -144,7 +142,7 @@ export default class Tutorial {
       },
       {
         id: 'sounds',
-        title: 'Sounds [M][B]',
+        title: `Sounds${this.pointer.isTouchDevice ? '' : '<div><img src="images/keys/m.png"/><img src="images/keys/b.png"/></div>'}`,
         text: '🎶 Turn the game sounds and music on or off whenever you like!<br/>(On mobile, the game respects your device’s silent mode)',
         classes: 'ignore',
         attachTo: {
@@ -155,7 +153,7 @@ export default class Tutorial {
       },
       {
         id: 'time-speed',
-        title: 'Time Speed [1][2][3]',
+        title: `Time Speed${this.pointer.isTouchDevice ? '' : '<div><img src="images/keys/1.png"/><img src="images/keys/2.png"/><img src="images/keys/3.png"/></div>'}`,
         text: '⏱️ You can adjust how fast time passes in the game. Choose the pace that fits your style between three options',
         classes: 'ignore',
         attachTo: {

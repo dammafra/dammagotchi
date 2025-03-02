@@ -31,6 +31,11 @@ export default function () {
     }
 
     if (this.tick >= startedAt + 6) {
+      if (happy.mesh.position.x < obstacle.mesh.position.x) {
+        this.fell()
+        return
+      }
+
       this.game.jumped = false
       this.game.score++
       this.game.refreshScoreTexture()

@@ -235,8 +235,28 @@ button.fab {
   @apply bg-white;
 }
 
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header:has(h3 *) {
+  @apply font-tama flex pb-0;
+}
+
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header > span {
+  @apply font-mono absolute top-4 text-sm;
+}
+
 .tutorial-step.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title {
   @apply font-tama justify-center;
+}
+
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title:has(*) {
+  @apply font-tama flex flex-col items-center;
+}
+
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title > div {
+  @apply flex;
+}
+
+.tutorial-step.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title img {
+  @apply size-8;
 }
 
 .tutorial-step .shepherd-button:not(.shepherd-button-secondary) {

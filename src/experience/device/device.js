@@ -111,13 +111,17 @@ export default class Device extends EventDispatcher {
 
     window.addEventListener('keydown', e => {
       switch (e.key) {
-        case ' ':
+        case 'Tab':
+          e.preventDefault()
           this.dispatchEvent({ type: 'press-A-button' })
           break
+        case ' ':
         case 'Enter':
+          e.preventDefault()
           this.dispatchEvent({ type: 'press-B-button' })
           break
-        case 'Escape':
+        case 'Backspace':
+          e.preventDefault()
           this.dispatchEvent({ type: 'press-C-button' })
           break
       }
