@@ -22,10 +22,6 @@ import Pixel from './pixel'
 export default class Screen {
   static debugName = '📺 screen'
 
-  get isBlank() {
-    return this.blank.visible
-  }
-
   constructor() {
     this.experience = Experience.instance
     this.time = this.experience.time
@@ -123,17 +119,18 @@ export default class Screen {
   setFlicker(value) {
     this.flicker = value
     if (!this.flicker) {
-      Pixel.material?.color.set(new Color('black'))
-      this.blank.visible = false
+      this.turnOn()
     }
   }
 
   turnOn() {
     this.blank.visible = false
+    Pixel.material?.color.set(new Color('black'))
   }
 
   turnOff() {
     this.blank.visible = true
+    Pixel.material?.color.set(new Color('white'))
   }
 
   ready() {
@@ -150,8 +147,7 @@ export default class Screen {
     if (!this.flicker) return
 
     const toggle = Math.floor(this.time.elapsed * this.time.speed * this.flickerSpeed) % 2 === 0
-    this.blank.visible = toggle
-    Pixel.material.color.set(new Color(toggle ? 'white' : 'black'))
+    toggle ? this.turnOff() : this.turnOn()
   }
 
   contains(sprite, position) {

@@ -59,4 +59,8 @@ export default class Misc {
     const obstacle = this.sprites.get('obstacle').at(0)
     return [ready, go, obstacle]
   }
+
+  getSleep() {
+    return this.sprites.get('sleep')
+  }
 }

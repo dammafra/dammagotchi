@@ -5,6 +5,7 @@ const babyConfig = [
   { name: 'sad', index: 6 },
   { name: 'eyes-closed', index: 8 },
   { name: 'upset', index: 10 },
+  { name: 'bed', index: 11, split: 2 },
   { name: 'eat', index: 12, split: 2 },
   { name: 'hatching', index: 13 },
   { name: 'no', index: 14 },
@@ -21,6 +22,7 @@ const childConfig = [
   { name: 'eat', index: 12, split: 2 },
   { name: 'no', index: 14 },
   { name: 'sit', index: 14 },
+  { name: 'bed', index: 15, split: 2 },
 ]
 
 const teenagerBaseConfig = [
@@ -34,8 +36,8 @@ const teenagerBaseConfig = [
   { name: 'no', index: 14 },
   { name: 'sit', index: 16, split: 2 },
 ]
-const teenagerConfig1 = teenagerBaseConfig
-const teenagerConfig2 = teenagerBaseConfig
+const teenagerConfig1 = teenagerBaseConfig.concat([{ name: 'bed', index: 17, split: 2 }])
+const teenagerConfig2 = teenagerBaseConfig.concat([{ name: 'bed', index: 15, split: 2 }])
 
 const adultBaseConfig = [
   { name: 'idle', index: 0, split: 2 },
@@ -46,21 +48,25 @@ const adultBaseConfig = [
   { name: 'eat', index: 26, split: 2 },
 ]
 const adultConfig1 = adultBaseConfig.concat([
+  { name: 'bed', index: 21, split: 2 },
   { name: 'no', index: 29 },
   { name: 'sit', index: 32, split: 2 },
   { name: 'run', index: 35, split: 3 },
 ])
 const adultConfig2 = adultBaseConfig.concat([
+  { name: 'bed', index: 25, split: 2 },
   { name: 'no', index: 30 },
   { name: 'sit', index: 33, split: 2 },
   { name: 'run', index: 36, split: 3 },
 ])
 const adultConfig3 = adultBaseConfig.concat([
+  { name: 'bed', index: 25, split: 2 },
   { name: 'no', index: 30 },
   { name: 'sit', index: 33, split: 2 },
   { name: 'run', index: 36, split: 3 },
 ])
 const adultConfig4 = adultBaseConfig.concat([
+  { name: 'bed', index: 29, split: 2 },
   { name: 'no', index: 30 },
   { name: 'sit', index: 34, split: 2 },
   { name: 'run', index: 37, split: 3 },
@@ -71,6 +77,7 @@ const seniorConfig = [
   { name: 'happy', index: 7 },
   { name: 'sad', index: 14 },
   { name: 'eyes-closed', index: 18 },
+  { name: 'bed', index: 20, split: 2 },
   { name: 'upset', index: 22 },
   { name: 'eat', index: 25, split: 2 },
   { name: 'no', index: 28 },

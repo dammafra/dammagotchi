@@ -6,6 +6,6 @@ export default class MenuLight extends Menu {
   }
 
   action() {
-    this.screen.isBlank ? this.screen.turnOn() : this.screen.turnOff()
+    this.life.pet.isSleeping ? this.life.pet.idle() : this.life.pet.sleep()
   }
 }
