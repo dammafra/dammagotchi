@@ -77,7 +77,13 @@ export default class Camera {
     this.controls.enabled = false
     this.controls.smoothTime = speed
     this.controls.zoomTo(1, true)
+
+    !this.experience.life.started && this.sizes.aspectRatio < 1
+      ? this.controls.setFocalOffset(1, 0, 0.5, true)
+      : this.controls.setFocalOffset(0, 0, 0, true)
+
     await this.controls.setLookAt(0, 0, 3, 0, 0, 0, true)
+
     this.controls.enabled = true
   }
 
