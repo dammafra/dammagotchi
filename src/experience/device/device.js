@@ -115,10 +115,6 @@ export default class Device extends EventDispatcher {
         case ' ':
           this.dispatchEvent({ type: 'press-A-button' })
           break
-        case 'ArrowUp':
-        case 'ArrowDown':
-          if (this.selectedMenu) this.dispatchEvent({ type: 'press-A-button' })
-          break
         case 'Enter':
           this.dispatchEvent({ type: 'press-B-button' })
           break

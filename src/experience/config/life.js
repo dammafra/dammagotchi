@@ -2,9 +2,9 @@ export default {
   stats: {
     hungryDecayRate: 200,
     happyDecayRate: 200,
-    messGenerationRate: 100,
-    sicknessRate: 150,
-    badRate: 200,
+    messGenerationRate: 150,
+    sicknessRate: 200,
+    badRate: 300,
   },
   transitions: {
     hatching: 6,
@@ -13,11 +13,11 @@ export default {
   },
   stages: {
     egg: 15,
-    babies: 100,
-    children: 150,
-    teenagers: 200,
-    adults: 250,
-    seniors: 200,
+    babies: 200,
+    children: 250,
+    teenagers: 300,
+    adults: 350,
+    seniors: 250,
     death: 0,
   },
 }

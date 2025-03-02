@@ -25,7 +25,7 @@ export default function () {
   this.update = null
 
   this.updateSeconds = () => {
-    if (happy.mesh.position.distanceTo(obstacle.mesh.position) < 0.67) {
+    if (happy.mesh.position.distanceTo(obstacle.mesh.position) < 0.68) {
       this.fell()
       return
     }

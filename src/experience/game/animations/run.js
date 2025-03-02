@@ -14,7 +14,7 @@ export default function () {
   this.game.group.add(run1.mesh, run2.mesh)
 
   const obstacle = Misc.instance.getGame().at(2)
-  obstacle.mesh.position.x = this.screen.bounds.xMax - Random.number(0, 2)
+  obstacle.mesh.position.x = this.screen.bounds.xMax - Random.number(0.6, 1.5)
   this.game.group.add(obstacle.mesh)
 
   this.game.scoreMesh.visible = true
