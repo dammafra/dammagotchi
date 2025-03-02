@@ -94,7 +94,6 @@ export default class Device extends EventDispatcher {
       onPull: () => {
         this.tab.dispose()
         this.tab = null
-        localStorage.setItem('tab-pulled', 'true')
         this.dispatchEvent({ type: 'tab' })
       },
     },
@@ -151,7 +150,7 @@ export default class Device extends EventDispatcher {
   }
 
   ready() {
-    if (!JSON.parse(localStorage.getItem('tab-pulled'))) {
+    if (!this.experience.life.started) {
       this.tab = new Tab(this.config.tab)
       this.scene.add(this.tab.mesh)
     }

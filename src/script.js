@@ -1,11 +1,10 @@
 import { createDoubleTapPreventer } from '@utils/double-tap-preventer'
 import Experience from './experience/experience'
 
-const v = '1.1'
+const v = '1.2'
 if (v !== localStorage.getItem('version')) {
   localStorage.removeItem('life')
   localStorage.removeItem('stats')
-  localStorage.removeItem('tab-pulled')
 }
 localStorage.setItem('version', v)
 
