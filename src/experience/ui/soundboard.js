@@ -24,6 +24,7 @@ export class Soundboard {
     this.time = this.experience.time
 
     this.setMutedButton()
+    this.setBackgorundMusicButton()
   }
 
   async loadSounds() {
@@ -47,6 +48,29 @@ export class Soundboard {
     })
 
     await Promise.all(promises)
+  }
+
+  async playBackgroundMusic() {
+    if (this.backgroundMusicSource) return
+
+    const response = await fetch('sounds/background.mp3')
+    const arrayBuffer = await response.arrayBuffer()
+
+    this.backgroundMusicSource = this.audioContext.createBufferSource()
+
+    const backgroundMusicBuffer = await this.audioContext.decodeAudioData(arrayBuffer)
+    this.backgroundMusicSource.buffer = backgroundMusicBuffer
+    this.backgroundMusicSource.loop = true
+
+    const gainNode = this.audioContext.createGain()
+    gainNode.gain.value = 0.3
+    this.backgroundMusicSource.connect(gainNode).connect(this.audioContext.destination)
+    this.backgroundMusicSource.start()
+  }
+
+  async stopBackgroundMusic() {
+    this.backgroundMusicSource?.stop()
+    this.backgroundMusicSource = null
   }
 
   setMuted(value) {
@@ -89,5 +113,19 @@ export class Soundboard {
 
     this.button = document.getElementById('muted')
     this.button.addEventListener('click', this.toggleMuted)
+  }
+
+  toggleBackgroundMusic = () => {
+    this.backgroundMusic = !this.backgroundMusic
+    this.backgroundMusic ? this.playBackgroundMusic() : this.stopBackgroundMusic()
+
+    this.backgroundMusicButton.firstElementChild.children.item(1).classList.toggle('!hidden')
+  }
+
+  setBackgorundMusicButton() {
+    window.addEventListener('keypress', e => e.key === 'b' && this.toggleBackgroundMusic())
+
+    this.backgroundMusicButton = document.getElementById('music')
+    this.backgroundMusicButton.addEventListener('click', this.toggleBackgroundMusic)
   }
 }

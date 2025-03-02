@@ -144,11 +144,11 @@ export default class Tutorial {
       },
       {
         id: 'sounds',
-        title: 'Sounds [M]',
-        text: '🎶 Turn the game sound on or off whenever you like!<br/>(On mobile, the game respects your device’s silent mode)',
+        title: 'Sounds [M][B]',
+        text: '🎶 Turn the game sounds and music on or off whenever you like!<br/>(On mobile, the game respects your device’s silent mode)',
         classes: 'ignore',
         attachTo: {
-          element: '#muted',
+          element: '#sounds',
           on: 'top',
         },
         buttons: [skipButton, backButton, nextButton('Sounds good!')],

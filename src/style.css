@@ -49,13 +49,40 @@
   font-style: normal;
 }
 
+@utility pix-cursor-auto {
+  cursor: url('/cursors/auto.png'), auto;
+}
+
+@utility pix-cursor-pointer {
+  cursor: url('/cursors/pointer.png'), pointer;
+}
+
+@utility pix-cursor-grab {
+  cursor: url('/cursors/grab.png'), grab;
+}
+
+@utility pix-cursor-grabbing {
+  cursor: url('/cursors/grabbing.png'), grabbing;
+}
+
 :root {
   --color-primary: var(--color-indigo-900);
 }
 
 /* styles */
 * {
-  @apply select-none touch-manipulation;
+  @apply select-none touch-manipulation !pix-cursor-auto;
+}
+
+a {
+  @apply inline-block;
+}
+
+a,
+button,
+a *,
+button * {
+  @apply !pix-cursor-pointer;
 }
 
 html,
@@ -74,15 +101,15 @@ body {
 }
 
 .webgl.grab {
-  @apply !cursor-grab;
+  @apply !pix-cursor-grab;
 }
 
 .webgl.grabbing {
-  @apply !cursor-grabbing;
+  @apply !pix-cursor-grabbing;
 }
 
 .webgl.pointer {
-  @apply !cursor-pointer;
+  @apply !pix-cursor-pointer;
 }
 
 main footer {
