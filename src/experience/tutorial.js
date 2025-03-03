@@ -143,7 +143,7 @@ export default class Tutorial {
       {
         id: 'sounds',
         title: `Sounds${this.pointer.isTouchDevice ? '' : '<div><img src="images/keys/m.png"/><img src="images/keys/b.png"/></div>'}`,
-        text: '🎶 Turn the game sounds and music on or off whenever you like!<br/>(On mobile, the game respects your device’s silent mode)',
+        text: `🎶 Turn the game sounds and music on or off whenever you like!${this.pointer.isTouchDevice ? '<br/>Your device’s silent mode is respected' : ''}`,
         classes: 'ignore',
         attachTo: {
           element: '#sounds',
