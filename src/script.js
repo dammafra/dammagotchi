@@ -1,5 +1,8 @@
 import { createDoubleTapPreventer } from '@utils/double-tap-preventer'
+import { inject } from '@vercel/analytics'
 import Experience from './experience/experience'
+
+inject()
 
 const v = '1.3'
 if (v !== localStorage.getItem('version')) {
