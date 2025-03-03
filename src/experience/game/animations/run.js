@@ -4,6 +4,8 @@ import Random from '@utils/random'
 export default function () {
   this.dispose && this.dispose()
 
+  this.game.running = true
+
   const [run1, run2] = this.life.pet.sprites.get('run')
   run1.mesh.visible = true
   run1.mesh.rotation.y = Math.PI
@@ -43,5 +45,7 @@ export default function () {
     obstacle.mesh.position.x -= this.screen.unit * this.game.speed
   }
 
-  this.dispose = () => {}
+  this.dispose = () => {
+    this.game.running = false
+  }
 }

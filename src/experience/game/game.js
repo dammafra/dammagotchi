@@ -26,7 +26,9 @@ export default class Game {
   }
 
   onB = () => {
-    this.jumped = true
+    if (this.running) {
+      this.jumped = true
+    }
   }
 
   onC = () => {
