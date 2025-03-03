@@ -79,7 +79,7 @@ export default class Tutorial {
       {
         id: 'button-a',
         title: `A Button${this.pointer.isTouchDevice ? '' : '<img src="images/keys/tab.png"/>'}`,
-        text: '➡️ Press it to move between menu icons and options',
+        text: '➡️ Press it to move between<br/>menu icons and options',
         buttons: [skipButton, backButton, nextButton('Got it!')],
       },
       {
@@ -91,13 +91,13 @@ export default class Tutorial {
       {
         id: 'button-c',
         title: `C Button${this.pointer.isTouchDevice ? '' : '<img src="images/keys/backspace.png"/>'}`,
-        text: '❌ Press it to go back, cancel selection, or close menus',
+        text: '❌ Press it to go back,<br/>cancel selection, or close menus',
         buttons: [skipButton, backButton, nextButton('Okay!')],
       },
       {
         id: 'screen',
         title: 'Screen',
-        text: '📺 This is where your pet lives, eats, sleeps, and plays!<br/>Ready to learn about the actions?',
+        text: '📺 This is where your pet lives,<br/>eats, sleeps, and plays!<br/>Ready to learn about the actions?',
         buttons: [skipButton, backButton, nextButton("I'm Ready!")],
       },
 
@@ -126,13 +126,13 @@ export default class Tutorial {
       {
         id: 'button-reset',
         title: 'Reset',
-        text: '🔄 Everything comes to an end… whether it’s when your pet passes away, or if you ever want a fresh start, just hit the reset button',
+        text: '🔄 Everything comes to an end…<br/>whether it’s when your pet passes away,<br/>or if you ever want a fresh start,<br/>just hit the reset button',
         buttons: [skipButton, backButton, nextButton('What’s next?')],
       },
       {
         id: 'customization',
         title: 'Customization',
-        text: ' 🌈 Change the frame and shell colors to make it truly yours!',
+        text: ' 🌈 Change the frame and shell colors<br/>to make it truly yours!',
         classes: 'ignore',
         attachTo: {
           element: '#colors',
@@ -143,7 +143,7 @@ export default class Tutorial {
       {
         id: 'sounds',
         title: `Sounds${this.pointer.isTouchDevice ? '' : '<div><img src="images/keys/m.png"/><img src="images/keys/b.png"/></div>'}`,
-        text: `🎶 Turn the game sounds and music on or off whenever you like!${this.pointer.isTouchDevice ? '<br/>Your device’s silent mode is respected' : ''}`,
+        text: `🎶 Turn the game sounds and music<br/>ON or OFF whenever you like!${this.pointer.isTouchDevice ? '<br/>Your device’s silent mode is respected' : ''}`,
         classes: 'ignore',
         attachTo: {
           element: '#sounds',
@@ -154,7 +154,7 @@ export default class Tutorial {
       {
         id: 'time-speed',
         title: `Time Speed${this.pointer.isTouchDevice ? '' : '<div><img src="images/keys/1.png"/><img src="images/keys/2.png"/><img src="images/keys/3.png"/></div>'}`,
-        text: '⏱️ You can adjust how fast time passes in the game. Choose the pace that fits your style between three options',
+        text: '⏱️ You can adjust how fast time passes.<br/>Choose the pace that fits your style<br/>between three options',
         classes: 'ignore',
         attachTo: {
           element: '#speed-settings',

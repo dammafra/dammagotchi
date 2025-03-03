@@ -256,7 +256,7 @@ button.fab {
 }
 
 .tutorial-step .shepherd-text {
-  @apply text-center;
+  @apply text-center text-sm;
 }
 
 .tutorial-step.small .shepherd-text {
@@ -280,7 +280,7 @@ button.fab {
 }
 
 .tutorial-step.shepherd-has-title .shepherd-content .shepherd-header > span {
-  @apply font-mono absolute top-4 text-sm;
+  @apply font-mono absolute top-4 text-xs;
 }
 
 .tutorial-step.shepherd-has-title .shepherd-content .shepherd-header .shepherd-title {
