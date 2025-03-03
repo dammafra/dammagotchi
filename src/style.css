@@ -148,6 +148,10 @@ button {
   color: var(--color-primary);
 }
 
+button.outlined {
+  @apply bg-transparent border border-white text-white shadow-none opacity-80 hover:opacity-100 active:opacity-100;
+}
+
 button.fab {
   @apply rounded-full size-10 text-xl p-0;
 }
