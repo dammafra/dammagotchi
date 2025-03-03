@@ -35,6 +35,22 @@
   }
 }
 
+@theme {
+  --animate-sway: sway 0.5s infinite ease-in-out;
+
+  @keyframes sway {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+}
+
 @utility font-kablammo {
   font-family: 'Kablammo', 'Comic Sans MS', 'Comic Sans', sans-serif;
   font-optical-sizing: auto;
@@ -209,7 +225,7 @@ button.fab {
 }
 
 .credits .content img {
-  @apply size-14;
+  @apply size-14 group-hover:animate-sway group-active:animate-sway;
 }
 
 /* tutorial */
