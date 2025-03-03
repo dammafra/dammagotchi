@@ -271,7 +271,9 @@ button.fab {
   @apply p-4 justify-center;
 }
 
-.fullscreen .tutorial-step .shepherd-footer {
+.fullscreen
+  .tutorial-step[data-popper-placement='bottom']:not(.shepherd-centered)
+  .shepherd-footer {
   @apply pb-10;
 }
 
@@ -306,6 +308,7 @@ button.fab {
 .tutorial-step .shepherd-button {
   @apply px-4;
 }
+
 .tutorial-step .shepherd-button:not(.shepherd-button-secondary) {
   @apply bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/80;
 }
