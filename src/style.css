@@ -144,7 +144,7 @@ main footer {
 }
 
 button {
-  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer shadow px-4 py-2 rounded-md;
+  @apply bg-white hover:bg-gray-200 flex items-center justify-center cursor-pointer shadow px-4 py-2 rounded-md text-sm uppercase;
   color: var(--color-primary);
 }
 
@@ -299,6 +299,9 @@ button.fab {
   @apply size-8;
 }
 
+.tutorial-step .shepherd-button {
+  @apply px-4;
+}
 .tutorial-step .shepherd-button:not(.shepherd-button-secondary) {
-  background-color: var(--color-primary);
+  @apply bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/80;
 }

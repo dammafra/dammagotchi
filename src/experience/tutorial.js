@@ -69,11 +69,11 @@ export default class Tutorial {
         attachTo: undefined,
         buttons: [
           {
-            text: '😎 Yes,<br/>I’m a pro!',
+            text: '😎 Yes, I’m a pro!',
             secondary: true,
             action: () => (this.device.tab ? this.tour.show('tab') : this.tour.complete()),
           },
-          nextButton('🤔 No,<br/>teach me'),
+          nextButton('🤔 No, teach me'),
         ],
       },
       {
