@@ -238,7 +238,7 @@ button.fab {
 }
 
 .tutorial-overlay .tutorial-spotlight {
-  @apply bg-transparent rounded-full size-[10000px] aspect-square border-black/60 border-[1000px] transition-all duration-1500;
+  @apply bg-transparent rounded-full aspect-square outline-black/60 outline-[10000px] transition-all duration-1500;
 }
 
 /* reset */

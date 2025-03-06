@@ -201,12 +201,12 @@ export default class Tutorial {
   }
 
   hideSpotlight() {
-    this.spotlight.style.borderWidth = '1000px'
+    this.spotlight.style.width = this.spotlight.style.height = '2000px'
   }
 
   setSpotlight(dimension) {
-    this.spotlight.style.borderWidth =
-      dimension === 'lg' ? `4650px` : dimension === 'md' ? '4800px' : '4900px'
+    this.spotlight.style.width = this.spotlight.style.height =
+      dimension === 'lg' ? `80svh` : dimension === 'md' ? '50svh' : '30svh'
   }
 
   start = () => {
