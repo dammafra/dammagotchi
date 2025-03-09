@@ -38,9 +38,8 @@ Your pet has various needs that must be managed, including hunger, happiness, sl
 
 A built-in mini-game challenges the pet to jump over obstacles, providing an interactive way to keep it entertained. Performing well in the game can increase the pet's happiness and engagement.
 
-|                                                    |                                              |                                                  |                                                  |
-| -------------------------------------------------- | -------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
 | <img src="./screens/game/ready.png" alt="Ready"  > | <img src="./screens/game/go.png" alt="Go"  > | <img src="./screens/game/jump.png" alt="Jump"  > | <img src="./screens/game/fail.png" alt="Fail"  > |
+| -------------------------------------------------- | -------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
 
 ### Customizable Device Appearance
 
@@ -67,6 +66,10 @@ Players can control the simulation speed, adjusting how quickly time passes to f
 ### State Persistence
 
 The game automatically saves the pet’s progress and status using local storage. This ensures that users can continue where they left off, even after closing the browser or refreshing the page.
+
+### Mobile-Friendly
+
+The experience is optimized for mobile devices, providing a smooth and engaging experience on smartphones and tablets. It adapts to smaller screens, ensuring easy interaction and navigation on touch interfaces.
 
 ## Technologies Used
 
