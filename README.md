@@ -22,15 +22,17 @@ The pet follows a full life cycle, starting as an egg and evolving into differen
 | Senior                                                     | Death                                                          |
 | <img src="./screens/life-cycle/senior.png" alt="Senior"  > | <img src="./screens/life-cycle/death.png" alt="Death"  >       |
 
-### Needs Management System
+### Needs
 
 Your pet has various needs that must be managed, including hunger, happiness, sleep, cleanliness, illness, and discipline. Ignoring these factors can lead to negative consequences, affecting the pet’s well-being.
 
-| Feed                                              | Sleep                                               | Illness                                                 |
-| ------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
-| <img src="./screens/needs/feed.png" alt="Feed"  > | <img src="./screens/needs/sleep.png" alt="Sleep"  > | <img src="./screens/needs/illness.png" alt="Illness"  > |
-| Toilet                                            |                                                     |                                                         |
-| <img src="./screens/needs/mess.png" alt="Mess"  > | <img src="./screens/needs/clean.png" alt="Clean"  > | <img src="./screens/needs/toilet.png" alt="Toilet"  >   |
+| Feed                                                | Sleep                                               | Illness                                                 |
+| --------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
+| <img src="./screens/needs/feed.png" alt="Feed"  >   | <img src="./screens/needs/sleep.png" alt="Sleep"  > | <img src="./screens/needs/illness.png" alt="Illness"  > |
+| Toilet                                              |                                                     |                                                         |
+| <img src="./screens/needs/mess.png" alt="Mess"  >   | <img src="./screens/needs/clean.png" alt="Clean"  > | <img src="./screens/needs/toilet.png" alt="Toilet"  >   |
+| Happy                                               | Upset                                               |                                                         |
+| <img src="./screens/needs/happy.png" alt="Happy"  > | <img src="./screens/needs/upset.png" alt="Upset"  > |                                                         |
 
 ### Game: Jumping Obstacles
 
@@ -46,15 +48,7 @@ Users can personalize the look of their virtual Tamagotchi by changing the devic
 
 <img src="./screens/customization.gif" alt="Customization"  >
 
-### Adjustable Time Speed
-
-Players can control the simulation speed, adjusting how quickly time passes to fit their preferred pace of interaction. This allows for a more relaxed or more fast-paced experience depending on user preference.
-
-### State Persistence & Local Storage
-
-The game automatically saves the pet’s progress and status using local storage. This ensures that users can continue where they left off, even after closing the browser or refreshing the page.
-
-### Reset with Countdown
+### Reset
 
 Just like the original Tamagotchi, there is a reset button on the back of the device, that allows to start over with a new pet. To prevent accidental resets, the button must be held down for a few seconds while a countdown confirms the action. This ensures that users don't lose progress unintentionally.
 
@@ -63,6 +57,16 @@ Just like the original Tamagotchi, there is a reset button on the back of the de
 ### Tutorial Introduction
 
 A built-in tutorial guides new users through the basic interactions and mechanics, making the experience accessible for those who have never played with a Tamagotchi before.
+
+<img src="./screens/tutorial.png" alt="Tutorial"  >
+
+### Time Speed
+
+Players can control the simulation speed, adjusting how quickly time passes to fit their preferred pace of interaction. This allows for a more relaxed or more fast-paced experience depending on user preference.
+
+### State Persistence
+
+The game automatically saves the pet’s progress and status using local storage. This ensures that users can continue where they left off, even after closing the browser or refreshing the page.
 
 ## Technologies Used
 
