@@ -66,13 +66,13 @@ A built-in tutorial guides new users through the basic interactions and mechanic
 
 ## Technologies Used
 
-- **Three.js** (3D rendering)
-- **three-bvh-csg** (3D modeling)
-- Tailwindcss
-- Tweakpane
-- shepherd.js (tutorial)
-- camera-controls
-- @jaames/iro (colors customization)
+- [Three.js](https://threejs.org/) (3D rendering)
+- [three-bvh-csg](https://github.com/gkjohnson/three-bvh-csg) (3D modeling)
+- [Tweakpane](https://tweakpane.github.io/docs/) (Debug)
+- [Shepherd.js](https://www.shepherdjs.dev/) (Tutorial)
+- [@yomotsu/camera-controls](https://github.com/yomotsu/camera-controls)
+- [Tailwind](https://tailwindcss.com/)
+- [iro.js](https://iro.js.org/) (Color Picker)
 
 ## Setup
 
@@ -93,10 +93,9 @@ Using `html2canvas-pro` i created a little tool that captures HTML elements and 
 
 <img src="./screens/html2png.png" alt="html2png"  >
 
-```bash
-# Install dependencies (only the first time)
-npm install
+You can run it using
 
+```bash
 # Run the local server at localhost:5174
 npm run html2png
 ```
@@ -105,8 +104,29 @@ npm run html2png
 
 Check out the credits section in the project for a full list of resources used
 
-## Feedback & Contributions
+<img src="./screens/credits.png" alt="Credits"  >
+
+- **Tamagotchi Connection v2 Sprites**  
+  by [MasterPengo](https://www.spriters-resource.com/submitter/MasterPengo/) from [The Spriters Resource](https://www.spriters-resource.com)
+
+- **TamaConnectType Font**  
+  by [@thekiwicodex](https://instagram.com/thekiwicodex)
+
+- **Back Tick Sound Effect**  
+  by [freesound_community](https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=107822) from [Pixabay](https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=107822)
+
+- **Background Music**  
+  by [Gaston A-P](https://pixabay.com/users/xtremefreddy-32332307/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=145285) from [Pixabay](https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=145285)
+
+- **Tamagotchi Background Screen**  
+  by [matiasbloodbones](https://www.deviantart.com/matiasbloodbones) from [DeviantArt](https://www.deviantart.com/)
+
+- **Tamagotchi 1996 Sound Effects OST**  
+  by [gameboyadvance45](https://www.youtube.com/watch?v=aoVaAutNJPM&ab_channel=gameboyadvance45)
+
+- **Cursor Pixel Pack**  
+  by [Kenney.nl](https://kenney.nl/)
+
+## Feedback
 
 If you have any suggestions, feel free to reach out!
-
-Hope you enjoy it!
