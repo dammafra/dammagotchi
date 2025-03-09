@@ -1,5 +1,11 @@
 # 🥚 Dammagotchi
 
+![](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![](https://img.shields.io/badge/ThreeJs-black?style=for-the-badge&logo=three.js&logoColor=white)
+![](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+> Try it live here 👉 [dammagotchi.vercel.app](https://dammagotchi.vercel.app)
+
 I grew up with Tamagotchi and wanted to faithfully recreate the original experience. My goal is to replicate how the classic virtual pet was, complete with its life cycle, care mechanics, and pixelated charm.
 
 ## Features
