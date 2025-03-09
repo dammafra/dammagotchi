@@ -8,6 +8,29 @@
 
 I grew up with Tamagotchi and wanted to faithfully recreate the original experience. My goal is to replicate how the classic virtual pet was, complete with its life cycle, care mechanics, and pixelated charm.
 
+## Technologies Used
+
+- [Three.js](https://threejs.org/) (3D rendering)
+- [three-bvh-csg](https://github.com/gkjohnson/three-bvh-csg) (3D modeling)
+- [Tweakpane](https://tweakpane.github.io/docs/) (Debug)
+- [Shepherd.js](https://www.shepherdjs.dev/) (Tutorial)
+- [@yomotsu/camera-controls](https://github.com/yomotsu/camera-controls)
+- [Tailwind](https://tailwindcss.com/)
+- [iro.js](https://iro.js.org/) (Color Picker)
+
+## Setup
+
+```bash
+# Install dependencies (only the first time)
+npm install
+
+# Run the local server at localhost:5173
+npm run dev
+
+# Build for production in the dist/ directory
+npm run build
+```
+
 ## Features
 
 ### Life Cycle
@@ -70,29 +93,6 @@ The game automatically saves the pet’s progress and status using local storage
 ### Mobile-Friendly
 
 The experience is optimized for mobile devices, providing a smooth and engaging experience on smartphones and tablets. It adapts to smaller screens, ensuring easy interaction and navigation on touch interfaces.
-
-## Technologies Used
-
-- [Three.js](https://threejs.org/) (3D rendering)
-- [three-bvh-csg](https://github.com/gkjohnson/three-bvh-csg) (3D modeling)
-- [Tweakpane](https://tweakpane.github.io/docs/) (Debug)
-- [Shepherd.js](https://www.shepherdjs.dev/) (Tutorial)
-- [@yomotsu/camera-controls](https://github.com/yomotsu/camera-controls)
-- [Tailwind](https://tailwindcss.com/)
-- [iro.js](https://iro.js.org/) (Color Picker)
-
-## Setup
-
-```bash
-# Install dependencies (only the first time)
-npm install
-
-# Run the local server at localhost:5173
-npm run dev
-
-# Build for production in the dist/ directory
-npm run build
-```
 
 ## html2png
 
