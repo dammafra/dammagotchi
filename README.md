@@ -136,6 +136,16 @@ Check out the credits section in the project for a full list of resources used
 - **Cursor Pixel Pack**  
   by [Kenney.nl](https://kenney.nl/)
 
+## Going Further
+
+There are still some missing features I have in mind:
+
+- Death conditions based on hunger, unhappiness, and illness
+- Time progression even when not actively playing
+- An actual sleep/wake cycle
+- Better device model with blender, with AO map
+- Extract and serialize all sprites into matrices, avoiding on-the-go PNG processing
+
 ## Feedback
 
 If you have any suggestions, feel free to reach out!
