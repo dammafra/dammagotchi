@@ -7,7 +7,7 @@
 
 > 🥉 3rd place in the [Three.js Journey Challenge 016](https://threejs-journey.com/challenges/016-tamagotchi)
 
-> Try it live here 👉 [dammagotchi.vercel.app](https://dammagotchi.vercel.app)
+> Try it live here 👉 [dammagotchi.dammafra.dev](https://dammagotchi.dammafra.dev)
 
 I grew up with Tamagotchi and wanted to faithfully recreate the original experience. My goal is to replicate how the classic virtual pet was, complete with its life cycle, care mechanics, and pixelated charm.
 
